@@ -1993,33 +1993,33 @@ function searchFeatures(q) {
     if (seen.has(item.f)) continue;
     let score = Infinity;
 
-    // 1. Exact substring match (highest priority)
+    // 1. Exact match or prefix/substring match
     for (const kw of item.sk) {
       if (!kw) continue;
       for (const t of terms) {
-        if (t === kw || kw.includes(t) || t.includes(kw)) {
-          score = 0; break;
+        if (t === kw) { score = 0; break; }
+        if (kw.includes(t) || t.includes(kw)) {
+          score = 0.5;
         }
       }
       if (score === 0) break;
     }
 
-    // 2. Token-level Levenshtein (fuzzy typo correction)
-    if (score > 0) {
+    // 2. Token-level Levenshtein (fuzzy typo correction - STRICTER)
+    if (score > 0.5) {
       for (const kw of item.sk) {
         if (!kw || kw.length < 2) continue;
         for (const t of terms) {
-          // Try whole keyword
           const d1 = lev(t, kw);
-          if (d1 <= Math.max(1, Math.floor(Math.min(t.length, kw.length) * 0.35))) {
+          const thresh1 = Math.floor(Math.min(t.length, kw.length) * 0.25);
+          if (d1 <= Math.max(1, thresh1)) {
             score = Math.min(score, d1); continue;
           }
-          // Try individual tokens
           for (const tok of kw.split(' ')) {
             if (tok.length < 3) continue;
             const d2 = lev(t, tok);
-            const thresh = Math.max(1, Math.floor(Math.min(t.length, tok.length) * 0.35));
-            if (d2 <= thresh) score = Math.min(score, d2 + 0.5);
+            const thresh2 = Math.floor(Math.min(t.length, tok.length) * 0.25);
+            if (d2 <= Math.max(1, thresh2)) score = Math.min(score, d2 + 0.5);
           }
         }
       }
@@ -2031,10 +2031,18 @@ function searchFeatures(q) {
     }
   }
 
-  // Sort: exact matches first, then by score, deduplicate by feature text
-  return results
-    .sort((a, b) => a.score - b.score)
-    .map(r => r.item);
+  if(!results.length) return [];
+
+  // Sort by score
+  results.sort((a, b) => a.score - b.score);
+
+  // If we have very strong matches (score <= 0.5), only return those!
+  if (results[0].score <= 0.5) {
+    return results.filter(r => r.score <= 0.5).map(r => r.item);
+  }
+
+  // Otherwise return top 3 fuzzy matches
+  return results.slice(0, 3).map(r => r.item);
 }
 
 // ─── TYPO CORRECTION: best suggestion for mistyped query ──────
@@ -2721,7 +2729,15 @@ window.addEventListener('load',()=>{
   function detectFeatures(q, categoryType){
     const key = (categoryType||'*')+'|'+q;
     if(_featCache.has(key)) return _featCache.get(key);
-    const terms = expandQ(q);
+    
+    // Remove stop words to prevent false matching
+    let nq = norm(q);
+    const stopWords = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق'];
+    stopWords.forEach(w => { nq = nq.replace(new RegExp(`\\b${w}\\b`,'g'), ' '); });
+    nq = nq.replace(/\s+/g,' ').trim();
+    if(!nq) return [];
+
+    const terms = expandQ(nq);
     const fabCat = categoryType ? TYPE_TO_FABCAT[categoryType] : null;
     const cand = [];
     for(const item of FAB_IDX){
@@ -2733,10 +2749,11 @@ window.addEventListener('load',()=>{
         if(t.length>=3 && hayAll.includes(t)) score += t.length;
         for(const k of (item.sk||[])){
           const nk = norm(k);
-          if(t.includes(nk) && nk.length>=3) score += nk.length*1.5;
-          if(nk.includes(t) && t.length>=3) score += t.length*1.5;
+          if(t===nk) score += nk.length * 3; // EXACT match strong boost
+          else if(t.includes(nk) && nk.length>=3) score += nk.length*1.5;
+          else if(nk.includes(t) && t.length>=3) score += t.length*1.5;
         }
-        score += fuzzyMatch(t, hayF) * 0.8;
+        score += fuzzyMatch(t, hayF) * 0.4; // Reduced fuzzy weight
       }
       if(score>0) cand.push({item, score});
     }
@@ -2969,7 +2986,8 @@ window.addEventListener('load',()=>{
 
     // STRICT FOCUS: When a feature is clearly matched, explain ONLY that feature
     // and list ALL matching devices — no fluff, no unrelated features.
-    if(feats.length && feats[0].score >= 4){
+    // Increased threshold to 8 to demand strict relevance (avoid false positives).
+    if(feats.length && feats[0].score >= 8){
       const it = feats[0].item;
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = cat;
       const prods = productsByFeature(it, cat);
@@ -3013,7 +3031,7 @@ window.addEventListener('load',()=>{
 
 
   // ---------- UI ----------
-  const AVATAR_URL = '/__l5e/assets-v1/510ccb30-c490-45a8-bf18-2a2d7da69c00/consultant-avatar.png';
+  const AVATAR_URL = 'https://api.dicebear.com/7.x/bottts/svg?seed=RayaBot&backgroundColor=0A2540';
   const LS_KEY = 'raya_cbot_history_v1';
 
   const style = document.createElement('style');
