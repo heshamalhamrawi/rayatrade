@@ -319,6 +319,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .view-srch-cnt{font-size:12px;font-weight:500;color:#64748B;margin-bottom:10px;padding:0 2px}
 .view-srch-cnt strong{color:#0A2540;font-weight:700}
 
+/* ─── FEAT ACCORDION ───────────────────────────────────── */
+.feat-prods-accordion { margin-top: 14px; background: #fff; border: 1.5px solid #E1E7EF; border-radius: 10px; overflow: hidden; transition: all .2s; }
+.feat-prods-summary { padding: 12px 14px; font-weight: 700; color: #0B6E6E; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #F4F7FB; list-style: none; font-size: 13.5px; }
+.feat-prods-summary::-webkit-details-marker { display: none; }
+.feat-prods-accordion[open] .feat-prods-summary { border-bottom: 1px solid #E1E7EF; background: #E6F4F4; }
+.feat-prods-accordion[open] .feat-prods-arrow { transform: rotate(180deg); }
+.feat-prods-arrow { transition: transform 0.2s; font-size: 12px; }
+.feat-prods-accordion .fab-prods-grid { display: grid; gap: 8px; padding: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+
 /* ─── SCROLL TO TOP ───────────────────────────────────── */
 #scrollTopBtn{position:fixed;bottom:28px;left:24px;z-index:500;width:46px;height:46px;border-radius:50%;background:#0A2540;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;box-shadow:0 4px 18px rgba(10,37,64,.35);transition:opacity .25s,transform .22s;font-size:20px;line-height:1}
 #scrollTopBtn.vis{opacity:1;pointer-events:all}
@@ -1842,6 +1851,12 @@ function renderFAB(items,q){
       h+=`<div class="fab-section"><div class="section-hdr"><div class="section-bar"></div><span class="section-title">${ico} ${esc(cat)}</span><span class="section-count">${arr.length} خاصية</span></div>`;
       arr.forEach(item=>{
         const safeBen=item.b.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ');
+        const prods = findProdsWithFeature(item, 50);
+        const prodsHtml = prods.length 
+          ? `<details class="feat-prods-accordion">
+               <summary class="feat-prods-summary">الأجهزة المقترحة التي تدعم الخاصية (${prods.length}) <span class="feat-prods-arrow">▼</span></summary>
+               <div class="fab-prods-grid">${prods.map(p=>`<div class="mini-prod" onclick="openProd('${p.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')"><div class="mini-prod-t">${esc(p.t)}</div><div class="mini-prod-n">${esc(p.n)}</div><div class="mini-prod-s">${esc(p.s)}</div></div>`).join('')}</div>
+             </details>` : '';
         h+=`<div class="fab-card fade">
           <div class="fab-head">
             <div><div class="fab-head-lbl">Feature — الخاصية</div><div class="fab-feature">${hi(item.f,q)}</div></div>
@@ -1849,9 +1864,8 @@ function renderFAB(items,q){
           </div>
           <div class="fab-body">
             <div class="fab-adv"><div class="fab-row-lbl"><div class="fab-row-dot"></div><span class="fab-row-txt">Advantage — الميزة</span></div><div class="fab-adv-body">${hi(item.a,q)}</div></div>
-            <div class="fab-ben"><div class="fab-row-lbl"><div class="fab-row-dot"></div><span class="fab-row-txt">Benefit — فائدة العميل</span></div><div class="fab-ben-body">${hi(item.b,q)}</div>
-              
-            </div>
+            <div class="fab-ben"><div class="fab-row-lbl"><div class="fab-row-dot"></div><span class="fab-row-txt">Benefit — فائدة العميل</span></div><div class="fab-ben-body">${hi(item.b,q)}</div></div>
+            ${prodsHtml}
           </div>
         </div>`;
       });
@@ -2182,7 +2196,8 @@ const CAT_TO_TYPES = {
 };
 function findProdsWithFeature(fabItem, max) {
   max = max || 12;
-  const keywords = fabItem.pk || [];
+  // Always include the feature name as a fallback search keyword
+  const keywords = Array.from(new Set([...(fabItem.pk || []), fabItem.f]));
   if (!keywords.length) return [];
 
   // Get allowed product types from FAB category
@@ -2209,21 +2224,29 @@ function findProdsWithFeature(fabItem, max) {
       let matchedKw = null;
       for (const ekw of expandedKws) {
         if (dn.includes(ekw)) { matchedKw = ekw; break; }
+        // Fuzzy Matching fallback for embedded text without exact match
+        if (ekw.length >= 4) {
+          for (const w of dn.split(/\s+/)) {
+            if (w.length >= 4 && lev(ekw, w) <= 2) { matchedKw = ekw; break; }
+          }
+        }
+        if (matchedKw) break;
       }
       
       if (!matchedKw) continue;
 
-      // Verify the feature is available (not "غير متاح")
+      matched = true;
+      // Filter out explicitly negative statements for this feature
       for (const part of p.d.split(' | ')) {
         const pn = norm(part);
         if (!pn.includes(matchedKw)) continue;
-        // Check value after colon
         const colonIdx = part.indexOf(':');
-        if (colonIdx < 0) { matched = true; break; }
-        const val = norm(part.slice(colonIdx + 1).trim());
-        const NO_VALS = ['غير متاح', 'لا', 'no', 'false', '—', '-', 'غير'];
-        if (!NO_VALS.some(nv => val === nv || val.startsWith(nv))) {
-          matched = true; break;
+        if (colonIdx >= 0) {
+          const val = norm(part.slice(colonIdx + 1).trim());
+          const NO_VALS = ['غير متاح', 'لا', 'no', 'false', '—', '-', 'غير'];
+          if (NO_VALS.some(nv => val === nv || val.startsWith(nv))) {
+            matched = false; break;
+          }
         }
       }
       if (matched) break;
