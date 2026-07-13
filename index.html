@@ -1553,20 +1553,95 @@ function searchFAB(q){
   const base=FAB.filter(getFABFilter());
   if(!q) return base;
   const terms=expandQ(q);
-  return base.filter(item=>{
+  const results = [];
+  
+  for(const item of base) {
     const h=norm(item.c+' '+item.f+' '+item.a+' '+item.b);
-    return terms.some(t=>h.includes(t));
-  });
+    let score = Infinity;
+    
+    // 1. Exact Match
+    for(const t of terms) {
+      if(h.includes(t)) { score = 0; break; }
+    }
+    
+    // 2. Fuzzy Match
+    if(score > 0) {
+      const fName = norm(item.f);
+      for(const t of terms) {
+        if(t.length >= 3) {
+           const d = lev(t, fName);
+           const thresh = Math.floor(Math.min(t.length, fName.length) * 0.25);
+           if(d <= Math.max(1, thresh)) { score = Math.min(score, d); continue; }
+           
+           for(const w of fName.split(' ')) {
+             if(w.length >= 3) {
+               const d2 = lev(t, w);
+               if(d2 <= Math.max(1, Math.floor(Math.min(t.length, w.length)*0.25))) {
+                 score = Math.min(score, d2 + 0.5);
+               }
+             }
+           }
+        }
+      }
+    }
+    
+    if(score < Infinity) results.push({item, score});
+  }
+  
+  results.sort((a,b)=>a.score - b.score);
+  // Strict matching priority
+  if(results.length && results[0].score <= 0.5) {
+    return results.filter(r=>r.score <= 0.5).map(r=>r.item);
+  }
+  return results.map(r=>r.item);
 }
 
 function searchAR(q){
+  if(!q) return AR.filter(p=>filterByL1L2(p));
   const terms=expandQ(q);
-  return AR.filter(p=>{
-    if(!filterByL1L2(p)) return false;
-    if(!q) return true;
+  const results = [];
+  
+  for(const p of AR) {
+    if(!filterByL1L2(p)) continue;
+    
     const h=norm(p.s+' '+p.n+' '+p.d+' '+p.t);
-    return terms.some(t=>h.includes(t));
-  });
+    let score = Infinity;
+    
+    // 1. Exact Match
+    for(const t of terms) {
+      if(h.includes(t)) { score = 0; break; }
+    }
+    
+    // 2. Fuzzy Match on product name
+    if(score > 0) {
+      const pName = norm(p.n);
+      for(const t of terms) {
+        if(t.length >= 3) {
+           const d = lev(t, pName);
+           const thresh = Math.floor(Math.min(t.length, pName.length) * 0.25);
+           if(d <= Math.max(1, thresh)) { score = Math.min(score, d); continue; }
+           
+           for(const w of pName.split(' ')) {
+             if(w.length >= 3) {
+               const d2 = lev(t, w);
+               if(d2 <= Math.max(1, Math.floor(Math.min(t.length, w.length)*0.25))) {
+                 score = Math.min(score, d2 + 0.5);
+               }
+             }
+           }
+        }
+      }
+    }
+    
+    if(score < Infinity) results.push({p, score});
+  }
+  
+  results.sort((a,b)=>a.score - b.score);
+  // Strict matching priority
+  if(results.length && results[0].score <= 0.5) {
+    return results.filter(r=>r.score <= 0.5).map(r=>r.p);
+  }
+  return results.map(r=>r.p);
 }
 
 function findExactSKU(q){
