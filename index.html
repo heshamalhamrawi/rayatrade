@@ -2117,10 +2117,9 @@ function searchFeatures(q) {
   // Sort by score
   results.sort((a, b) => a.score - b.score);
 
-  // Return ONLY the absolute best matching feature (Top 1)
-  // This prevents showing multiple features and saves scrolling
+  // Return all matched features to enable progressive filtering (like phone contacts)
   if (results[0].score <= 1.5) {
-    return [results[0].item];
+    return results.filter(r => r.score <= 1.5).map(r => r.item);
   }
 
   return [];
@@ -3112,7 +3111,7 @@ window.addEventListener('load',()=>{
 
 
   // ---------- UI ----------
-  const AVATAR_URL = 'https://api.dicebear.com/7.x/bottts/svg?seed=RayaBot&backgroundColor=0A2540';
+  const AVATAR_URL = 'smart_salesman_avatar_1783942817825.png';
   const LS_KEY = 'raya_cbot_history_v1';
 
   const style = document.createElement('style');
