@@ -342,6 +342,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     padding: 10px 18px;
     font-size: 14px;
   }
+  .feat-search-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 14px;
+  }
+  .feat-search-text { width: 100%; }
   .main { padding: 14px 14px 100px; }
   .prod-card, .fab-card, .rec-card, .mini-prod {
     padding: 16px;
@@ -2111,13 +2117,13 @@ function searchFeatures(q) {
   // Sort by score
   results.sort((a, b) => a.score - b.score);
 
-  // If we have very strong matches (score <= 0.5), only return those!
-  if (results[0].score <= 0.5) {
-    return results.filter(r => r.score <= 0.5).map(r => r.item);
+  // Return ONLY the absolute best matching feature (Top 1)
+  // This prevents showing multiple features and saves scrolling
+  if (results[0].score <= 1.5) {
+    return [results[0].item];
   }
 
-  // Otherwise return top 3 fuzzy matches
-  return results.slice(0, 3).map(r => r.item);
+  return [];
 }
 
 // ─── TYPO CORRECTION: best suggestion for mistyped query ──────
@@ -3378,7 +3384,15 @@ window.addEventListener('load',()=>{
 
 </script>
 <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="رجوع للأعلى">↑</button>
-
+<script>
+window.addEventListener('scroll', function(){
+  var stBtn = document.getElementById('scrollTopBtn');
+  if(stBtn){
+    if(window.scrollY > 300) stBtn.classList.add('vis');
+    else stBtn.classList.remove('vis');
+  }
+});
+</script>
 </body>
 </html>
 
