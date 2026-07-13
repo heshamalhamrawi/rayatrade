@@ -1985,7 +1985,7 @@ function goPage(p){PAGE=p;render();window.scrollTo(0,58);}
 // ─── FEATURE SEARCH: find matching FAB items by query ─────────
 function searchFeatures(q) {
   if (!q || q.length < 2) return [];
-  const nq = norm(q);
+  const terms = expandQ(q);
   const results = [];
   const seen = new Set();
 
@@ -1996,26 +1996,31 @@ function searchFeatures(q) {
     // 1. Exact substring match (highest priority)
     for (const kw of item.sk) {
       if (!kw) continue;
-      if (nq === kw || kw.includes(nq) || nq.includes(kw)) {
-        score = 0; break;
+      for (const t of terms) {
+        if (t === kw || kw.includes(t) || t.includes(kw)) {
+          score = 0; break;
+        }
       }
+      if (score === 0) break;
     }
 
     // 2. Token-level Levenshtein (fuzzy typo correction)
     if (score > 0) {
       for (const kw of item.sk) {
         if (!kw || kw.length < 2) continue;
-        // Try whole keyword
-        const d1 = lev(nq, kw);
-        if (d1 <= Math.max(1, Math.floor(Math.min(nq.length, kw.length) * 0.35))) {
-          score = Math.min(score, d1); continue;
-        }
-        // Try individual tokens
-        for (const tok of kw.split(' ')) {
-          if (tok.length < 3) continue;
-          const d2 = lev(nq, tok);
-          const thresh = Math.max(1, Math.floor(Math.min(nq.length, tok.length) * 0.35));
-          if (d2 <= thresh) score = Math.min(score, d2 + 0.5);
+        for (const t of terms) {
+          // Try whole keyword
+          const d1 = lev(t, kw);
+          if (d1 <= Math.max(1, Math.floor(Math.min(t.length, kw.length) * 0.35))) {
+            score = Math.min(score, d1); continue;
+          }
+          // Try individual tokens
+          for (const tok of kw.split(' ')) {
+            if (tok.length < 3) continue;
+            const d2 = lev(t, tok);
+            const thresh = Math.max(1, Math.floor(Math.min(t.length, tok.length) * 0.35));
+            if (d2 <= thresh) score = Math.min(score, d2 + 0.5);
+          }
         }
       }
     }
@@ -2109,14 +2114,21 @@ function findProdsWithFeature(fabItem, max) {
     let matched = false;
 
     for (const kw of sortedKws) {
-      // Require minimum 5 chars to avoid false positives
-      if (!kw || kw.length < 5) continue;
-      if (!dn.includes(kw)) continue;
+      // Require minimum 4 chars to avoid false positives
+      if (!kw || kw.length < 4) continue;
+      
+      const expandedKws = expandQ(kw);
+      let matchedKw = null;
+      for (const ekw of expandedKws) {
+        if (dn.includes(ekw)) { matchedKw = ekw; break; }
+      }
+      
+      if (!matchedKw) continue;
 
       // Verify the feature is available (not "غير متاح")
       for (const part of p.d.split(' | ')) {
         const pn = norm(part);
-        if (!pn.includes(kw)) continue;
+        if (!pn.includes(matchedKw)) continue;
         // Check value after colon
         const colonIdx = part.indexOf(':');
         if (colonIdx < 0) { matched = true; break; }
@@ -2709,7 +2721,6 @@ window.addEventListener('load',()=>{
   function detectFeatures(q, categoryType){
     const key = (categoryType||'*')+'|'+q;
     if(_featCache.has(key)) return _featCache.get(key);
-    const nq = norm(q);
     const terms = expandQ(q);
     const fabCat = categoryType ? TYPE_TO_FABCAT[categoryType] : null;
     const cand = [];
@@ -2718,12 +2729,15 @@ window.addEventListener('load',()=>{
       let score = 0;
       const hayF = norm(item.f);
       const hayAll = norm(item.f + ' ' + item.a + ' ' + item.b + ' ' + (item.sk||[]).join(' ') + ' ' + (item.pk||[]).join(' '));
-      for(const t of terms){ if(t.length>=3 && hayAll.includes(t)) score += t.length; }
-      for(const k of (item.sk||[])){
-        const nk = norm(k);
-        if(nq.includes(nk) && nk.length>=3) score += nk.length*1.5;
+      for(const t of terms){
+        if(t.length>=3 && hayAll.includes(t)) score += t.length;
+        for(const k of (item.sk||[])){
+          const nk = norm(k);
+          if(t.includes(nk) && nk.length>=3) score += nk.length*1.5;
+          if(nk.includes(t) && t.length>=3) score += t.length*1.5;
+        }
+        score += fuzzyMatch(t, hayF) * 0.8;
       }
-      score += fuzzyMatch(nq, hayF) * 0.8;
       if(score>0) cand.push({item, score});
     }
     cand.sort((a,b)=>b.score-a.score);
@@ -3004,10 +3018,11 @@ window.addEventListener('load',()=>{
 
   const style = document.createElement('style');
   style.textContent = `
-  .cbot-fab-btn{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:16px;width:64px;height:64px;min-width:44px;min-height:44px;border-radius:50%;background:linear-gradient(135deg,#0A2540,#0B6E6E);color:#fff;box-shadow:0 10px 30px rgba(10,37,64,.45);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;padding:0;overflow:visible;transition:transform .18s}
-  .cbot-fab-btn img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #14b8a6;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
-  .cbot-fab-btn:hover{transform:scale(1.06)}
-  .cbot-fab-btn .cbot-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid #14b8a6;opacity:.6;animation:cbotPulse 1.8s infinite;pointer-events:none}
+  .cbot-fab-btn{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:16px;width:auto;height:64px;border-radius:32px;background:linear-gradient(135deg,#0A2540,#0B6E6E);color:#fff;box-shadow:0 10px 30px rgba(10,37,64,.45);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;padding:6px;padding-inline-end:20px;gap:12px;overflow:visible;transition:transform .18s;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif}
+  .cbot-fab-btn img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #14b8a6;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25));flex-shrink:0}
+  .cbot-fab-btn span.cbot-fab-label{font-size:16px;font-weight:700;white-space:nowrap}
+  .cbot-fab-btn:hover{transform:scale(1.03)}
+  .cbot-fab-btn .cbot-pulse{position:absolute;inset:-4px;border-radius:inherit;border:2px solid #14b8a6;opacity:.6;animation:cbotPulse 1.8s infinite;pointer-events:none}
   @keyframes cbotPulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.35);opacity:0}}
   .cbot-panel{position:fixed;bottom:calc(94px + env(safe-area-inset-bottom));left:16px;width:420px;max-width:calc(100vw - 24px);height:640px;max-height:calc(100dvh - 130px);background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(10,37,64,.35);z-index:9998;display:none;flex-direction:column;overflow:hidden;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif}
   .cbot-panel.open{display:flex;animation:cbotIn .22s ease}
@@ -3084,9 +3099,10 @@ window.addEventListener('load',()=>{
   .cbot-fab-list ul{padding-inline-start:18px;margin:4px 0}
   .cbot-fab-list li{margin-bottom:4px}
   @media(max-width:640px){
-    .cbot-fab-btn{width:60px;height:60px;left:12px;bottom:calc(12px + env(safe-area-inset-bottom))}
-    .cbot-fab-btn img{width:48px;height:48px}
-    .cbot-panel{width:calc(100vw - 16px);height:calc(100dvh - 16px);max-height:calc(100dvh - 16px);left:8px;right:8px;bottom:8px;top:8px;border-radius:16px}
+    .cbot-fab-btn{height:56px;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:4px;padding-inline-end:16px;gap:8px;border-radius:28px;}
+    .cbot-fab-btn img{width:48px;height:48px;}
+    .cbot-fab-btn span.cbot-fab-label{font-size:14.5px;}
+    .cbot-panel{width:100vw;height:100dvh;max-height:100dvh;left:0;right:0;bottom:0;top:0;border-radius:0;z-index:99999}
     .cbot-msg{font-size:14.5px}
   }
   `;
@@ -3094,19 +3110,19 @@ window.addEventListener('load',()=>{
 
   const btn = document.createElement('button');
   btn.className = 'cbot-fab-btn';
-  btn.setAttribute('aria-label','فتح المستشار الذكي');
+  btn.setAttribute('aria-label','فتح مستشارك الذكي');
   btn.setAttribute('aria-expanded','false');
-  btn.innerHTML = `<img src="${AVATAR_URL}" alt="مستشار المبيعات الذكي"/><span class="cbot-pulse" aria-hidden="true"></span>`;
+  btn.innerHTML = `<img src="${AVATAR_URL}" alt="مستشارك الذكي"/><span class="cbot-fab-label">مستشارك الذكي</span><span class="cbot-pulse" aria-hidden="true"></span>`;
 
   const panel = document.createElement('div');
   panel.className = 'cbot-panel';
   panel.setAttribute('role','dialog');
-  panel.setAttribute('aria-label','مستشار المبيعات الذكي');
+  panel.setAttribute('aria-label','مستشارك الذكي');
   panel.innerHTML = `
     <div class="cbot-hdr">
       <div class="cbot-av"><img src="${AVATAR_URL}" alt=""/></div>
       <div style="min-width:0">
-        <h4>مستشار المبيعات الذكي</h4>
+        <h4>مستشارك الذكي</h4>
         <span class="cbot-status">متصل • جاهز لخدمتك</span>
       </div>
       <div class="cbot-actions">
@@ -3212,7 +3228,7 @@ window.addEventListener('load',()=>{
 
   // Initial hydrate: prefer persisted history
   if(!loadHistory()){
-    addMsg('أهلاً بك يا <b>مستشار</b> 👋<br>أنا مساعدك الذكي على أرض المعرض. اسألني عن أي جهاز، خاصية، أو قارن بين موديلين وسأزودك بالحجج البيعية الجاهزة.', 'b');
+    addMsg('أهلاً بك يا <b>مستشار</b> 👋<br>أنا مساعدك الذكي فى الفرع عملنى هشام الغمراوى عشان أساعدك. اسألني عن أي جهاز، خاصية، أو قارن بين موديلين وهجاوبك ببساطة', 'b');
   }
   renderChips();
 
