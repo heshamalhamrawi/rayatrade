@@ -329,7 +329,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .feat-prods-accordion .fab-prods-grid { display: grid; gap: 8px; padding: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 
 /* ─── SCROLL TO TOP ───────────────────────────────────── */
-#scrollTopBtn{position:fixed;bottom:28px;left:24px;z-index:500;width:46px;height:46px;border-radius:50%;background:#0A2540;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;box-shadow:0 4px 18px rgba(10,37,64,.35);transition:opacity .25s,transform .22s;font-size:20px;line-height:1}
+#scrollTopBtn{position:fixed;bottom:100px;left:24px;z-index:500;width:46px;height:46px;border-radius:50%;background:#0A2540;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;box-shadow:0 4px 18px rgba(10,37,64,.35);transition:opacity .25s,transform .22s;font-size:20px;line-height:1}
 #scrollTopBtn.vis{opacity:1;pointer-events:all}
 #scrollTopBtn:hover{transform:translateY(-3px);background:#0B6E6E}
 
@@ -1372,31 +1372,188 @@ function generateFAB(specKey, specVal, prodType, prodName) {
 
 
     
-    // Fallback generic — maintains exact same tone
-  return {
-    f: specKey + (v && !['متاح','نعم','yes'].includes(v.trim().toLowerCase()) ? ' — '+v : ''),
-    a: 'مواصفة تقنية تُعدّ معياراً جوهرياً في فئة '+prodType+' وتميّز هذا الجهاز بمستوى أداء متقدم.',
-    b: (function(){
-    var nk2=norm(specKey);
-    if(nk2.includes('امان')||nk2.includes('حمايه')||nk2.includes('قفل'))
-      return '"أمان حقيقي لعيلتك! '+specKey+' بتوقف أي خطر قبل ما يحصل — راحة بال مستحيل تحسبها بفلوس."';
-    if(nk2.includes('طاقه')||nk2.includes('كهربا')||nk2.includes('كفاءه')||nk2.includes('استهلاك'))
-      return '"فاتورة الكهرباء هتحس بالفرق! '+specKey+' بتوفر في الطاقة بشكل حقيقي ومحسوس كل شهر."';
-    if(nk2.includes('سرعه')||nk2.includes('سريع')||nk2.includes('دقيقه')||nk2.includes('وقت'))
-      return '"وفّر وقتك لحياتك! '+specKey+' بتخلي الجهاز ينهي شغله بسرعة مضاعفة بدون انتظار."';
-    if(nk2.includes('بطاريه')||nk2.includes('شحن')||nk2.includes('طاقه'))
-      return '"استخدم بحرية طوال اليوم! '+specKey+' بتضمن استمرارية بدون قلق من نفاد الشحن."';
-    if(nk2.includes('كاميرا')||nk2.includes('تصوير')||nk2.includes('صوره')||nk2.includes('ميجا'))
-      return '"لقطات بجودة تستحق الحفظ! '+specKey+' بتديك تفاصيل وألوان حادة تفرق فعلاً عن الكاميرات العادية."';
-    if(nk2.includes('شاشه')||nk2.includes('عرض')||nk2.includes('دقه')||nk2.includes('وضوح'))
-      return '"تجربة مشاهدة تفرق حقاً! '+specKey+' بتديك وضوح وألوان تحس إن الصورة أمامك مش مجرد بكسلات."';
-    if(nk2.includes('نظيف')||nk2.includes('تنظيف')||nk2.includes('غسيل')||nk2.includes('معقم'))
-      return '"نظافة حقيقية مش بس مظهر! '+specKey+' بتضمن تنظيف عميق يوصل لكل مكان ويحمي صحة عيلتك."';
-    if(nk2.includes('صوت')||nk2.includes('صوتي')||nk2.includes('سماع')||nk2.includes('ضوضاء'))
-      return '"تجربة صوت بتحس إنك في المكان! '+specKey+' بتديك جودة صوت مختلفة تماماً عن المعتاد."';
-    return '"'+specKey+(v&&v!=='متاح'?' — '+v:'')+' ميزة بتؤثر فعلاً في تجربتك مع الجهاز — فرق محسوس تحسه من أول استخدام."';
-  })()
-  };
+  // Smart Fallback Generator with contextual categories
+  const nv = norm(v || '');
+  const featureTitle = specKey + (v && !['متاح','نعم','yes','true'].includes(nv) ? ' — ' + v : '');
+  
+  let advantage = 'مواصفة تقنية أساسية مصممة خصيصاً لتناسب استخدامك اليومي.';
+  let benefit = '"' + specKey + ' بتديك تجربة استخدام أسهل وأكثر عملية في روتينك اليومي."';
+  
+  var nk2 = norm(specKey);
+  
+  // 1. Processors & Performance
+  if (nk2.includes('معالج') || nk2.includes('بروسيسور') || nk2.includes('اداء') || nk2.includes('كور')) {
+    advantage = 'شريحة معالجة ذكية للتعامل مع المهام المتعددة بدون بطء أو تهنيج.';
+    benefit = '"سرعة خيالية! تقدر تفتح كذا تطبيق في نفس الوقت وتلعب براحتك من غير ما الجهاز يعلق معاك."';
+  }
+  // 2. RAM & Memory
+  else if (nk2.includes('رام') || nk2.includes('ذاكره عشوائيه') || nk2.includes('ram')) {
+    advantage = 'سعة ذاكرة تضمن لك سلاسة في التنقل بين التطبيقات في لمح البصر.';
+    benefit = '"أنجز مهامك بسرعة! تنقل بين البرامج بدون ما تضطر تقفل حاجة عشان التانية تشتغل."';
+  }
+  // 3. Storage & Capacity (Tech)
+  else if (nk2.includes('تخزين') || nk2.includes('مساحه') || nk2.includes('هارد') || nk2.includes('ssd') || nk2.includes('hdd') || nk2.includes('مساحة')) {
+    advantage = 'مساحة تخزينية ضخمة وآمنة لحفظ كافة ملفاتك وبرامجك المهمة.';
+    benefit = '"صوّر وحمّل براحتك! مساحة تشيل كل ذكرياتك وملفاتك بدون ما تضطر تمسح حاجة."';
+  }
+  // 4. Cameras & Photography
+  else if (nk2.includes('كاميرا') || nk2.includes('تصوير') || nk2.includes('عدسه') || nk2.includes('ميجا بكسل')) {
+    advantage = 'مستشعر تصوير عالي الدقة يبرز التفاصيل حتى في الإضاءة الضعيفة.';
+    benefit = '"لقطات تخطف العين! هتاخد صور احترافية بألوان طبيعية وواضحة جداً تفخر تشاركها مع أصحابك."';
+  }
+  // 5. Display & Screen
+  else if (nk2.includes('شاشه') || nk2.includes('شاشة') || nk2.includes('عرض') || nk2.includes('دقه') || nk2.includes('دقة') || nk2.includes('وضوح') || nk2.includes('ريزوليوشن') || nk2.includes('refresh') || nk2.includes('hz')) {
+    advantage = 'تكنولوجيا عرض متقدمة بألوان زاهية وتباين عالي لراحة العين.';
+    benefit = '"تجربة مشاهدة سينمائية! هتستمتع بكل تفصيلة في المسلسلات والألعاب بألوان واقعية جداً."';
+  }
+  // 6. Battery & Charging
+  else if (nk2.includes('بطاريه') || nk2.includes('بطارية') || nk2.includes('شحن') || nk2.includes('طاقه') || nk2.includes('طاقة') || nk2.includes('امبير')) {
+    advantage = 'إدارة ذكية للطاقة تمنحك فترات تشغيل أطول وتوفر سرعة في إعادة الشحن.';
+    benefit = '"انسى الشاحن وانطلق! بطارية تعيش معاك اليوم كله بدون ما تقطعك في أهم لحظاتك."';
+  }
+  // 7. Security & Safety
+  else if (nk2.includes('امان') || nk2.includes('حمايه') || nk2.includes('قفل') || nk2.includes('بصمه')) {
+    advantage = 'نظام حماية موثوق مصمم لمنع أي أخطار أو وصول غير مصرح به.';
+    benefit = '"راحة بال تامة! الجهاز متأمن بالكامل عشان يحافظ على خصوصيتك ويحمي أطفالك من أي خطر."';
+  }
+  // 8. Energy Efficiency
+  else if (nk2.includes('كهربا') || nk2.includes('كفاءه') || nk2.includes('كفاءة') || nk2.includes('استهلاك') || nk2.includes('توفير')) {
+    advantage = 'تصميم هندسي يعتمد على استهلاك الحد الأدنى من الطاقة لتحقيق نفس الأداء.';
+    benefit = '"وفر في فاتورة الكهرباء! هتشغل الجهاز براحتك من غير ما تشيل هم الاستهلاك في آخر الشهر."';
+  }
+  // 9. Time Saving & Speed
+  else if (nk2.includes('سرعه') || nk2.includes('سرعة') || nk2.includes('سريع') || nk2.includes('دقيقه') || nk2.includes('وقت') || nk2.includes('تايمر')) {
+    advantage = 'نظام تشغيل مكثف يقلل دورة العمل للنصف تقريباً دون المساس بالجودة.';
+    benefit = '"وفّر وقتك الثمين! الجهاز هيخلص شغله في وقت قياسي عشان تتفرغ لحياتك وتستمتع بيومك."';
+  }
+  // 10. Cleaning & Hygiene
+  else if (nk2.includes('نظيف') || nk2.includes('تنظيف') || nk2.includes('غسيل') || nk2.includes('معقم') || nk2.includes('تعقيم') || nk2.includes('بكتيريا')) {
+    advantage = 'دورة تنظيف وتعقيم عميقة تتغلغل لإزالة أصعب البقع والجراثيم.';
+    benefit = '"نظافة صحية تطمنك! هتحافظ على صحة أسرتك بفضل قدرة الجهاز على القضاء التام على الجراثيم."';
+  }
+  // 11. Audio & Sound
+  else if (nk2.includes('صوت') || nk2.includes('صوتي') || nk2.includes('سماع') || nk2.includes('ضوضاء') || nk2.includes('عزل') || nk2.includes('audio')) {
+    advantage = 'معالجة صوتية دقيقة تضمن لك تجربة استماع نقية وعزل تام للضوضاء.';
+    benefit = '"عزل تام عن دوشة العالم! هتعيش جو المشهد أو الموسيقى بصوت مجسم وواضح جداً."';
+  }
+  // 12. Dimensions & Weight
+  else if (nk2.includes('وزن') || nk2.includes('ابعاد') || nk2.includes('طول') || nk2.includes('عرض') || nk2.includes('عمق') || nk2.includes('حجم')) {
+    advantage = 'تصميم هندسي مدمج ومدروس لتوفير المساحة وتسهيل عملية النقل أو التركيب.';
+    benefit = '"شياكة وعملية! تصميم الجهاز بيسهل عليك تظبطه في أي مكان في بيتك أو تشيله معاك بدون إرهاق."';
+  }
+  // 13. Connectivity (Wi-Fi, Bluetooth)
+  else if (nk2.includes('واي فاي') || nk2.includes('بلوتوث') || nk2.includes('اتصال') || nk2.includes('شبكه') || nk2.includes('شبكة') || nk2.includes('لاسلكي') || nk2.includes('wifi') || nk2.includes('bluetooth') || nk2.includes('nfc')) {
+    advantage = 'بروتوكولات اتصال حديثة توفر سرعة استجابة ومدى تغطية واسع.';
+    benefit = '"وصل أجهزتك في ثواني! بدون أسلاك أو تعقيد، هتنقل بياناتك وتتحكم في الجهاز من أي مكان."';
+  }
+  // 14. Capacity (Appliances)
+  else if (nk2.includes('سعه') || nk2.includes('سعة') || nk2.includes('لتر') || nk2.includes('كيلو') || nk2.includes('حمولة')) {
+    advantage = 'حيز داخلي مُصمم بذكاء ليستوعب كميات أكبر في دورة تشغيل واحدة.';
+    benefit = '"يكفي العيلة كلها! السعة دي هتوفر عليك تكرار التشغيل وتنجز معاك كميات كبيرة مرة واحدة."';
+  }
+  // 15. Cooling & Heating
+  else if (nk2.includes('تبريد') || nk2.includes('فريون') || nk2.includes('تجميد') || nk2.includes('حراره') || nk2.includes('تسخين') || nk2.includes('مروحه')) {
+    advantage = 'نظام توزيع حراري/تبريدي متساوي يضمن الوصول لدرجة الحرارة المطلوبة سريعاً.';
+    benefit = '"كفاءة تحافظ على حاجتك! تبريد قوي يخلي الأكل فريش مدة أطول، أو تسخين سريع ينجزك في المطبخ."';
+  }
+  // 16. Materials & Build Quality
+  else if (nk2.includes('خامه') || nk2.includes('ماتريال') || nk2.includes('زجاج') || nk2.includes('معدن') || nk2.includes('استانلس') || nk2.includes('بلاستيك') || nk2.includes('تصميم')) {
+    advantage = 'هيكل مصنوع من مواد عالية الجودة مقاومة للتآكل والصدمات.';
+    benefit = '"جهاز يعيش معاك سنين! الخامات القوية بتضمن لك متانة وقوة تحمل حتى مع الاستخدام الشاق."';
+  }
+  // 17. Motors & Compressors
+  else if (nk2.includes('موتور') || nk2.includes('محرك') || nk2.includes('كمبروسر')) {
+    advantage = 'قلب نابض قوي يعمل بهدوء وكفاءة عالية لتقليل الاهتزازات وزيادة العمر الافتراضي.';
+    benefit = '"أداء ثابت بدون دوشة! الموتور مصمم عشان يديلك أقصى قوة وفي نفس الوقت مايزعجكش بصوته."';
+  }
+  // 18. OS & Smart Features
+  else if (nk2.includes('نظام') || nk2.includes('تشغيل') || nk2.includes('اندرويد') || nk2.includes('سمارت') || nk2.includes('تطبيق') || nk2.includes('ذكاء')) {
+    advantage = 'واجهة مستخدم ذكية وسلسة توفر لك ميزات متقدمة وتحديثات مستمرة.';
+    benefit = '"سهولة وذكاء في متناول يدك! الجهاز هيفهم احتياجاتك ويوفرلك خيارات كتير تخلي استخدامك أمتع."';
+  }
+  // 19. Warranty & Support
+  else if (nk2.includes('ضمان') || nk2.includes('كفاله') || nk2.includes('صيانه')) {
+    advantage = 'تغطية رسمية وخدمة ما بعد البيع معتمدة لضمان استمرارية عمل الجهاز.';
+    benefit = '"اشتري وأنت مطمن! ضمان حقيقي يخليك تعتمد على الجهاز بدون أي قلق من مصاريف الصيانة."';
+  }
+  // 20. Ports & Interfaces
+  else if (nk2.includes('منفذ') || nk2.includes('مدخل') || nk2.includes('مخرج') || nk2.includes('usb') || nk2.includes('hdmi') || nk2.includes('type c')) {
+    advantage = 'تعدد في خيارات التوصيل لتتوافق مع كافة ملحقاتك وأجهزتك الخارجية.';
+    benefit = '"وصّل كل اللي تحتاجه! مداخل متنوعة تخليك تربط الجهاز بأي شاشة أو فلاشة أو موبايل بسهولة."';
+  }
+  // 21. Dynamic Generic Fallback (True AI-style variance with Contextual Injection)
+  else {
+    const vc = v ? v.trim() : '';
+    const isDescriptive = vc.split(/\s+/).length >= 3;
+
+    const advList = [
+      'هذه الخاصية تعتبر إضافة هندسية مدروسة ترفع من كفاءة الجهاز وتلبي احتياجاتك بامتياز.',
+      'مواصفة تقنية تم تصميمها بعناية لتعطيك الأداء الأمثل مقارنة بالأجهزة التقليدية.',
+      'تفصيلة دقيقة تضمن لك تجربة استخدام سلسة ومريحة في كل مرة تعتمد فيها على الجهاز.',
+      'إضافة عملية جداً تم دمجها في هذا الموديل لتمنحك قيمة حقيقية مقابل استثمارك.',
+      'تكنولوجيا مصممة خصيصاً لراحتك، هدفها الأساسي هو توفير وقتك ومجهودك بشكل ملحوظ.'
+    ];
+    
+    const benList = [
+      'بتديك راحة أكبر وتسهل عليك استخدام الجهاز في روتينك من غير أي تعقيد.',
+      'هتخليك تحس بسلاسة واستقرار في الأداء من أول يوم تشغيل.',
+      'استثمار ذكي هيخليك تستفيد بأقصى قدرة للجهاز بكل سهولة.',
+      'بتضمن لك كفاءة استثنائية وعمر افتراضي أطول يعيش معاك سنين.',
+      'هتلاحظ إن تعاملك مع الجهاز بقى أسهل وأمتع بشكل يومي.'
+    ];
+
+    const toggleAdv = [
+      'توفر لك هذه الميزة خيارات تحكم أوسع تناسب تفضيلاتك الشخصية.',
+      'تقنية إضافية مدمجة تمنحك مرونة أعلى في إدارة مهامك اليومية.'
+    ];
+    const toggleBen = [
+      'ميزة هتريحك كتير وتديك تحكم كامل في الجهاز حسب احتياجك وقتها.',
+      'إضافة بسيطة بس بتفرق جداً في سهولة الاستخدام وتوفير المجهود.'
+    ];
+
+    const numAdv = [
+      'مواصفة دقيقة تعتمد على (' + vc + ') لضمان أداء فائق ينافس أعلى المعايير.',
+      'هذه القدرة (' + vc + ') تقدم لك توازناً مثالياً بين القوة وسرعة الإنجاز.'
+    ];
+    const numBen = [
+      'قوة الـ ' + vc + ' بتترجم لأداء عملي هتحس بسرعته في كل مرة تستخدم الجهاز.',
+      'قدرات مبهرة بفضل الـ ' + vc + ' هتخليك تنجز شغلك أسرع وتعتمد عليه في أصعب الظروف.'
+    ];
+
+    const descAdv = [
+      'ميزة قوية في هذا الموديل: ' + vc + '.',
+      'هذه الخاصية تقدم فائدة مباشرة حيث أنها ' + vc + '.',
+      'إضافة ترفع من كفاءة الجهاز بشكل ملحوظ: ' + vc + '.'
+    ];
+    const descBen = [
+      'هتلاحظ الفرق بنفسك! ميزة ' + specKey + ' بتديك تجربة أسهل لأنها ' + vc + '.',
+      'راحة وتجربة أسهل! بفضل إن ' + specKey + ' ' + vc + '، وده هيريحك جداً.',
+      'أداء متميز يريحك.. ' + specKey + ' ' + vc + ' مما يوفر وقتك ومجهودك.'
+    ];
+
+    let hash = 0;
+    for (let i = 0; i < specKey.length; i++) {
+      hash = ((hash << 5) - hash) + specKey.charCodeAt(i);
+      hash |= 0; 
+    }
+    hash = Math.abs(hash);
+
+    if (isDescriptive && !/\d/.test(nv)) {
+      advantage = descAdv[hash % descAdv.length];
+      benefit = '"' + descBen[hash % descBen.length] + '"';
+    } else if (nv.includes('متاح') || nv === 'نعم' || nv === 'yes' || nv === 'true') {
+      advantage = toggleAdv[hash % toggleAdv.length];
+      benefit = '"' + specKey + ' ' + toggleBen[hash % toggleBen.length] + '"';
+    } else if (/\d/.test(nv)) { 
+      advantage = numAdv[hash % numAdv.length];
+      benefit = '"' + numBen[hash % numBen.length] + '"';
+    } else {
+      advantage = advList[hash % advList.length];
+      benefit = '"' + specKey + ' ' + benList[hash % benList.length] + '"';
+    }
+  }
+
+  return { f: featureTitle, a: advantage, b: benefit };
 }
 
 // Check if spec key has a direct FAB entry in the file
@@ -1441,6 +1598,7 @@ function norm(t){
   return String(t).toLowerCase()
     .replace(/[\u064B-\u065F\u0670]/g,'')
     .replace(/[أإآا]/g,'ا').replace(/[ةه]/g,'ه').replace(/[يى]/g,'ي')
+    .replace(/[™®©]/g,'')
     .replace(/\s+/g,' ').trim();
 }
 
@@ -1501,24 +1659,41 @@ const DEF_SYN=[
   ['multi air flow','تدفق هواء متعدد','multi-air-flow'],
   ['steam refresh','ستيم ريفريش','بخار تجديد','steam refresh'],
   ['fall detection','اكتشاف السقوط','سقوط تلقائي'],
+  ['ايكو', 'بابل', 'ايكوبابل', 'ايكو بابل', 'eco', 'bubble', 'ecobubble', 'eco bubble', 'eco bub']
 ];
 
 function expandQ(q){
   const nq=norm(q); const terms=new Set([nq]);
+  const nqWords = nq.split(/\s+/);
   for(const grp of DEF_SYN){
     const ng=grp.map(norm);
-    if(ng.some(w=>nq.includes(w)||w.includes(nq))) ng.forEach(w=>terms.add(w));
+    if(ng.some(w=>{
+      if(w === nq || nqWords.includes(w)) return true;
+      const wWords = w.split(/\s+/);
+      return wWords.includes(nq);
+    })) {
+      ng.forEach(w=>terms.add(w));
+    }
   }
   return [...terms];
 }
 
+const _levV0 = new Int32Array(100);
+const _levV1 = new Int32Array(100);
 function lev(a,b){
-  const m=a.length,n=b.length;
-  const d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));
-  for(let j=0;j<=n;j++)d[0][j]=j;
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
-    d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j-1],d[i-1][j],d[i][j-1]);
-  return d[m][n];
+  if(a.length===0) return b.length;
+  if(b.length===0) return a.length;
+  if(b.length >= 100) return a.length + b.length; // fallback
+  for(let i=0;i<=b.length;i++) _levV0[i]=i;
+  for(let i=0;i<a.length;i++){
+    _levV1[0]=i+1;
+    for(let j=0;j<b.length;j++){
+      const cost=(a[i]===b[j])?0:1;
+      _levV1[j+1]=Math.min(_levV1[j]+1, _levV0[j+1]+1, _levV0[j]+cost);
+    }
+    for(let j=0;j<=b.length;j++) _levV0[j]=_levV1[j];
+  }
+  return _levV0[b.length];
 }
 const KWS=['البوتجازات','الثلاجات','الفريزرات','الغسالات','التكييفات','التلفزيونات',
   'لاب توب','الموبايل','سخان مياه','افران بلت ان','غسالات الاطباق',
@@ -1571,27 +1746,31 @@ function searchFAB(q){
   const results = [];
   
   for(const item of base) {
-    const h=norm(item.c+' '+item.f+' '+item.a+' '+item.b);
+    const h=norm(item.c+' '+item.f);
     let score = Infinity;
     
-    // 1. Exact Match
+    // 1. Exact Match against Feature Name or Keywords
+    const fName = norm(item.f);
     for(const t of terms) {
-      if(h.includes(t)) { score = 0; break; }
+      if(fName === t) { score = 0; break; }
+      if(item.pk && item.pk.some(k => norm(k) === t)) { score = 0; break; }
+      if(fName.includes(t)) { score = Math.min(score, 1); }
+      if(h.includes(t)) { score = Math.min(score, 2); }
     }
     
     // 2. Fuzzy Match
     if(score > 0) {
-      const fName = norm(item.f);
       for(const t of terms) {
         if(t.length >= 3) {
            const d = lev(t, fName);
            const thresh = Math.floor(Math.min(t.length, fName.length) * 0.25);
-           if(d <= Math.max(1, thresh)) { score = Math.min(score, d); continue; }
+           if(d <= thresh) { score = Math.min(score, d); continue; }
            
            for(const w of fName.split(' ')) {
              if(w.length >= 3) {
                const d2 = lev(t, w);
-               if(d2 <= Math.max(1, Math.floor(Math.min(t.length, w.length)*0.25))) {
+               const thresh2 = Math.floor(Math.min(t.length, w.length)*0.25);
+               if(d2 <= thresh2) {
                  score = Math.min(score, d2 + 0.5);
                }
              }
@@ -1604,9 +1783,14 @@ function searchFAB(q){
   }
   
   results.sort((a,b)=>a.score - b.score);
-  // Strict matching priority
-  if(results.length && results[0].score <= 0.5) {
-    return results.filter(r=>r.score <= 0.5).map(r=>r.item);
+  
+  // Exact Match Isolation Rule (Hide distractions if an exact match exists)
+  const exacts = results.filter(r => r.score === 0);
+  if(exacts.length > 0) return exacts.map(r => r.item);
+
+  // Strict matching priority for partial matches
+  if(results.length && results[0].score <= 1) {
+    return results.filter(r=>r.score <= 1).map(r=>r.item);
   }
   return results.map(r=>r.item);
 }
@@ -1623,8 +1807,18 @@ function searchAR(q){
     let score = Infinity;
     
     // 1. Exact Match
+    const pName = norm(p.n);
+    const pSku = norm(p.s);
     for(const t of terms) {
-      if(h.includes(t)) { score = 0; break; }
+      if(pSku === t || pName === t) { score = 0; break; }
+      if(pSku.includes(t) || pName.includes(t)) { score = Math.min(score, 0.8); }
+      if(h.includes(t)) { 
+        if (t === norm(q) || t.includes(' ')) {
+          score = Math.min(score, 0.9);
+        } else {
+          score = Math.min(score, 2);
+        }
+      }
     }
     
     // 2. Fuzzy Match on product name
@@ -1634,12 +1828,13 @@ function searchAR(q){
         if(t.length >= 3) {
            const d = lev(t, pName);
            const thresh = Math.floor(Math.min(t.length, pName.length) * 0.25);
-           if(d <= Math.max(1, thresh)) { score = Math.min(score, d); continue; }
+           if(d <= thresh) { score = Math.min(score, d); continue; }
            
            for(const w of pName.split(' ')) {
              if(w.length >= 3) {
                const d2 = lev(t, w);
-               if(d2 <= Math.max(1, Math.floor(Math.min(t.length, w.length)*0.25))) {
+               const thresh2 = Math.floor(Math.min(t.length, w.length)*0.25);
+               if(d2 <= thresh2) {
                  score = Math.min(score, d2 + 0.5);
                }
              }
@@ -1652,9 +1847,14 @@ function searchAR(q){
   }
   
   results.sort((a,b)=>a.score - b.score);
+  
+  // Exact Match Isolation Rule (Hide distractions if an exact match exists)
+  const exacts = results.filter(r => r.score === 0);
+  if(exacts.length > 0) return exacts.map(r => r.p);
+
   // Strict matching priority
-  if(results.length && results[0].score <= 0.5) {
-    return results.filter(r=>r.score <= 0.5).map(r=>r.p);
+  if(results.length && results[0].score <= 1) {
+    return results.filter(r=>r.score <= 1).map(r=>r.p);
   }
   return results.map(r=>r.p);
 }
@@ -1851,12 +2051,10 @@ function renderFAB(items,q){
       h+=`<div class="fab-section"><div class="section-hdr"><div class="section-bar"></div><span class="section-title">${ico} ${esc(cat)}</span><span class="section-count">${arr.length} خاصية</span></div>`;
       arr.forEach(item=>{
         const safeBen=item.b.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ');
-        const prods = findProdsWithFeature(item, 50);
-        const prodsHtml = prods.length 
-          ? `<details class="feat-prods-accordion">
-               <summary class="feat-prods-summary">الأجهزة المقترحة التي تدعم الخاصية (${prods.length}) <span class="feat-prods-arrow">▼</span></summary>
-               <div class="fab-prods-grid">${prods.map(p=>`<div class="mini-prod" onclick="openProd('${p.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')"><div class="mini-prod-t">${esc(p.t)}</div><div class="mini-prod-n">${esc(p.n)}</div><div class="mini-prod-s">${esc(p.s)}</div></div>`).join('')}</div>
-             </details>` : '';
+        const prodsHtml = `<details class="feat-prods-accordion" ontoggle="if(this.open && !this.dataset.loaded){ this.dataset.loaded='true'; window.loadFeatProds(this, '${item.f.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}'); }">
+               <summary class="feat-prods-summary">الأجهزة المقترحة التي تدعم الخاصية <span class="feat-prods-arrow">▼</span></summary>
+               <div class="fab-prods-grid" style="text-align:center;padding:12px;color:#64748B;">جاري البحث عن الأجهزة المقترحة...</div>
+             </details>`;
         h+=`<div class="fab-card fade">
           <div class="fab-head">
             <div><div class="fab-head-lbl">Feature — الخاصية</div><div class="fab-feature">${hi(item.f,q)}</div></div>
@@ -1874,6 +2072,25 @@ function renderFAB(items,q){
   }
   return h;
 }
+
+window.loadFeatProds = function(detailsEl, featName) {
+  setTimeout(() => {
+    const item = FAB.find(x => x.f === featName);
+    const grid = detailsEl.querySelector('.fab-prods-grid');
+    if (!item) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:12px;color:#64748B;">حدث خطأ في تحميل الخاصية.</div>';
+      return;
+    }
+    const prods = findProdsWithFeature(item, 50);
+    if (prods.length) {
+      detailsEl.querySelector('summary').innerHTML = `الأجهزة المقترحة التي تدعم الخاصية (${prods.length}) <span class="feat-prods-arrow">▼</span>`;
+      grid.innerHTML = prods.map(p=>`<div class="mini-prod" onclick="openProd('${p.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')"><div class="mini-prod-t">${esc(p.t)}</div><div class="mini-prod-n">${esc(p.n)}</div><div class="mini-prod-s">${esc(p.s)}</div></div>`).join('');
+    } else {
+      detailsEl.querySelector('summary').innerHTML = `الأجهزة المقترحة التي تدعم الخاصية (0) <span class="feat-prods-arrow">▼</span>`;
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:12px;color:#64748B;">لا توجد أجهزة حالياً بهذه الخاصية.</div>`;
+    }
+  }, 10);
+};
 
 // ══════════════════════════════════════════════════════════════
 // RENDER: PRODUCTS
@@ -2093,7 +2310,7 @@ function searchFeatures(q) {
       if (!kw) continue;
       for (const t of terms) {
         if (t === kw) { score = 0; break; }
-        if (kw.includes(t) || t.includes(kw)) {
+        if (kw.includes(t) || (t.includes(kw) && kw.length >= 3)) {
           score = 0.5;
         }
       }
@@ -2107,14 +2324,14 @@ function searchFeatures(q) {
         for (const t of terms) {
           const d1 = lev(t, kw);
           const thresh1 = Math.floor(Math.min(t.length, kw.length) * 0.25);
-          if (d1 <= Math.max(1, thresh1)) {
+          if (d1 <= thresh1) {
             score = Math.min(score, d1); continue;
           }
           for (const tok of kw.split(' ')) {
             if (tok.length < 3) continue;
             const d2 = lev(t, tok);
             const thresh2 = Math.floor(Math.min(t.length, tok.length) * 0.25);
-            if (d2 <= Math.max(1, thresh2)) score = Math.min(score, d2 + 0.5);
+            if (d2 <= thresh2) score = Math.min(score, d2 + 0.5);
           }
         }
       }
@@ -2130,6 +2347,10 @@ function searchFeatures(q) {
 
   // Sort by score
   results.sort((a, b) => a.score - b.score);
+
+  // Exact Match Isolation Rule (Hide distractions if an exact match exists)
+  const exacts = results.filter(r => r.score === 0);
+  if(exacts.length > 0) return exacts.map(r => r.item);
 
   // Return all matched features to enable progressive filtering (like phone contacts)
   if (results[0].score <= 1.5) {
@@ -2213,7 +2434,7 @@ function findProdsWithFeature(fabItem, max) {
     if (seen.has(p.s)) continue;
     // Category filter: only products of the right type
     if (allowedTypes && !allowedTypes.includes(p.t)) continue;
-    const dn = norm(p.d);
+    const dn = norm((p.d||'') + ' ' + (p.n||''));
     let matched = false;
 
     for (const kw of sortedKws) {
@@ -2226,8 +2447,9 @@ function findProdsWithFeature(fabItem, max) {
         if (dn.includes(ekw)) { matchedKw = ekw; break; }
         // Fuzzy Matching fallback for embedded text without exact match
         if (ekw.length >= 4) {
+          const tresh = Math.floor(ekw.length * 0.2);
           for (const w of dn.split(/\s+/)) {
-            if (w.length >= 4 && lev(ekw, w) <= 2) { matchedKw = ekw; break; }
+            if (w.length >= 4 && lev(ekw, w) <= tresh) { matchedKw = ekw; break; }
           }
         }
         if (matchedKw) break;
@@ -2237,7 +2459,7 @@ function findProdsWithFeature(fabItem, max) {
 
       matched = true;
       // Filter out explicitly negative statements for this feature
-      for (const part of p.d.split(' | ')) {
+      for (const part of String(p.d||'').split(' | ')) {
         const pn = norm(part);
         if (!pn.includes(matchedKw)) continue;
         const colonIdx = part.indexOf(':');
@@ -2821,7 +3043,8 @@ window.addEventListener('load',()=>{
       for(const w of words){
         if(Math.abs(w.length-tok.length)>2) continue;
         const d = lev(tok,w);
-        if(d<=Math.max(1,Math.floor(tok.length*0.34))){ score += Math.max(1, tok.length-d); break; }
+        const thresh = Math.floor(tok.length*0.2);
+        if(d<=thresh){ score += Math.max(1, tok.length-d); break; }
       }
     }
     return score;
@@ -2847,7 +3070,7 @@ window.addEventListener('load',()=>{
       if(fabCat && item.c !== fabCat) continue;
       let score = 0;
       const hayF = norm(item.f);
-      const hayAll = norm(item.f + ' ' + item.a + ' ' + item.b + ' ' + (item.sk||[]).join(' ') + ' ' + (item.pk||[]).join(' '));
+      const hayAll = norm(item.f + ' ' + (item.sk||[]).join(' ') + ' ' + (item.pk||[]).join(' '));
       for(const t of terms){
         if(t.length>=3 && hayAll.includes(t)) score += t.length;
         for(const k of (item.sk||[])){
@@ -3010,7 +3233,8 @@ window.addEventListener('load',()=>{
 
   function renderProductCard(p){
     const cat = TYPE_TO_FABCAT[p.t]||p.t;
-    return `<div class="cbot-prod">
+    const safeSku = p.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="cbot-prod" onclick="openProd('${safeSku}')">
       <div class="cbot-prod-h">
         <span class="cbot-prod-t">${esc2(p.t)}</span>
         <b>${esc2(p.s)}</b>
@@ -3129,12 +3353,12 @@ window.addEventListener('load',()=>{
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = null;
       return renderFeatureHit(it, productsByFeature(it,null), '');
     }
-    return `<div class="cbot-empty">لم أجد نتائج دقيقة يا مستشار. جرّب اسم الخاصية بشكل مختلف أو حدّد فئة الجهاز.</div>`;
+    return `<div class="cbot-empty">معنديش اجابة ياريت تتواصل مع هشام الغمراوى عشان يضيف سؤالك</div>`;
   }
 
 
   // ---------- UI ----------
-  const AVATAR_URL = 'smart_salesman_avatar_1783942817825.png';
+  const AVATAR_URL = 'chic_robot_avatar.png';
   const LS_KEY = 'raya_cbot_history_v1';
 
   const style = document.createElement('style');
@@ -3188,7 +3412,8 @@ window.addEventListener('load',()=>{
   .cbot-fab-b{color:#0A2540}
   .cbot-cnt{font-size:12.5px;color:#0B6E6E;margin-bottom:6px}
   .cbot-list{display:grid;gap:6px;max-height:320px;overflow-y:auto;padding-inline-end:4px}
-  .cbot-prod{background:#F4F7FB;border:1px solid #E1E7EF;border-radius:8px;padding:10px}
+  .cbot-prod{background:#F4F7FB;border:1px solid #E1E7EF;border-radius:8px;padding:10px;cursor:pointer;transition:all .2s}
+  .cbot-prod:hover{background:#fff;border-color:#0B6E6E;transform:translateY(-1px);box-shadow:0 3px 10px rgba(11,110,110,.1)}
   .cbot-prod-h{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:2px}
   .cbot-prod-t{color:#0B6E6E;font-size:11px;font-weight:600}
   .cbot-prod-n{color:#4A5A6E;font-size:12px}
@@ -3333,7 +3558,19 @@ window.addEventListener('load',()=>{
       ? `<div class="cbot-row-av" aria-hidden="true"><img src="${AVATAR_URL}" alt=""/></div>`
       : '') + `<div class="cbot-msg ${who}">${html}</div>`;
     body.appendChild(row);
-    body.scrollTop = body.scrollHeight;
+    
+    if (who === 'b') {
+      setTimeout(() => {
+        if (row.offsetHeight > body.clientHeight * 0.6) {
+          body.scrollTo({ top: row.offsetTop - 20, behavior: 'smooth' });
+        } else {
+          body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+        }
+      }, 50);
+    } else {
+      body.scrollTop = body.scrollHeight;
+    }
+
     if(!silent) saveHistory();
     return row;
   }
@@ -3349,7 +3586,7 @@ window.addEventListener('load',()=>{
 
   // Initial hydrate: prefer persisted history
   if(!loadHistory()){
-    addMsg('أهلاً بك يا <b>مستشار</b> 👋<br>أنا مساعدك الذكي فى الفرع عملنى هشام الغمراوى عشان أساعدك. اسألني عن أي جهاز، خاصية، أو قارن بين موديلين وهجاوبك ببساطة', 'b');
+    addMsg('أنا مستشارك الذكي، صممني هشام الغمراوي لمساعدتك بسرعة وسهولة. اسألني أي سؤال، وسأجيبك فورًا.', 'b');
   }
   renderChips();
 
@@ -3369,7 +3606,6 @@ window.addEventListener('load',()=>{
         addMsg('⚠️ حدث خطأ: '+esc2(err.message), 'b');
       }
       renderChips();
-      body.scrollTop = body.scrollHeight;
     }, 220);
   }
   send.addEventListener('click', onSend);
@@ -3405,7 +3641,9 @@ window.addEventListener('load',()=>{
 })();
 
 </script>
-<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="رجوع للأعلى">↑</button>
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="رجوع للأعلى">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
 <script>
 window.addEventListener('scroll', function(){
   var stBtn = document.getElementById('scrollTopBtn');
