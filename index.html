@@ -166,7 +166,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .empty-sub{font-size:13px;line-height:1.6}
 
 /* ─── MODAL ──────────────────────────────────────────────────── */
-.overlay{position:fixed;inset:0;z-index:300;background:rgba(10,25,47,.65);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
+.overlay{position:fixed;inset:0;z-index:100000;background:rgba(10,25,47,.65);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
 .modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:700px;max-height:93vh;overflow-y:auto;box-shadow:0 -8px 60px rgba(0,0,0,.25)}
 .modal-handle{width:40px;height:4px;border-radius:2px;background:#E4EAF2;margin:12px auto 0}
 .modal-head{padding:16px 20px;border-bottom:1px solid #E4EAF2;position:sticky;top:0;background:#fff;z-index:1}
@@ -2149,7 +2149,7 @@ function renderUS(items,q){
       <div class="rec-head"><div class="rec-title">${hi(item.from,q)}</div>${prioBadge(item.priority)}</div>
       <div class="up-flow">
         <div class="up-box up-from"><div class="up-lbl">من</div><div class="up-val">${hi(item.from,q)}</div></div>
-        <div class="up-arr">→</div>
+        <div class="up-arr">←</div>
         <div class="up-box up-to"><div class="up-lbl">إلى</div><div class="up-val">${hi(item.to,q)}</div></div>
       </div>
       <div class="up-reason">${hi(item.reason,q)}</div>
@@ -2817,7 +2817,7 @@ function openProd(sku){
 
   // ── CS ─────────────────────────────────────────────────
   const nt=norm(p.t);
-  const ci2=CS.filter(function(x){return norm(x.main).includes(nt)||nt.includes(norm(x.main));}).sort(function(a,b){return pw(a.priority)-pw(b.priority);}).slice(0,6);
+  const ci2=CS.filter(function(x){return norm(x.main) === nt;}).sort(function(a,b){return pw(a.priority)-pw(b.priority);}).slice(0,6);
   var ch='';
   if(ci2.length){
     ch='<div class="modal-sec-title">🔀 Cross-Selling</div>';
@@ -2828,22 +2828,44 @@ function openProd(sku){
   document.getElementById('mCS').innerHTML=ch;
 
   // ── US ─────────────────────────────────────────────────
-  const ui2=US.filter(function(u){return norm(u.from).includes(nt)||nt.includes(norm(u.from));}).sort(function(a,b){return pw(a.priority)-pw(b.priority);}).slice(0,3);
+  function _price(x){
+    if(x.p) return Number(String(x.p).replace(/[^0-9.]/g,''))||0;
+    const m = String(x.d||'').match(/(?:سعر|Price)[^\d]*(\d[\d,\.]*)/i);
+    return m ? Number(m[1].replace(/,/g,''))||0 : 0;
+  }
+  function _cntFabs(x){
+    const dn = norm(x.d);
+    let n=0;
+    for(const it of FAB_IDX){
+      for(const k of (it.pk||[])){ if(k.length>=5 && dn.includes(k)){ n++; break; } }
+    }
+    return n;
+  }
+
+  const sameCat = AR.filter(function(x){return x.t===p.t && x.s!==p.s;});
+  const pFabs = _cntFabs(p);
+  const better = sameCat.map(function(x){return {x:x, f:_cntFabs(x), pr:_price(x)};})
+    .filter(function(o){return o.f>pFabs;})
+    .sort(function(a,b){return b.f-a.f || a.pr-b.pr;})
+    .slice(0,3).map(function(o){return o.x;});
+
   var uh='';
-  if(ui2.length){
+  if(better.length){
     uh='<div class="modal-sec-title">⬆️ Upselling</div>';
-    ui2.forEach(function(u){
-      uh+='<div class="rec-card" style="margin-bottom:8px"><div class="rec-head">'+prioBadge(u.priority)+'</div>'
-        +'<div class="up-flow"><div class="up-box up-from"><div class="up-lbl">من</div><div class="up-val">'+esc(u.from)+'</div></div>'
-        +'<div class="up-arr">→</div>'
-        +'<div class="up-box up-to"><div class="up-lbl">إلى</div><div class="up-val">'+esc(u.to)+'</div></div></div>'
-        +'<div class="up-reason">'+esc(u.reason)+'</div></div>';
+    better.forEach(function(u){
+      uh+='<div class="rec-card" style="margin-bottom:8px; cursor:pointer;" onclick="openProd(\''+u.s+'\')">'
+        +'<div class="rec-head"><div class="rec-title">'+esc(u.n||u.s)+'</div><span class="cbot-pri cbot-pri-عالية">أعلى تقنياً</span></div>'
+        +'<div class="rec-reason">يحتوي على خصائص ذكية أعلى من الموديل الحالي.</div></div>';
     });
   }
   document.getElementById('mUS').innerHTML=uh;
 
   document.getElementById('prodOverlay').style.display='flex';
   document.body.style.overflow='hidden';
+  
+  // Reset scroll so the user sees the new product specs at the top
+  const modalEl = document.querySelector('#prodOverlay .modal');
+  if(modalEl) modalEl.scrollTop = 0;
 }
 function closeProd(){document.getElementById('prodOverlay').style.display='none';document.body.style.overflow='';}
 
@@ -3109,18 +3131,19 @@ window.addEventListener('load',()=>{
   }
 
   // ---------- Comparison ----------
-  function findProduct(q){
+  function findProduct(q, cat){
     const nq = norm(q);
     if(!nq) return null;
     // exact SKU
-    let p = AR.find(x=>norm(x.s)===nq);
+    let p = AR.find(x=>norm(x.s)===nq && (!cat || x.t===cat));
     if(p) return p;
     // contains SKU
-    p = AR.find(x=>norm(x.s).includes(nq)||nq.includes(norm(x.s)));
+    p = AR.find(x=>(norm(x.s).includes(nq)||nq.includes(norm(x.s))) && (!cat || x.t===cat));
     if(p) return p;
     // by name
     let best=null, bs=0;
     for(const x of AR){
+      if(cat && x.t !== cat) continue; // STRICT CATEGORY LOCK!
       const s = fuzzyMatch(nq, norm((x.n||'')+' '+x.s));
       if(s>bs){ bs=s; best=x; }
     }
@@ -3197,20 +3220,14 @@ window.addEventListener('load',()=>{
 
   // ---------- Upsell / Cross-sell ----------
   function upsellFor(p){
-    const cat = TYPE_TO_FABCAT[p.t];
-    // 1) explicit US rules matching this type
-    const rules = US.filter(u=>{
-      const f = norm(u.from);
-      return f.includes(norm(p.t)) || f.includes(norm(p.n||'')) || (cat && f.includes(norm(cat)));
-    });
-    // 2) find a premium same-category product with more FAB features
+    // find a premium same-category product with more FAB features
     const sameCat = AR.filter(x=>x.t===p.t && x.s!==p.s);
     const pFabs = countProductFabs(p);
     const better = sameCat.map(x=>({x, f:countProductFabs(x), pr:priceOf(x)}))
       .filter(o=>o.f>pFabs)
       .sort((a,b)=>b.f-a.f || a.pr-b.pr)
       .slice(0,3).map(o=>o.x);
-    return {rules, products: better};
+    return {rules: [], products: better};
   }
 
   function countProductFabs(p){
@@ -3224,7 +3241,8 @@ window.addEventListener('load',()=>{
 
   function crossSellFor(p){
     const nt = norm(p.t);
-    return CS.filter(c=>norm(c.main)===nt || norm(c.main).includes(nt) || nt.includes(norm(c.main)))
+    // Strict exact match to avoid random wrong category matches
+    return CS.filter(c => norm(c.main) === nt)
       .sort((a,b)=>pw(a.priority)-pw(b.priority));
   }
 
@@ -3307,14 +3325,41 @@ window.addEventListener('load',()=>{
     }
 
     // 2) Exact product lookup (SKU / name) → upsell + cross-sell + FABs
-    const prod = findProduct(q);
     const cat  = detectCategory(q);
+    const prod = findProduct(q, cat);
     const feats = detectFeatures(q, cat);
+
+    // --- Validation: Detect Illogical Combinations ---
+    const allFeats = detectFeatures(q, null);
+    let detectedCats = new Set();
+    const nq = norm(q);
+    CAT_ALIASES.forEach(alias => {
+        alias.kw.forEach(k => {
+            if (nq.includes(norm(k))) detectedCats.add(alias.t);
+        });
+    });
+
+    // 1) Mixed Categories (e.g., "بوتاجاز وغسالة")
+    if (detectedCats.size >= 2) {
+        return `<div class="cbot-empty">عذراً طلبك غير متاح. لا يمكن خلط أجهزة من فئات مختلفة في نفس الطلب.</div>`;
+    }
+
+    // 2) Category vs Feature Mismatch (e.g., "تلاجة توب لودينج" أو "غسالة بـ 3 أبواب")
+    if (cat && allFeats.length && allFeats[0].score >= 5) {
+       const userCat = TYPE_TO_FABCAT[cat]; 
+       
+       // Check if ANY feature with a score >= 5 belongs to the user's requested category
+       const hasMatch = allFeats.some(f => f.score >= 5 && (!f.item.c || f.item.c === userCat));
+       
+       if (!hasMatch && userCat) {
+           return `<div class="cbot-empty">عذراً طلبك غير متاح. لا توجد أجهزة تجمع بين مواصفات <b>${esc2(cat)}</b> وميزة <b>${esc2(allFeats[0].item.f)}</b>.</div>`;
+       }
+    }
+    // -------------------------------------------------
 
     // STRICT FOCUS: When a feature is clearly matched, explain ONLY that feature
     // and list ALL matching devices — no fluff, no unrelated features.
-    // Increased threshold to 8 to demand strict relevance (avoid false positives).
-    if(feats.length && feats[0].score >= 8){
+    if(feats.length && feats[0].score >= 6){
       const it = feats[0].item;
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = cat;
       const prods = productsByFeature(it, cat);
@@ -3347,13 +3392,12 @@ window.addEventListener('load',()=>{
     }
 
     // Fallback: single strongest FAB match across everything
-    const cand = detectFeatures(q, null);
-    if(cand.length){
-      const it = cand[0].item;
+    if(allFeats.length){
+      const it = allFeats[0].item;
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = null;
       return renderFeatureHit(it, productsByFeature(it,null), '');
     }
-    return `<div class="cbot-empty">معنديش اجابة ياريت تتواصل مع هشام الغمراوى عشان يضيف سؤالك</div>`;
+    return `<div class="cbot-empty">تواصل مع هشام الغمراوى لمناقشة طلبك.</div>`;
   }
 
 
