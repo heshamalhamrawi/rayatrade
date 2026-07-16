@@ -370,8 +370,68 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media (max-width: 480px) {
   .sku-specs-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── SMART COMPARE ─────────────────────────────────────────── */
+.compare-section { background: #fff; border: 1px solid #E4EAF2; border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.compare-hdr { font-size: 16px; font-weight: 700; color: #0A2540; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.comp-sel { padding: 10px; border-radius: 8px; border: 1px solid #E4EAF2; font-size: 13px; font-family: inherit; width: 100%; color: #0D1B2A; background: #F8FAFC; }
+.comp-sel:focus { outline: none; border-color: #0B6E6E; background: #fff; }
+.comp-btn { background: #0B6E6E; color: #fff; border: none; padding: 12px 32px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; display: block; margin: 0 auto; }
+.comp-btn:hover { background: #085A5A; }
+.comp-table-wrap { width: 100%; overflow-x: auto; margin-top: 20px; border-radius: 8px; border: 1px solid #E4EAF2; }
+.comp-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13px; }
+.comp-table th, .comp-table td { padding: 12px 14px; border-bottom: 1px solid #E4EAF2; line-height: 1.5; }
+.comp-table th { background: #F8FAFC; color: #0A2540; font-weight: 700; position: sticky; top: 0; min-width: 200px; }
+.comp-table td:first-child { font-weight: 600; color: #64748B; background: #F8FAFC; min-width: 140px; }
+.comp-table tr.diff-row td { background: #FEF9EE; }
+
+/* ─── DARK MODE ─────────────────────────────────────────── */
+.dark-toggle {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; flex-shrink: 0; cursor: pointer; transition: all .2s;
+}
+.dark-toggle:hover { background: rgba(255,255,255,.2); }
+
+body.dark-mode { background: #010409; color: #c9d1d9; }
+.dark-mode .main { background: transparent; }
+.dark-mode .view-tabs, .dark-mode .empty-sub { background: transparent; border-color: #30363d; }
+.dark-mode .result-txt, .dark-mode .result-txt strong { color: #8b949e; }
+.dark-mode .vtab.on { background: #161b22; color: #c9d1d9; }
+.dark-mode .vtab { color: #8b949e; }
+.dark-mode .rec-card, .dark-mode .fab-card, .dark-mode .sku-card, .dark-mode .cmp-card, .dark-mode .mini-prod, .dark-mode .feat-card, .dark-mode .modal {
+  background: #0d1117; border-color: #30363d; color: #c9d1d9;
+}
+.dark-mode .modal-close { background: #161b22; color: #c9d1d9; border: 1px solid #30363d; }
+.dark-mode .feat-a, .dark-mode .feat-b, .dark-mode .rec-reason, .dark-mode .modal-desc, .dark-mode .mini-reason { color: #8b949e; }
+.dark-mode .rec-title, .dark-mode .fab-f, .dark-mode .modal-title, .dark-mode .mini-title, .dark-mode .modal-sec-title { color: #c9d1d9; }
+.dark-mode .hdr, .dark-mode .nav-l1, .dark-mode .nav-l2 { border-bottom: 1px solid #30363d; box-shadow: none; }
+.dark-mode .dym { background: #161b22; border-color: #30363d; }
+
+.dark-mode .compare-section { background: #0d1117; border-color: #30363d; box-shadow: none; }
+.dark-mode .compare-hdr { color: #c9d1d9; }
+.dark-mode .comp-sel { background: #161b22; border-color: #30363d; color: #c9d1d9; }
+.dark-mode .comp-table-wrap { border-color: #30363d; }
+.dark-mode .comp-table th, .dark-mode .comp-table td { border-bottom-color: #30363d; }
+.dark-mode .comp-table th { background: #161b22; color: #c9d1d9; }
+.dark-mode .comp-table td:first-child { background: #161b22; color: #8b949e; }
+.dark-mode .comp-table tr.diff-row td { background: rgba(184,137,26,0.15); }
 </style>
 <script src="data.js"></script>
+<script>
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('raya_dark_mode', isDark);
+  document.querySelector('.dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  if(localStorage.getItem('raya_dark_mode') === 'true') {
+    document.body.classList.add('dark-mode');
+    document.querySelector('.dark-toggle').textContent = '☀️';
+  }
+});
+</script>
 </head>
 <body>
 
@@ -391,6 +451,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <button id="clrBtn" class="srch-clr" onclick="clearSearch()">✕</button>
     </div>
     <div class="hdr-cnt"><span id="cntNum">169</span> عنصر</div>
+    <button class="dark-toggle" onclick="toggleDarkMode()" title="تبديل الوضع الداكن">🌙</button>
   </div>
 
   <!-- L1 NAV -->
@@ -431,6 +492,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   </div>
 
   <div id="vFAB"></div>
+  <div id="vCompare" style="display:none"></div>
   <div id="vProducts" style="display:none"></div>
   <div id="vCross" style="display:none">
     <div class="view-srch-wrap">
@@ -2163,6 +2225,155 @@ function emptyState(icon,title,sub){
 }
 
 // ══════════════════════════════════════════════════════════════
+// SMART COMPARE (ALL PRODUCTS)
+// ══════════════════════════════════════════════════════════════
+window.activeCompareItems = [];
+const KNOWN_BRANDS = ['توشيبا', 'شارب', 'تورنيدو', 'بيكو', 'ال جي', 'سامسونج', 'بوش', 'فريش', 'كريازي', 'يونيون اير', 'يونيون تك', 'وايت ويل', 'هاير', 'زانوسي', 'وايت بوينت', 'الكتروستار', 'هوفر', 'ميديا', 'باساب', 'سوني', 'فيليبس', 'اريستون', 'بلاك اند ديكر', 'كينوود', 'براون', 'ميلا', 'إل جي', 'تيفال', 'جراندي', 'يونيفرسال', 'اوشن', 'انديست', 'باناسونيك'];
+
+function extractBrand(name) {
+  for (let b of KNOWN_BRANDS) {
+    if (name.includes(b)) return b;
+  }
+  if (name.includes('LG') || name.includes('lg') || name.includes('ال جى')) return 'ال جي';
+  return 'أخرى';
+}
+
+function renderSmartCompareUI(items) {
+  window.activeCompareItems = items;
+  const brands = [...new Set(items.map(f => extractBrand(f.n)).filter(b => b !== 'أخرى'))].sort();
+  if (items.some(f => extractBrand(f.n) === 'أخرى')) brands.push('أخرى');
+  
+  let brandOpts = '<option value="">اختر الماركة</option>' + brands.map(b => `<option value="${b}">${b}</option>`).join('');
+  
+  return `
+    <div class="compare-section">
+      <div class="compare-hdr">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B6E6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        المقارنة الذكية (لجميع المنتجات)
+      </div>
+      <div class="compare-grid">
+        <select id="compB1" class="comp-sel" onchange="populateCompareModels(1)">${brandOpts}</select>
+        <select id="compM1" class="comp-sel"><option value="">الموديل 1</option></select>
+        <select id="compB2" class="comp-sel" onchange="populateCompareModels(2)">${brandOpts}</select>
+        <select id="compM2" class="comp-sel"><option value="">الموديل 2</option></select>
+      </div>
+      <button class="comp-btn" onclick="runSmartCompare()">قارن الآن</button>
+      <div id="compTableWrap" class="comp-table-wrap" style="display:none"></div>
+    </div>
+  `;
+}
+
+window.populateCompareModels = function(idx) {
+  const brand = document.getElementById('compB' + idx).value;
+  const modSel = document.getElementById('compM' + idx);
+  if (!brand) { modSel.innerHTML = '<option value="">الموديل ' + idx + '</option>'; return; }
+  
+  const items = window.activeCompareItems.filter(x => extractBrand(x.n) === brand);
+  modSel.innerHTML = '<option value="">اختر الموديل</option>' + items.map(f => `<option value="${f.s}">${f.n.split(' - ')[0]}</option>`).join('');
+};
+
+window.runSmartCompare = function() {
+  const m1Id = document.getElementById('compM1').value;
+  const m2Id = document.getElementById('compM2').value;
+  const wrap = document.getElementById('compTableWrap');
+  
+  if (!m1Id || !m2Id) {
+    alert('الرجاء اختيار موديلين للمقارنة');
+    return;
+  }
+  
+  const p1 = AR.find(x => x.s === m1Id);
+  const p2 = AR.find(x => x.s === m2Id);
+  
+  const parseSpecs = (p) => {
+    let specs = {};
+    specs['البراند'] = extractBrand(p.n);
+    
+    // Extract hidden features from title
+    let n = p.n;
+    if (n.match(/(\d+)\s*باب/)) specs['التصميم / الأبواب'] = n.match(/(\d+)\s*باب/)[0];
+    if (n.includes('انفرتر')) specs['تقنية الانفرتر'] = 'متوفر (نعم)';
+    if (n.includes('ديجيتال')) specs['شاشة ديجيتال'] = 'متوفر (نعم)';
+    if (n.includes('نوفروست')) specs['نظام التبريد'] = 'نوفروست (بدون ثلج)';
+    if (n.includes('ديفروست')) specs['نظام التبريد'] = 'ديفروست (عادي)';
+    if (n.toLowerCase().includes('smart') || n.includes('سمارت')) specs['تكنولوجيا ذكية'] = 'متوفر (سمارت)';
+    if (n.toLowerCase().includes('4k')) specs['جودة الصورة'] = '4K UHD';
+    
+    let capMatch = n.match(/(\d+(?:\.\d+)?)\s*(لتر|قدم|كيلو|بوصة)/);
+    
+    p.d.split(' | ').forEach(s => {
+      let key = s.trim();
+      let val = 'متاح';
+      
+      if (s.includes(':')) {
+        let parts = s.split(':');
+        key = parts[0].trim();
+        val = parts.slice(1).join(':').trim();
+      }
+      
+      let fullStr = s;
+      
+      if (fullStr.includes('سعة') || fullStr.includes('لتر') || fullStr.includes('كيلو') || fullStr.includes('قدم') || fullStr.includes('بوصة')) {
+         let type = 'السعة';
+         if(fullStr.includes('كيلو') || fullStr.includes('غسيل')) type = 'السعة (وزن)';
+         else if(fullStr.includes('بوصة') || fullStr.includes('شاشة')) type = 'حجم الشاشة';
+         
+         key = type; 
+         // Regex to capture the first decimal/integer number correctly
+         let match = fullStr.match(/(\d+(?:\.\d+)?)/);
+         if(match) {
+            let unit = fullStr.includes('لتر') ? 'لتر' : (fullStr.includes('كيلو') ? 'كجم' : (fullStr.includes('قدم') ? 'قدم' : (fullStr.includes('بوصة') ? 'بوصة' : '')));
+            val = match[1] + (unit ? ' ' + unit : '');
+         }
+      }
+      else if (fullStr.includes('نوفروست')) { key = 'نظام التبريد'; val = 'نوفروست (بدون ثلج)'; }
+      else if (fullStr.includes('ديفروست')) { key = 'نظام التبريد'; val = 'ديفروست (عادي)'; }
+      else if (fullStr.includes('ديجيتال')) { key = 'شاشة ديجيتال'; val = 'متوفر (نعم)'; }
+      else if (fullStr.includes('انفرتر')) { key = 'تقنية الانفرتر'; val = 'متوفر (مضاد للاستهلاك)'; }
+      else if (fullStr.includes('مبرد') || fullStr.includes('حنفية')) { key = 'مبرد مياه'; val = 'متوفر (نعم)'; }
+      else if (fullStr.includes('لون')) { key = 'اللون'; }
+      else if (key.includes('البراند') || key.includes('ماركة') || key.includes('العلامة التجارية')) { key = 'البراند'; val = extractBrand(p.n); }
+      
+      if (key && key.length < 30) specs[key] = val; 
+    });
+    
+    // Fallback if missing
+    if(!specs['السعة'] && !specs['السعة (وزن)'] && capMatch) {
+       specs['السعة / الحجم'] = capMatch[0];
+    }
+    
+    return specs;
+  };
+  
+  const s1 = parseSpecs(p1);
+  const s2 = parseSpecs(p2);
+  
+  const allKeys = [...new Set([...Object.keys(s1), ...Object.keys(s2)])];
+  
+  let table = '<table class="comp-table"><thead><tr><th>المواصفات</th><th>' + p1.n + '</th><th>' + p2.n + '</th></tr></thead><tbody>';
+  
+  // Custom sorting to keep Brand and Capacity at top
+  const sortedKeys = allKeys.sort((a,b) => {
+    if(a === 'البراند') return -1;
+    if(b === 'البراند') return 1;
+    if(a.includes('سعة') || a.includes('حجم')) return -1;
+    if(b.includes('سعة') || b.includes('حجم')) return 1;
+    return 0;
+  });
+  
+  sortedKeys.forEach(k => {
+    const v1 = s1[k] || 'غير متاح';
+    const v2 = s2[k] || 'غير متاح';
+    const diffClass = (v1 !== v2) ? 'diff-row' : '';
+    table += `<tr class="${diffClass}"><td>${k}</td><td>${v1}</td><td>${v2}</td></tr>`;
+  });
+  
+  table += '</tbody></table>';
+  wrap.innerHTML = table;
+  wrap.style.display = 'block';
+};
+
+// ══════════════════════════════════════════════════════════════
 // MAIN RENDER
 // ══════════════════════════════════════════════════════════════
 function render(){
@@ -2202,17 +2413,53 @@ function render(){
     setCount(items.length,'خاصية FAB');
   } else if(VIEW==='products'){
     filtProds=searchAR(q);
+    
+    // Inject Smart Compare UI dynamically based on active L2 view
+    const compEl = document.getElementById('vCompare');
+    if(L2 && L2 !== 'all' && !q) {
+      if(compEl.innerHTML === '' || window.activeCompareItems !== filtProds) {
+         compEl.innerHTML = renderSmartCompareUI(filtProds);
+      }
+      compEl.style.display = 'block';
+    } else {
+      compEl.style.display = 'none';
+    }
+
     document.getElementById('vProducts').innerHTML=renderProducts(filtProds,q,PAGE);
     setCount(filtProds.length,'منتج');
   } else if(VIEW==='cross'){
     const csQ=(document.getElementById('csInp')||{value:''}).value.trim();
     const useQ=csQ||q;
+
+    // Filter by active category
+    const activeL2s = L2 ? [L2] : (L1 && L1 !== 'all' && L2_DEFS[L1] ? L2_DEFS[L1].map(d=>d.id) : []);
+    let validKws = [];
+    activeL2s.forEach(l2 => {
+      let kws = [];
+      if(l2 === 'fridges') kws = ['ثلاج'];
+      else if(l2 === 'washers') kws = ['غسال'];
+      else if(l2 === 'cookers') kws = ['بوتجاز', 'بوتاجاز'];
+      else if(l2 === 'dw') kws = ['اطباق'];
+      else if(l2 === 'freezers') kws = ['فريزر'];
+      else if(l2 === 'ac') kws = ['تكييف', 'مكيف', 'سبليت'];
+      else if(l2 === 'ovens') kws = ['فرن'];
+      else if(l2 === 'hobs') kws = ['مسطح', 'هوب'];
+      else if(l2 === 'hoods') kws = ['شفاط', 'هود'];
+      else if(l2 === 'wh') kws = ['سخان'];
+      else if(l2 === 'tv') kws = ['شاش', 'تلفزيون'];
+      else if(l2 === 'mobiles') kws = ['موبايل', 'هاتف'];
+      else if(l2 === 'laptops') kws = ['لاب'];
+      else kws = [norm(l2)];
+      validKws = validKws.concat(kws.map(norm));
+    });
+
     const items=CS.filter(x=>{
       const h=norm(x.main+' '+x.rec+' '+x.reason);
       const mq=!useQ||expandQ(useQ).some(t=>h.includes(t));
-      const ml=L1==='all'||norm(x.main+' '+x.rec).includes(norm(L1));
+      const ml=(validKws.length===0)||validKws.some(kw=>h.includes(kw));
       return mq&&ml;
     }).sort((a,b)=>pw(a.priority)-pw(b.priority));
+
     const ci=document.getElementById('vCrossInner');
     if(ci) ci.innerHTML=renderCS(items,useQ);
     const cc=document.getElementById('csCnt');
@@ -2221,11 +2468,36 @@ function render(){
   } else {
     const upQ=(document.getElementById('upInp')||{value:''}).value.trim();
     const useUpQ=upQ||q;
+
+    // Filter by active category
+    const activeL2s = L2 ? [L2] : (L1 && L1 !== 'all' && L2_DEFS[L1] ? L2_DEFS[L1].map(d=>d.id) : []);
+    let validKws = [];
+    activeL2s.forEach(l2 => {
+      let kws = [];
+      if(l2 === 'fridges') kws = ['ثلاج'];
+      else if(l2 === 'washers') kws = ['غسال'];
+      else if(l2 === 'cookers') kws = ['بوتجاز', 'بوتاجاز'];
+      else if(l2 === 'dw') kws = ['اطباق'];
+      else if(l2 === 'freezers') kws = ['فريزر'];
+      else if(l2 === 'ac') kws = ['تكييف', 'مكيف', 'سبليت'];
+      else if(l2 === 'ovens') kws = ['فرن'];
+      else if(l2 === 'hobs') kws = ['مسطح', 'هوب'];
+      else if(l2 === 'hoods') kws = ['شفاط', 'هود'];
+      else if(l2 === 'wh') kws = ['سخان'];
+      else if(l2 === 'tv') kws = ['شاش', 'تلفزيون'];
+      else if(l2 === 'mobiles') kws = ['موبايل', 'هاتف'];
+      else if(l2 === 'laptops') kws = ['لاب'];
+      else kws = [norm(l2)];
+      validKws = validKws.concat(kws.map(norm));
+    });
+
     const items=US.filter(x=>{
       const h=norm(x.from+' '+x.to+' '+x.reason);
       const mq=!useUpQ||expandQ(useUpQ).some(t=>h.includes(t));
-      return mq;
+      const ml=(validKws.length===0)||validKws.some(kw=>h.includes(kw));
+      return mq&&ml;
     }).sort((a,b)=>pw(a.priority)-pw(b.priority));
+
     const upEl=document.getElementById('vUpInner');
     if(upEl) upEl.innerHTML=renderUS(items,useUpQ);
     const upCntEl=document.getElementById('upCnt');
@@ -3535,34 +3807,36 @@ window.addEventListener('load',()=>{
   const send = panel.querySelector('#cbotSend');
   const chipsRow = panel.querySelector('#cbotChips');
 
-  const DEFAULT_CHIPS = [
-    'أفضل غسالة فيها انفرتر',
-    'ثلاجة نو فروست',
-    'تكييف كفاءة طاقة عالية',
-    'قارن بين موديلين',
-    'ايكوبابل',
-    'شاشة 4K',
-  ];
+  const ContextSuggestions = {
+    "fridges": ["ما هو الفرق بين التبريد المزدوج والبلازما؟", "أفضل ثلاجة إنفرتر في استهلاك الكهرباء؟", "قارن بين موديلين ثلاجات"],
+    "heaters": ["ما هي مميزات نظام الأمان الخماسي؟", "أيهما أفضل: السخان الغاز أم الكهرباء؟"],
+    "cookers": ["اشرح لي خاصية الأمان الكامل", "ما فائدة مروحة توزيع الحرارة؟"],
+    "default": ["كيف يمكنني مساعدة العميل اليوم؟", "كيف أستخدم ميزة المقارنة؟", "أفضل الموديلات المتاحة"] 
+  };
 
-  function contextChips(){
-    const chips = [];
+  function updateChatContext(){
+    let chips = [];
+    
+    // 1. Internal Chat Context
     if(_ctx.feat && _ctx.cat){
       const fname = _ctx.feat.f.replace(/\s*\(.+?\)\s*/g,'').trim();
-      const catShort = _ctx.cat;
-      chips.push(`ما هي أجهزة ${catShort} التي بها ${fname}؟`);
-      chips.push(`قارن بين موديلين من ${catShort}`);
-      chips.push(`ما الفائدة للعميل من ${fname}؟`);
-      chips.push(`مميزات ${catShort} الأخرى`);
+      chips.push(`ما هي أجهزة ${_ctx.cat} التي بها ${fname}؟`);
+      chips.push(`قارن بين موديلين من ${_ctx.cat}`);
     } else if(_ctx.catType){
       chips.push(`أفضل موديلات ${_ctx.catType}`);
       chips.push(`مميزات ${_ctx.catType}`);
-      chips.push(`قارن بين موديلين من ${_ctx.catType}`);
     }
-    return chips.length ? chips : DEFAULT_CHIPS;
+    
+    // 2. Global UI Context (Active L2 Category)
+    if (window.L2 && ContextSuggestions[window.L2]) {
+      chips = [...chips, ...ContextSuggestions[window.L2]];
+    }
+    
+    return chips.length ? [...new Set(chips)] : ContextSuggestions['default'];
   }
 
   function renderChips(){
-    const chips = contextChips();
+    const chips = updateChatContext();
     chipsRow.innerHTML = chips.map(c=>`<button class="cbot-chip" type="button">${esc2(c)}</button>`).join('');
     chipsRow.querySelectorAll('.cbot-chip').forEach(c=>{
       c.addEventListener('click',()=>{ inp.value=c.textContent; onSend(); });
@@ -3659,7 +3933,10 @@ window.addEventListener('load',()=>{
     const open = !panel.classList.contains('open');
     panel.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', String(open));
-    if(open) setTimeout(()=>inp.focus(), 100);
+    if(open) {
+      renderChips();
+      setTimeout(()=>inp.focus(), 100);
+    }
   });
   panel.querySelector('.cbot-x').addEventListener('click', ()=>{
     panel.classList.remove('open');
