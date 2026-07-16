@@ -1669,7 +1669,7 @@ const DEF_SYN=[
   ['الشاشات','التلفزيونات','المسرح المنزلى','تلفزيون','شاشة','tv','television'],
   ['الكومبيوتر','لاب توب','كمبيوتر','لابتوب','laptop','pc'],
   ['البوتجازات','البوتاجازات','بوتجاز','بوتاجاز','كوكر','cooker'],
-  ['الثلاجات','ثلاجة','فريج','ثلاجه','refrigerator','fridge'],
+  ['الثلاجات','ثلاجة','فريج','ثلاجه','refrigerator','fridge','تلاجة','تلاجه','تلاجات'],
   ['الغسالات','غسالة','غساله','washing machine'],
   ['التكييفات','تكييف','مكيف','تكيف','ac','air conditioner'],
   ['الموبايل','موبايل','جوال','تليفون','هاتف','phone','smartphone','ايفون','iphone','اندرويد','android'],
@@ -3294,7 +3294,7 @@ window.addEventListener('load',()=>{
   const CAT_ALIASES = [
     {t:'الغسالات', kw:['غساله','غسالة','غسالات','washing','washer']},
     {t:'مجفف الملابس', kw:['مجفف','dryer']},
-    {t:'الثلاجات', kw:['ثلاجه','ثلاجة','ثلاجات','فريج','fridge','refrigerator']},
+    {t:'الثلاجات', kw:['ثلاجه','ثلاجة','ثلاجات','فريج','fridge','refrigerator','تلاجة','تلاجه','تلاجات']},
     {t:'الفريزرات', kw:['فريزر','freezer','ديب فريزر']},
     {t:'تكيفات', kw:['تكييف','تكيف','مكيف','مكيفات','ac','air conditioner','سبليت']},
     {t:'البوتجازات', kw:['بوتاجاز','بوتجاز','بوتاجازات','كوكر','cooker']},
@@ -3329,12 +3329,16 @@ window.addEventListener('load',()=>{
     if(hay.includes(needle)) return needle.length;
     // token-wise fuzzy
     let score = 0;
-    const nt = needle.split(/\s+/).filter(x=>x.length>=3);
+    const nt = needle.split(/\s+/).filter(x=>x.length>=2);
+    const hayWords = hay.split(/\s+/);
     for(const tok of nt){
+      if(tok.length === 2) {
+          if(hayWords.includes(tok)) score += tok.length;
+          continue;
+      }
       if(hay.includes(tok)){ score += tok.length; continue; }
       // levenshtein tolerance for short words
-      const words = hay.split(/\s+/);
-      for(const w of words){
+      for(const w of hayWords){
         if(Math.abs(w.length-tok.length)>2) continue;
         const d = lev(tok,w);
         const thresh = Math.floor(tok.length*0.2);
@@ -3352,8 +3356,8 @@ window.addEventListener('load',()=>{
     
     // Remove stop words to prevent false matching
     let nq = norm(q);
-    const stopWords = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق'];
-    stopWords.forEach(w => { nq = nq.replace(new RegExp(`\\b${w}\\b`,'g'), ' '); });
+    const stopWords = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن'];
+    stopWords.forEach(w => { nq = nq.replace(new RegExp(`\\b${norm(w)}\\b`,'g'), ' '); });
     nq = nq.replace(/\s+/g,' ').trim();
     if(!nq) return [];
 
@@ -3366,12 +3370,18 @@ window.addEventListener('load',()=>{
       const hayF = norm(item.f);
       const hayAll = norm(item.f + ' ' + (item.sk||[]).join(' ') + ' ' + (item.pk||[]).join(' '));
       for(const t of terms){
-        if(t.length>=3 && hayAll.includes(t)) score += t.length;
+        if(t.length>=2) {
+            if(t.length === 2) {
+                if(hayAll.split(/\s+/).includes(t)) score += t.length;
+            } else {
+                if(hayAll.includes(t)) score += t.length;
+            }
+        }
         for(const k of (item.sk||[])){
           const nk = norm(k);
           if(t===nk) score += nk.length * 3; // EXACT match strong boost
-          else if(t.includes(nk) && nk.length>=3) score += nk.length*1.5;
-          else if(nk.includes(t) && t.length>=3) score += t.length*1.5;
+          else if(t.includes(nk) && nk.length>=2) score += nk.length*1.5;
+          else if(nk.includes(t) && t.length>=2) score += t.length*1.5;
         }
         score += fuzzyMatch(t, hayF) * 0.4; // Reduced fuzzy weight
       }
@@ -3427,7 +3437,24 @@ window.addEventListener('load',()=>{
     const m = q.match(/(?:قارن(?:\s*بين)?|compare)\s+(.+?)\s+(?:و|and|vs|مقابل)\s+(.+)/i)
            || q.match(/(.+?)\s+(?:vs|مقابل|و)\s+(.+)/i);
     if(!m) return null;
-    const a = findProduct(m[1].trim()), b = findProduct(m[2].trim());
+    let t1 = m[1].trim();
+    let t2 = m[2].trim();
+    let cat1 = detectCategory(t1);
+    let cat2 = detectCategory(t2);
+    
+    function cleanTerm(t) {
+        let cl = norm(t);
+        const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن'];
+        stopWordsEx.forEach(w => { cl = cl.replace(new RegExp(`\\b${norm(w)}\\b`,'g'), ' '); });
+        CAT_ALIASES.forEach(alias => {
+            alias.kw.forEach(k => { cl = cl.replace(new RegExp(`\\b${norm(k)}\\b`,'g'), ' '); });
+        });
+        return cl.replace(/\s+/g, ' ').trim();
+    }
+    const c1 = cleanTerm(t1);
+    const c2 = cleanTerm(t2);
+
+    const a = findProduct(c1 || t1, cat1), b = findProduct(c2 || t2, cat2);
     if(a && b && a.s!==b.s) return [a,b];
     return null;
   }
@@ -3598,13 +3625,31 @@ window.addEventListener('load',()=>{
 
     // 2) Exact product lookup (SKU / name) → upsell + cross-sell + FABs
     const cat  = detectCategory(q);
-    const prod = findProduct(q, cat);
-    const feats = detectFeatures(q, cat);
+    
+    // Create query without the category name or stop words to prevent false matches
+    const nq = norm(q);
+    let nq_clean = nq;
+    if (cat) {
+        const catAlias = CAT_ALIASES.find(a => a.t === cat);
+        if (catAlias) {
+            const sortedKw = catAlias.kw.map(norm).sort((a,b)=>b.length - a.length);
+            for(const k of sortedKw){
+               nq_clean = nq_clean.replace(new RegExp(`\\b${k}\\b`, 'g'), ' ');
+            }
+        }
+    }
+    const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن'];
+    stopWordsEx.forEach(w => { nq_clean = nq_clean.replace(new RegExp(`\\b${norm(w)}\\b`,'g'), ' '); });
+    nq_clean = nq_clean.replace(/\s+/g, ' ').trim();
+
+    const searchQ = nq_clean.length > 0 ? nq_clean : q;
+
+    const prod = findProduct(searchQ, cat);
+    const feats = detectFeatures(searchQ, cat);
 
     // --- Validation: Detect Illogical Combinations ---
-    const allFeats = detectFeatures(q, null);
+    const allFeats = detectFeatures(searchQ, null);
     let detectedCats = new Set();
-    const nq = norm(q);
     CAT_ALIASES.forEach(alias => {
         alias.kw.forEach(k => {
             if (nq.includes(norm(k))) detectedCats.add(alias.t);
@@ -3617,14 +3662,20 @@ window.addEventListener('load',()=>{
     }
 
     // 2) Category vs Feature Mismatch (e.g., "تلاجة توب لودينج" أو "غسالة بـ 3 أبواب")
-    if (cat && allFeats.length && allFeats[0].score >= 5) {
+    if (cat && allFeats.length && allFeats[0].score >= 8) {
        const userCat = TYPE_TO_FABCAT[cat]; 
+       const bestGlobal = allFeats[0];
+       const bestCatScore = feats.length ? feats[0].score : 0;
        
-       // Check if ANY feature with a score >= 5 belongs to the user's requested category
-       const hasMatch = allFeats.some(f => f.score >= 5 && (!f.item.c || f.item.c === userCat));
-       
-       if (!hasMatch && userCat) {
-           return `<div class="cbot-empty">عذراً طلبك غير متاح. لا توجد أجهزة تجمع بين مواصفات <b>${esc2(cat)}</b> وميزة <b>${esc2(allFeats[0].item.f)}</b>.</div>`;
+       // Detect mismatch if the best global feature belongs to another category and significantly outscores any feature in the requested category.
+       if (userCat && bestGlobal.item.c && bestGlobal.item.c !== userCat && bestGlobal.score >= 12 && bestCatScore < bestGlobal.score * 0.6) {
+           // Ensure we don't block if the products actually contain the requested text (e.g. Inverter in Fridge)
+           const queryTerms = expandQ(nq);
+           const possibleProds = productsByCategory(cat).filter(p => queryTerms.every(t => norm(p.n + ' ' + p.d).includes(t)));
+           
+           if (possibleProds.length === 0) {
+               return `<div class="cbot-empty">عذراً طلبك غير متاح. لا توجد أجهزة تجمع بين مواصفات <b>${esc2(cat)}</b> وميزة <b>${esc2(bestGlobal.item.f)}</b>.</div>`;
+           }
        }
     }
     // -------------------------------------------------
@@ -3655,6 +3706,9 @@ window.addEventListener('load',()=>{
     }
 
     if(cat){
+      if(nq_clean.length > 0) {
+          return `<div class="cbot-empty">عذراً طلبك غير متاح. لم نتمكن من العثور على أجهزة تطابق <b>${esc2(q)}</b>.</div>`;
+      }
       _ctx.catType = cat; _ctx.cat = TYPE_TO_FABCAT[cat]||null; _ctx.feat = null;
       const prods = productsByCategory(cat);
       return `<div class="cbot-blk">
