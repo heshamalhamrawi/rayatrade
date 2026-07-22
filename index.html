@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ─── MAIN LAYOUT ─── */
   .app-layout {
     display: grid;
-    grid-template-columns: 1fr 420px;
+    grid-template-columns: 1fr;
     gap: 24px; background: #e2e8f0;
     flex: 1;
     min-height: calc(100vh - 200px);
@@ -633,7 +633,9 @@ document.addEventListener('DOMContentLoaded', () => {
     overflow: visible;
     border-left: 1px solid var(--border-color);
     background: var(--bg-white);
-   border-radius: 16px; margin: 20px 0 20px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); height: auto; }
+    border-radius: 16px; margin: 20px 0 20px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); height: auto;
+    min-width: 0;
+  }
 
   .panel-header {
     padding: 18px 24px 14px;
@@ -724,6 +726,9 @@ document.addEventListener('DOMContentLoaded', () => {
     overflow-x: auto;
     flex-shrink: 0;
     scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .toc-bar::-webkit-scrollbar { height: 3px; }
   .toc-bar::-webkit-scrollbar-track { background: transparent; }
@@ -958,12 +963,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   .guest-steps {
     display: flex;
-    gap: 24px; background: #e2e8f0;
+    background: #e2e8f0;
     margin: 12px 0;
-    overflow: hidden;
+    overflow-x: auto;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .guest-steps::-webkit-scrollbar { display: none; }
   .guest-step {
     flex: 1;
     padding: 10px 6px;
@@ -976,6 +984,9 @@ document.addEventListener('DOMContentLoaded', () => {
     cursor: default;
   }
   .guest-step:last-child { border-left: none; }
+  .sub-step { flex: 1; padding: 10px 6px; text-align: center; font-size: 11.5px; font-weight: 700; background: var(--bg-light); color: var(--text-secondary); border-left: 1px solid var(--border-color); cursor: pointer; }
+  .sub-step:last-child { border-left: none; }
+  .sub-step.active-sub-step { background: var(--raya-blue); color: white; }
   .guest-step.active-step { background: var(--raya-blue); color: white; }
   .guest-step .step-letter { display: block; font-size: 18px; font-weight: 900; color: var(--raya-accent); }
   .guest-step.active-step .step-letter { color: white; }
@@ -1098,13 +1109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .policy-table tr:nth-child(even) td { background: var(--bg-light); }
 
   /* ─── RIGHT PANEL: CHATBOT ─── */
-  .chat-panel {
-display: flex;
-    flex-direction: column;
-    background: var(--bg-white);
-    border-right: none;
-    border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 1px solid var(--border-color); margin: 20px 20px 20px 0; height: calc(100vh - 102px); min-height: 500px; position: sticky; top: 80px;
-}
+  .chat-panel.mobile-open { display: flex !important; } .chat-panel { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: auto; width: 100%; height: 85vh; z-index: 9999; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.2); margin: 0; background: var(--bg-white); flex-direction: column; }
 
   .chat-header {
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-panel) 100%);
@@ -1114,6 +1119,7 @@ display: flex;
     align-items: center;
     gap: 12px;
   }
+  .chat-close-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: rgba(255,255,255,0.2); border: none; border-radius: 8px; color: #fff; font-size: 16px; margin-right: auto; cursor: pointer; }
   .chat-avatar {
     width: 42px;
     height: 42px;
@@ -1420,22 +1426,18 @@ display: flex;
   ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 6px; }
 
   /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .do-dont-grid, .personality-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 900px) {
+    .guest-step, .sub-step { flex: 0 0 auto !important; min-width: max-content; padding: 12px 16px !important; white-space: nowrap; }
+
     .top-nav { padding: 0 16px; }
     .nav-badge { display: none; }
     .app-layout { grid-template-columns: 1fr; gap: 6px; margin: 6px; width: calc(100% - 12px); overflow-x: hidden; box-sizing: border-box; }
     .manual-panel { margin: 0; border-radius: 12px; padding: 12px; width: 100%; overflow-x: hidden; box-sizing: border-box; }
-    .chat-panel {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100%; height: 100vh;
-      margin: 0; border-radius: 0;
-      z-index: 1000;
-      box-sizing: border-box;
-      border: none;
-    }
-    .chat-panel.mobile-open { display: flex; }
+    .chat-panel.mobile-open { display: flex !important; } .chat-panel { display: none; position: fixed; bottom: 0; left: 0; right: 0; top: auto; width: 100%; height: 85vh; z-index: 9999; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.2); margin: 0; background: var(--bg-white); flex-direction: column; }
+    .chat-panel.mobile-open { display: flex !important; }
     .mobile-chat-toggle {
       display: flex;
       position: fixed;
@@ -1459,14 +1461,14 @@ display: flex;
     .section-header { padding: 12px 14px; font-size: 14px; }
     .section-body { padding: 14px 10px; }
     .search-input { padding: 12px 40px 12px 14px; font-size: 15px; }
-    .toc-bar { padding: 8px 14px; }
+    .toc-bar { padding: 8px 14px; width: 100%; max-width: 100vw; box-sizing: border-box; }
     .toc-chip { padding: 6px 14px; font-size: 13px; }
     /* Ensure tables inside content are scrollable */
     table { display: block; width: 100%; overflow-x: auto; white-space: nowrap; }
   }
   @media (min-width: 901px) {
     .mobile-chat-toggle { display: none; }
-    .chat-close-btn { display: none; }
+    
   }
 </style>
 
@@ -1474,7 +1476,7 @@ display: flex;
 <!-- TOP NAV -->
 <nav class="top-nav">
   <div class="nav-brand">
-    <div class="nav-logo">Rᴬᵞᴬ</div>
+    <img class="nav-logo" style="width: 42px; height: 42px; object-fit: contain; background: transparent; padding: 2px;" src="Consultant.png" alt="Consultant">
     <div>
       <span class="nav-title">دليل مستشار راية</span>
       <span class="nav-subtitle">المنصة الذكية للتدريب والمراجعة</span>
@@ -1520,6 +1522,7 @@ display: flex;
       <button class="toc-chip" onclick="filterSection('store_front', this)">واجهة بيتك</button>
       <button class="toc-chip" onclick="filterSection('house_guard', this)">حارس البيت</button>
       <button class="toc-chip" onclick="filterSection('owner_dictionary', this)">قاموس صاحب البيت</button>
+      <button class="toc-chip" style="background: var(--raya-accent); color: var(--bg-dark); font-weight: bold; border: 1px solid var(--raya-accent);" onclick="toggleMobileChat()">🤖 مستشار راية الذكي</button>
     </div>
 
     <!-- Content -->
@@ -1539,46 +1542,60 @@ display: flex;
             <span class="section-toggle">▾</span>
           </div>
           <div class="section-body">
-
-            <div class="subsection">
-              <div class="subsection-title">رؤيتنا</div>
-              <div class="content-text">أن نكون الشريك التجاري الأكثر تأثيراً وثقة، من خلال وضع معايير جديدة في تجربة العملاء، وتقديم حلول قائمة على القيمة، والتميز في خدمات ما بعد البيع، والتمكين المالي — بما يرسخ شراكات طويلة الأمد تُسهم في تشكيل المستقبل.</div>
+            <div class="guest-steps">
+              <div class="guest-step active-step" onclick="showSectionTab('culture', 'vision', this)" style="cursor:pointer;">الرؤية</div>
+              <div class="guest-step" onclick="showSectionTab('culture', 'mission', this)" style="cursor:pointer;">الرسالة</div>
+              <div class="guest-step" onclick="showSectionTab('culture', 'values', this)" style="cursor:pointer;">القيم الأساسية</div>
+              <div class="guest-step" onclick="showSectionTab('culture', 'culture', this)" style="cursor:pointer;">ثقافتنا</div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">مهمتنا</div>
-              <div class="content-text">قيادة تحوّل السوق عبر شراكات استراتيجية، وابتكار مستدام، وحلول تركّز على العميل، بهدف توسيع نطاق الوصول ووضع معايير جديدة للقطاع.</div>
+            <div id="culture-tab-vision" class="section-tab-content" style="display: block;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">رؤيتنا</div>
+                <div class="content-text">أن نكون الشريك التجاري الأكثر تأثيراً وثقة، من خلال وضع معايير جديدة في تجربة العملاء، وتقديم حلول قائمة على القيمة، والتميز في خدمات ما بعد البيع، والتمكين المالي — بما يرسخ شراكات طويلة الأمد تُسهم في تشكيل المستقبل.</div>
+              </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">القيم الأساسية</div>
-              <div class="values-grid">
-                <div class="value-card">
-                  <div class="v-icon">🎯</div>
-                  <div class="v-name">التركيز على العملاء</div>
-                  <div class="v-desc">المبادئ الثابتة التي توجه القرارات</div>
-                </div>
-                <div class="value-card">
-                  <div class="v-icon">⭐</div>
-                  <div class="v-name">التميز</div>
-                  <div class="v-desc">أفضل الممارسات والمعايير الدولية</div>
-                </div>
-                <div class="value-card">
-                  <div class="v-icon">🤝</div>
-                  <div class="v-name">احترام الآخرين</div>
-                  <div class="v-desc">التوازن بين التكيف والمبادئ</div>
-                </div>
-                <div class="value-card">
-                  <div class="v-icon">👥</div>
-                  <div class="v-name">العمل الجماعي</div>
-                  <div class="v-desc">قيادة تحوّل السوق عبر شراكات</div>
+            <div id="culture-tab-mission" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">مهمتنا</div>
+                <div class="content-text">قيادة تحوّل السوق عبر شراكات استراتيجية، وابتكار مستدام، وحلول تركّز على العميل، بهدف توسيع نطاق الوصول ووضع معايير جديدة للقطاع.</div>
+              </div>
+            </div>
+
+            <div id="culture-tab-values" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">القيم الأساسية</div>
+                <div class="values-grid">
+                  <div class="value-card">
+                    <div class="v-icon">🎯</div>
+                    <div class="v-name">التركيز على العملاء</div>
+                    <div class="v-desc">المبادئ الثابتة التي توجه القرارات</div>
+                  </div>
+                  <div class="value-card">
+                    <div class="v-icon">⭐</div>
+                    <div class="v-name">التميز</div>
+                    <div class="v-desc">أفضل الممارسات والمعايير الدولية</div>
+                  </div>
+                  <div class="value-card">
+                    <div class="v-icon">🤝</div>
+                    <div class="v-name">احترام الآخرين</div>
+                    <div class="v-desc">التوازن بين التكيف والمبادئ</div>
+                  </div>
+                  <div class="value-card">
+                    <div class="v-icon">👥</div>
+                    <div class="v-name">العمل الجماعي</div>
+                    <div class="v-desc">قيادة تحوّل السوق عبر شراكات</div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">ثقافتنا وقيمنا</div>
-              <div class="content-text">تلتزم الشركة بتطبيق أفضل الممارسات العالمية في التشغيل، وأمن المعلومات، وإدارة الخدمات، بما يضمن جودة الخدمة واستمرارية الأعمال وفقًا للمعايير الدولية المعتمدة. رغم قدرتنا العالية على التكيف والاستجابة للتغيير، تظل قيمنا الأساسية ثابتة لا تتزعزع.</div>
+            <div id="culture-tab-culture" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">ثقافتنا وقيمنا</div>
+                <div class="content-text">تلتزم الشركة بتطبيق أفضل الممارسات العالمية في التشغيل، وأمن المعلومات، وإدارة الخدمات، بما يضمن جودة الخدمة واستمرارية الأعمال وفقًا للمعايير الدولية المعتمدة. رغم قدرتنا العالية على التكيف والاستجابة للتغيير، تظل قيمنا الأساسية ثابتة لا تتزعزع.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1591,51 +1608,65 @@ display: flex;
             <span class="section-toggle">▾</span>
           </div>
           <div class="section-body">
-
-            <div class="subsection">
-              <div class="subsection-title">خدمة العميل</div>
-              <div class="content-text">تقدم للعميل اللي بيدور عليه وتجاوب على أسئلته. ده رد فعل مباشر على طلب واضح.</div>
+            <div class="guest-steps">
+              <div class="guest-step active-step" onclick="showSectionTab('experience', 'service', this)" style="cursor:pointer;">خدمة العميل</div>
+              <div class="guest-step" onclick="showSectionTab('experience', 'experience', this)" style="cursor:pointer;">تجربة العميل</div>
+              <div class="guest-step" onclick="showSectionTab('experience', 'factors', this)" style="cursor:pointer;">عوامل التجربة</div>
+              <div class="guest-step" onclick="showSectionTab('experience', 'vision', this)" style="cursor:pointer;">منظور صاحب البيت</div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">تجربة العميل</div>
-              <div class="content-text">الرحلة اللي العميل بيعيشها من أول ما بيوصل الفرع لحد خدمة ما بعد البيع. سلسلة بتتجمع وبتكون الإنطباع النهائي عن الشركة. مش مجرد بيع وبس... دي تجربة كاملة.</div>
+            <div id="experience-tab-service" class="section-tab-content" style="display: block;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">خدمة العميل</div>
+                <div class="content-text">تقدم للعميل اللي بيدور عليه وتجاوب على أسئلته. ده رد فعل مباشر على طلب واضح.</div>
+              </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">عوامل التجربة</div>
-              <div class="do-dont-grid">
-                <div class="do-box">
-                  <span class="box-label">🏢 الفرع</span>
-                  <ul style="list-style:none;padding:0">
-                    <li>• نظافة الفرع والمنتجات</li>
-                    <li>• خريطة عرض المنتجات</li>
-                    <li>• الموسيقى</li>
-                  </ul>
-                </div>
-                <div style="background:rgba(26,47,110,0.07); border:1px solid rgba(26,47,110,0.2); padding:12px 14px; border-radius:8px; font-size:12.5px; color:#1a2f6e;">
-                  <span class="box-label" style="color:#1a2f6e; font-weight:800; font-size:12px; margin-bottom:6px; display:block;">👥 الفريق</span>
-                  <ul style="list-style:none;padding:0; color:#4a5a8a;">
-                    <li>• الاستقبال والتوديع</li>
-                    <li>• تعامل الفريق مع بعضه</li>
-                    <li>• طريقة التواصل مع العملاء</li>
-                    <li>• المظهر والنظافة الشخصية</li>
-                    <li>• تسهيل الإجراءات</li>
-                  </ul>
+            <div id="experience-tab-experience" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">تجربة العميل</div>
+                <div class="content-text">الرحلة اللي العميل بيعيشها من أول ما بيوصل الفرع لحد خدمة ما بعد البيع. سلسلة بتتجمع وبتكون الإنطباع النهائي عن الشركة. مش مجرد بيع وبس... دي تجربة كاملة.</div>
+              </div>
+            </div>
+
+            <div id="experience-tab-factors" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">عوامل التجربة</div>
+                <div class="do-dont-grid">
+                  <div class="do-box">
+                    <span class="box-label">🏢 الفرع</span>
+                    <ul style="list-style:none;padding:0">
+                      <li>• نظافة الفرع والمنتجات</li>
+                      <li>• خريطة عرض المنتجات</li>
+                      <li>• الموسيقى</li>
+                    </ul>
+                  </div>
+                  <div style="background:rgba(26,47,110,0.07); border:1px solid rgba(26,47,110,0.2); padding:12px 14px; border-radius:8px; font-size:12.5px; color:#1a2f6e;">
+                    <span class="box-label" style="color:#1a2f6e; font-weight:800; font-size:12px; margin-bottom:6px; display:block;">👥 الفريق</span>
+                    <ul style="list-style:none;padding:0; color:#4a5a8a;">
+                      <li>• الاستقبال والتوديع</li>
+                      <li>• تعامل الفريق مع بعضه</li>
+                      <li>• طريقة التواصل مع العملاء</li>
+                      <li>• المظهر والنظافة الشخصية</li>
+                      <li>• تسهيل الإجراءات</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">نظرة صاحب البيت لتقديم تجربة ناجحة</div>
-              <div class="content-text">هنحقق تجربة ناجحة للعميل لما نتعامل بمنظور مختلف.. تكون شايف العميل كأنه <strong>ضيفك</strong> والضيف دا جايلك <strong>بيتك</strong> اللي هو الفرع. فتقدمله أحسن تجربة يفضل دايما فاكرك بيها عشان يكون عميل دائم. انت هدفك تكسب العميل مش تكسب بس مجرد عملية البيع.</div>
-              <div class="info-row" style="margin-top:10px;">
-                <span class="info-badge badge-blue">🚫 ليس: زبون</span>
-                <span class="info-badge badge-green">✅ العميل = ضيف</span>
-                <span class="info-badge badge-blue">🚫 ليس: محل</span>
-                <span class="info-badge badge-green">✅ الفرع = بيتك</span>
-                <span class="info-badge badge-blue">🚫 ليس: بياع</span>
-                <span class="info-badge badge-green">✅ استشاري بيع</span>
+            <div id="experience-tab-vision" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">نظرة صاحب البيت لتقديم تجربة ناجحة</div>
+                <div class="content-text">هنحقق تجربة ناجحة للعميل لما نتعامل بمنظور مختلف.. تكون شايف العميل كأنه <strong>ضيفك</strong> والضيف دا جايلك <strong>بيتك</strong> اللي هو الفرع. فتقدمله أحسن تجربة يفضل دايما فاكرك بيها عشان يكون عميل دائم. انت هدفك تكسب العميل مش تكسب بس مجرد عملية البيع.</div>
+                <div class="info-row" style="margin-top:10px;">
+                  <span class="info-badge badge-blue">🚫 ليس: زبون</span>
+                  <span class="info-badge badge-green">✅ العميل = ضيف</span>
+                  <span class="info-badge badge-blue">🚫 ليس: محل</span>
+                  <span class="info-badge badge-green">✅ الفرع = بيتك</span>
+                  <span class="info-badge badge-blue">🚫 ليس: بياع</span>
+                  <span class="info-badge badge-green">✅ استشاري بيع</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1649,98 +1680,122 @@ display: flex;
             <span class="section-toggle">▾</span>
           </div>
           <div class="section-body">
-
-            <div class="subsection">
-              <div class="subsection-title">1- مهارة التواصل الفعال</div>
-              <div class="content-text">اللي هو القدرة على توصيل أفكارك بطريقة يفهمها العميل بشكل صحيح، من خلال الكلام (لفظي) ومن خلال لغة الجسد ونبرة الصوت (غير لفظي). 93% غير لفظي (لغة الجسد ونبرة الصوت) و7% لفظي (الكلمات).</div>
+            <div class="guest-steps">
+              <div class="guest-step active-step" onclick="showSectionTab('skills', 'comm', this)" style="cursor:pointer;">الاتصال الفعال</div>
+              <div class="guest-step" onclick="showSectionTab('skills', 'listen', this)" style="cursor:pointer;">الاستماع الفعال</div>
+              <div class="guest-step" onclick="showSectionTab('skills', 'barriers', this)" style="cursor:pointer;">الحواجز والمظهر</div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">التواصل غير اللفظي (93%)</div>
-              <div class="rule-list">
-                <li><span class="bullet"></span><strong>التواصل البصري:</strong> استخدام طريقة المثلث (العينين مع الجبهة) + (العينين مع الأنف) - من 3 لـ 5 ثواني. تجنب النظر للشفاه.</li>
-                <li><span class="bullet"></span><strong>الابتسامة:</strong> بنستخدمها في الترحيب، بدون إظهار الأسنان أو المبالغة. لا تُستخدم أثناء غضب العميل.</li>
-                <li><span class="bullet"></span><strong>تعبيرات الوجه:</strong> تعبير وجه بشوش ومفرود بدون تكشير. تعبير عن التضامن عند المشكلات.</li>
-                <li><span class="bullet"></span><strong>وضعية الجسد:</strong> اتجاه الجسد بكلا الكتفين نحو العميل. استقامة الوقوف وعدم تربيع اليدين.</li>
-                <li><span class="bullet"></span><strong>نبرة الصوت:</strong> مستوى صوت متوسط لا عالي ولا منخفض. نبرة مناسبة مع الموقف. تيمبو متوسط.</li>
-                <li><span class="bullet"></span><strong>المسافة مع العميل:</strong> 1م (مقدار ذراع) رجل-رجل / امرأة-امرأة. 1.5م (مقدار ذراع ونصف) رجل-امرأة.</li>
+            <div id="skills-tab-comm" class="section-tab-content" style="display: block;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">1- مهارة التواصل الفعال</div>
+                <div class="content-text">اللي هو القدرة على توصيل أفكارك بطريقة يفهمها العميل بشكل صحيح، من خلال الكلام (لفظي) ومن خلال لغة الجسد ونبرة الصوت (غير لفظي). 93% غير لفظي (لغة الجسد ونبرة الصوت) و7% لفظي (الكلمات).</div>
               </div>
-            </div>
 
-            <div class="subsection">
-              <div class="subsection-title">التواصل اللفظي (7%) – ألفاظ مناسبة</div>
-              <div class="do-dont-grid">
-                <div class="do-box">
-                  <span class="box-label">✅ استخدم</span>
-                  حضرتك / فندم / أستاذ / أستاذة / مدام / آنسة
+              <!-- Nested Tabs for Communication -->
+              <div id="comm-sub-container" style="margin-top: 15px;">
+                <div class="guest-steps" style="border-radius: 8px; overflow: hidden; margin-bottom: 15px;">
+                  <div class="sub-step active-sub-step" onclick="showSubTab('comm-sub-container', 'nonverbal', this)">التواصل غير اللفظي (93%)</div>
+                  <div class="sub-step" onclick="showSubTab('comm-sub-container', 'verbal', this)">التواصل اللفظي (7%)</div>
                 </div>
-                <div class="dont-box">
-                  <span class="box-label">🚫 لا تستخدم</span>
-                  أخويا / باشا / بيه / عسوله / حاج / كبير / غالي / معلم
-                </div>
-              </div>
-              <div style="margin-top:10px;">
-                <div class="do-box" style="margin-bottom:8px;">
-                  <span class="box-label">✅ بدلاً من الردود المختصرة قل:</span>
-                  "ممكن أستفسر لحضرتك وأرد عليك حالاً" - "أقترحلك بديل مناسب" - "نشوف مع بعض أنسب حل لحضرتك"
-                </div>
-                <div class="dont-box">
-                  <span class="box-label">🚫 تجنب:</span>
-                  ماعرفش / مش موجود / مش عارف / طيب خلاص / مش هينفع / هو ده الموجود / استنى شوية
-                </div>
-              </div>
-            </div>
 
-            <div class="subsection">
-              <div class="subsection-title">2- مهارة الاستماع الفعال</div>
-              <div class="personality-grid">
-                <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
-                  <div class="p-title" style="color:#b91c1c;">❌ استماع تظاهري</div>
-                  <div class="p-desc">التظاهر بالاستماع من غير تركيز حقيقي. ردود عامة غير مرتبطة بما قيل.</div>
+                <div id="comm-sub-container-tab-nonverbal" class="sub-tab-content" style="display: block;">
+                  <div class="rule-list">
+                    <li><span class="bullet"></span><strong>التواصل البصري:</strong> استخدام طريقة المثلث (العينين مع الجبهة) + (العينين مع الأنف) - من 3 لـ 5 ثواني. تجنب النظر للشفاه.</li>
+                    <li><span class="bullet"></span><strong>الابتسامة:</strong> بنستخدمها في الترحيب، بدون إظهار الأسنان أو المبالغة. لا تُستخدم أثناء غضب العميل.</li>
+                    <li><span class="bullet"></span><strong>تعبيرات الوجه:</strong> تعبير وجه بشوش ومفرود بدون تكشير. تعبير عن التضامن عند المشكلات.</li>
+                    <li><span class="bullet"></span><strong>وضعية الجسد:</strong> اتجاه الجسد بكلا الكتفين نحو العميل. استقامة الوقوف وعدم تربيع اليدين.</li>
+                    <li><span class="bullet"></span><strong>نبرة الصوت:</strong> مستوى صوت متوسط لا عالي ولا منخفض. نبرة مناسبة مع الموقف. تيمبو متوسط.</li>
+                    <li><span class="bullet"></span><strong>المسافة مع العميل:</strong> 1م (مقدار ذراع) رجل-رجل / امرأة-امرأة. 1.5م (مقدار ذراع ونصف) رجل-امرأة.</li>
+                  </div>
                 </div>
-                <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
-                  <div class="p-title" style="color:#b91c1c;">❌ استماع انتقائي</div>
-                  <div class="p-desc">التركيز على أجزاء معينة وتجاهل باقي الرسالة. يوصل انطباع سلبي.</div>
-                </div>
-                <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
-                  <div class="p-title" style="color:#15803d;">✅ استماع فعال</div>
-                  <div class="p-desc">الاستماع بتركيز كامل. اسأل أسئلة توضيحية. أعد صياغة الكلام. لا تقاطع.</div>
-                </div>
-                <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
-                  <div class="p-title" style="color:#15803d;">✅ استماع تضامني</div>
-                  <div class="p-desc">يُستخدم عند غضب العميل. إظهار التعاطف مع مشاعره. لا ابتسامة نهائياً.</div>
+
+                <div id="comm-sub-container-tab-verbal" class="sub-tab-content" style="display: none;">
+                  <div class="do-dont-grid">
+                    <div class="do-box">
+                      <span class="box-label">✅ استخدم</span>
+                      حضرتك / فندم / أستاذ / أستاذة / مدام / آنسة
+                    </div>
+                    <div class="dont-box">
+                      <span class="box-label">🚫 لا تستخدم</span>
+                      أخويا / باشا / بيه / عسوله / حاج / كبير / غالي / معلم
+                    </div>
+                  </div>
+                  <div style="margin-top:10px;">
+                    <div class="do-box" style="margin-bottom:8px;">
+                      <span class="box-label">✅ بدلاً من الردود المختصرة قل:</span>
+                      "ممكن أستفسر لحضرتك وأرد عليك حالاً" - "أقترحلك بديل مناسب" - "نشوف مع بعض أنسب حل لحضرتك"
+                    </div>
+                    <div class="dont-box">
+                      <span class="box-label">🚫 تجنب:</span>
+                      ماعرفش / مش موجود / مش عارف / طيب خلاص / مش هينفع / هو ده الموجود / استنى شوية
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">حواجز تؤثر على المهارات – الضغط</div>
-              <div class="rule-list">
-                <li><span class="bullet"></span><strong>حط نفسك مكان العميل:</strong> إن العميل مش عارف ضغوطك، متوقع يعيش تجربة حلوة.</li>
-                <li><span class="bullet"></span><strong>افصل نفسك عند انفعالات العملاء:</strong> الموضوع مرتبط بسبب الانفعال، العميل بيكون منفعل بسبب إحباط من الخدمة مش منك.</li>
-                <li><span class="bullet"></span><strong>افصل مشاكلك الشخصية عن الشغل:</strong> عشان تكون قادر تتعامل مع أي مشكلة.</li>
-                <li><span class="bullet"></span><strong>راقب لغة جسدك:</strong> دا محتاج منك تمرين ورقابة على نفسك بشكل مستمر.</li>
-                <li><span class="bullet"></span><strong>اطلب دعم:</strong> لو مش قادر تتحكم في الموقف، استعين بزميل أو مديرك.</li>
+            <div id="skills-tab-listen" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">2- مهارة الاستماع الفعال</div>
+                <div class="personality-grid">
+                  <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
+                    <div class="p-title" style="color:#b91c1c;">❌ استماع تظاهري</div>
+                    <div class="p-desc">التظاهر بالاستماع من غير تركيز حقيقي. ردود عامة غير مرتبطة بما قيل.</div>
+                  </div>
+                  <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
+                    <div class="p-title" style="color:#b91c1c;">❌ استماع انتقائي</div>
+                    <div class="p-desc">التركيز على أجزاء معينة وتجاهل باقي الرسالة. يوصل انطباع سلبي.</div>
+                  </div>
+                  <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
+                    <div class="p-title" style="color:#15803d;">✅ استماع فعال</div>
+                    <div class="p-desc">الاستماع بتركيز كامل. اسأل أسئلة توضيحية. أعد صياغة الكلام. لا تقاطع.</div>
+                  </div>
+                  <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
+                    <div class="p-title" style="color:#15803d;">✅ استماع تضامني</div>
+                    <div class="p-desc">يُستخدم عند غضب العميل. إظهار التعاطف مع مشاعره. لا ابتسامة نهائياً.</div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">المظهر والنظافة الشخصية</div>
-              <div class="do-dont-grid">
-                <div class="do-box">
-                  <span class="box-label">✅ مسموح به</span>
-                  قميص بولو "راية" نظيف ومكوي<br>
-                  بنطلون جينز غير ممزق<br>
-                  أحذية كاجوال أنيقة
+            <div id="skills-tab-barriers" class="section-tab-content" style="display: none;">
+              <div id="barriers-sub-container" style="margin-top: 15px;">
+                <div class="guest-steps" style="border-radius: 8px; overflow: hidden; margin-bottom: 15px;">
+                  <div class="sub-step active-sub-step" onclick="showSubTab('barriers-sub-container', 'pressure', this)">الضغوط والحواجز</div>
+                  <div class="sub-step" onclick="showSubTab('barriers-sub-container', 'appearance', this)">المظهر والنظافة</div>
                 </div>
-                <div class="dont-box">
-                  <span class="box-label">🚫 ممنوع</span>
-                  شورت<br>
-                  قميص مجعد أو غير نظيف<br>
-                  شباشب، أحذية رياضية
+
+                <div id="barriers-sub-container-tab-pressure" class="sub-tab-content" style="display: block;">
+                  <div class="subsection-title">حواجز تؤثر على المهارات – الضغط</div>
+                  <div class="rule-list">
+                    <li><span class="bullet"></span><strong>حط نفسك مكان العميل:</strong> إن العميل مش عارف ضغوطك، متوقع يعيش تجربة حلوة.</li>
+                    <li><span class="bullet"></span><strong>افصل نفسك عند انفعالات العملاء:</strong> الموضوع مرتبط بسبب الانفعال، العميل بيكون منفعل بسبب إحباط من الخدمة مش منك.</li>
+                    <li><span class="bullet"></span><strong>افصل مشاكلك الشخصية عن الشغل:</strong> عشان تكون قادر تتعامل مع أي مشكلة.</li>
+                    <li><span class="bullet"></span><strong>راقب لغة جسدك:</strong> دا محتاج منك تمرين ورقابة على نفسك بشكل مستمر.</li>
+                    <li><span class="bullet"></span><strong>اطلب دعم:</strong> لو مش قادر تتحكم في الموقف، استعين بزميل أو مديرك.</li>
+                  </div>
+                </div>
+
+                <div id="barriers-sub-container-tab-appearance" class="sub-tab-content" style="display: none;">
+                  <div class="subsection-title">المظهر والنظافة الشخصية</div>
+                  <div class="do-dont-grid">
+                    <div class="do-box">
+                      <span class="box-label">✅ مسموح به</span>
+                      قميص بولو "راية" نظيف ومكوي<br>
+                      بنطلون جينز غير ممزق<br>
+                      أحذية كاجوال أنيقة
+                    </div>
+                    <div class="dont-box">
+                      <span class="box-label">🚫 ممنوع</span>
+                      شورت<br>
+                      قميص مجعد أو غير نظيف<br>
+                      شباشب، أحذية رياضية
+                    </div>
+                  </div>
+                  <div class="content-text" style="margin-top:10px;">النظافة الشخصية: الأظافر – اللحية – الشعر – رائحة الفم – رائحة الجسد</div>
                 </div>
               </div>
-              <div class="content-text" style="margin-top:10px;">النظافة الشخصية: الأظافر – اللحية – الشعر – رائحة الفم – رائحة الجسد</div>
             </div>
           </div>
         </div>
@@ -1903,74 +1958,85 @@ function showGuestTab(tabId, el) {
             <span class="section-toggle">▾</span>
           </div>
           <div class="section-body">
+            <div class="guest-steps">
+              <div class="guest-step active-step" onclick="showSectionTab('complaints', 'angry', this)" style="cursor:pointer;">العميل الغاضب</div>
+              <div class="guest-step" onclick="showSectionTab('complaints', 'objection', this)" style="cursor:pointer;">التعامل مع الاعتراض</div>
+              <div class="guest-step" onclick="showSectionTab('complaints', 'escalation', this)" style="cursor:pointer;">تصعيد الشكاوى</div>
+            </div>
 
-            <div class="subsection">
-              <div class="subsection-title">عند التعامل مع العميل الغاضب – ثلاث خطوات</div>
-              <div class="protocol-step">
-                <div class="protocol-step-num">1</div>
-                <div class="protocol-step-content">
-                  <div class="protocol-step-title">الوعي</div>
-                  <div class="protocol-step-text">قبل أي رد فعل، لازم تكون واعي ليه العميل متضايق: هل المشكلة معايا شخصياً؟ لو كنت مكانه، هل كنت هحس بنفس الانفعال؟</div>
+            <div id="complaints-tab-angry" class="section-tab-content" style="display: block;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">عند التعامل مع العميل الغاضب – ثلاث خطوات</div>
+                <div class="protocol-step">
+                  <div class="protocol-step-num">1</div>
+                  <div class="protocol-step-content">
+                    <div class="protocol-step-title">الوعي</div>
+                    <div class="protocol-step-text">قبل أي رد فعل، لازم تكون واعي ليه العميل متضايق: هل المشكلة معايا شخصياً؟ لو كنت مكانه، هل كنت هحس بنفس الانفعال؟</div>
+                  </div>
                 </div>
-              </div>
-              <div class="protocol-step">
-                <div class="protocol-step-num">2</div>
-                <div class="protocol-step-content">
-                  <div class="protocol-step-title">التضامن</div>
-                  <div class="protocol-step-text">أظهر تعاطفك بتعابير وجه حريصة: "متفهم موقف حضرتك" أو "لو كنت مكانك كنت هحس كده برضه". تجنب قول كلمات زي "أهدى". لا تستخدم ابتسامة أبداً والعميل متعصب.</div>
+                <div class="protocol-step">
+                  <div class="protocol-step-num">2</div>
+                  <div class="protocol-step-content">
+                    <div class="protocol-step-title">التضامن</div>
+                    <div class="protocol-step-text">أظهر تعاطفك بتعابير وجه حريصة: "متفهم موقف حضرتك" أو "لو كنت مكانك كنت هحس كده برضه". تجنب قول كلمات زي "أهدى". لا تستخدم ابتسامة أبداً والعميل متعصب.</div>
+                  </div>
                 </div>
-              </div>
-              <div class="protocol-step">
-                <div class="protocol-step-num">3</div>
-                <div class="protocol-step-content">
-                  <div class="protocol-step-title">الفهم والحل</div>
-                  <div class="protocol-step-text">اسأل أسئلة تساعدك تفهم المشكلة بعمق. رد بطريقة واضحة وصريحة. استخدم كلمات تعكس حرص الشركة: "احنا في RAYA حريصين على تحقيق رضا حضرتك".</div>
+                <div class="protocol-step">
+                  <div class="protocol-step-num">3</div>
+                  <div class="protocol-step-content">
+                    <div class="protocol-step-title">الفهم والحل</div>
+                    <div class="protocol-step-text">اسأل أسئلة تساعدك تفهم المشكلة بعمق. رد بطريقة واضحة وصريحة. استخدم كلمات تعكس حرص الشركة: "احنا في RAYA حريصين على تحقيق رضا حضرتك".</div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">التعامل مع الاعتراض</div>
-              <div class="rule-list">
-                <li><span class="bullet"></span>الاستماع الجيد + تلخيص الكلام على العميل (عشان يحس أنه فعلاً وصلك رأيه)</li>
-                <li><span class="bullet"></span>شكر العميل على مشاركته لرأيه معنا وأنه رأيه مهم</li>
-                <li><span class="bullet"></span>التأكيد عليه أننا في RAYA بنحرص دايما على التطور والاستماع للعملاء</li>
+            <div id="complaints-tab-objection" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">التعامل مع الاعتراض</div>
+                <div class="rule-list">
+                  <li><span class="bullet"></span>الاستماع الجيد + تلخيص الكلام على العميل (عشان يحس أنه فعلاً وصلك رأيه)</li>
+                  <li><span class="bullet"></span>شكر العميل على مشاركته لرأيه معنا وأنه رأيه مهم</li>
+                  <li><span class="bullet"></span>التأكيد عليه أننا في RAYA بنحرص دايما على التطور والاستماع للعملاء</li>
+                </div>
               </div>
             </div>
 
-            <div class="subsection">
-              <div class="subsection-title">تصعيد الشكاوى – المسار الرسمي (أقصى 48 ساعة)</div>
-              <div class="escalation-flow">
-                <div class="escalation-step">
-                  <div class="e-num e-num-1">1</div>
-                  <div>
-                    <div class="e-title">الموظف (الوجهة الأولى)</div>
-                    <div class="e-desc">استقبال شكوى العميل ومحاولة الحل الفوري</div>
+            <div id="complaints-tab-escalation" class="section-tab-content" style="display: none;">
+              <div class="subsection" style="margin-top:16px;">
+                <div class="subsection-title">تصعيد الشكاوى – المسار الرسمي (أقصى 48 ساعة)</div>
+                <div class="escalation-flow">
+                  <div class="escalation-step">
+                    <div class="e-num e-num-1">1</div>
+                    <div>
+                      <div class="e-title">الموظف (الوجهة الأولى)</div>
+                      <div class="e-desc">استقبال شكوى العميل ومحاولة الحل الفوري</div>
+                    </div>
+                  </div>
+                  <div class="escalation-step">
+                    <div class="e-num e-num-2">2</div>
+                    <div>
+                      <div class="e-title">مدير الفرع</div>
+                      <div class="e-desc">يتدخل ويحاول حل المشكلة إذا لم يتم الحل</div>
+                    </div>
+                  </div>
+                  <div class="escalation-step">
+                    <div class="e-num e-num-3">3</div>
+                    <div>
+                      <div class="e-title">مدير المنطقة</div>
+                      <div class="e-desc">يتخذ قراراً فورياً</div>
+                    </div>
+                  </div>
+                  <div class="escalation-step">
+                    <div class="e-num e-num-4">4</div>
+                    <div>
+                      <div class="e-title">مدير المبيعات</div>
+                      <div class="e-desc">المراجعة النهائية واتخاذ القرار – الحل المرضي لجميع الأطراف</div>
+                    </div>
                   </div>
                 </div>
-                <div class="escalation-step">
-                  <div class="e-num e-num-2">2</div>
-                  <div>
-                    <div class="e-title">مدير الفرع</div>
-                    <div class="e-desc">يتدخل ويحاول حل المشكلة إذا لم يتم الحل</div>
-                  </div>
-                </div>
-                <div class="escalation-step">
-                  <div class="e-num e-num-3">3</div>
-                  <div>
-                    <div class="e-title">مدير المنطقة</div>
-                    <div class="e-desc">يتخذ قراراً فورياً</div>
-                  </div>
-                </div>
-                <div class="escalation-step">
-                  <div class="e-num e-num-4">4</div>
-                  <div>
-                    <div class="e-title">مدير المبيعات</div>
-                    <div class="e-desc">المراجعة النهائية واتخاذ القرار – الحل المرضي لجميع الأطراف</div>
-                  </div>
-                </div>
+                <div class="info-badge badge-red" style="display:inline-block; margin-top:8px; font-size:13px; padding:6px 14px;">⏱️ إجمالي الوقت المسموح لجميع مراحل التصعيد: 48 ساعة كحد أقصى</div>
               </div>
-              <div class="info-badge badge-red" style="display:inline-block; margin-top:8px; font-size:13px; padding:6px 14px;">⏱️ إجمالي الوقت المسموح لجميع مراحل التصعيد: 48 ساعة كحد أقصى</div>
             </div>
           </div>
         </div>
@@ -4237,8 +4303,32 @@ function formatAnswer(item, question) {
 }
 
 // ─── MOBILE TOGGLE ─────────────────────────────────────────────────
+function showSubTab(containerId, tabId, el) {
+  var container = document.getElementById(containerId);
+  var steps = container.querySelectorAll('.sub-step');
+  steps.forEach(function(s) { s.classList.remove('active-sub-step'); });
+  el.classList.add('active-sub-step');
+  var contents = container.querySelectorAll('.sub-tab-content');
+  contents.forEach(function(c) { c.style.display = 'none'; });
+  document.getElementById(containerId + '-tab-' + tabId).style.display = 'block';
+}
+
+function showSectionTab(sectionId, tabId, el) {
+  var section = document.getElementById('sec-' + sectionId);
+  var steps = section.querySelectorAll('.guest-step');
+  steps.forEach(function(s) { s.classList.remove('active-step'); });
+  el.classList.add('active-step');
+  var contents = section.querySelectorAll('.section-tab-content');
+  contents.forEach(function(c) { c.style.display = 'none'; });
+  document.getElementById(sectionId + '-tab-' + tabId).style.display = 'block';
+}
+
 function toggleMobileChat() {
   document.getElementById('chatPanel').classList.toggle('mobile-open');
+  setTimeout(() => {
+    const input = document.getElementById('chatInput');
+    if(input) input.focus();
+  }, 100);
 }
 
 // ─── TOAST ─────────────────────────────────────────────────────────
@@ -8129,6 +8219,21 @@ window.searchPdfManual = function(query) {
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
