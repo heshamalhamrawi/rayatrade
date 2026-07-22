@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل مستشار راية - المنصة الذكية</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap');
+
+  :root {
+    --raya-blue: #1a2f6e;
+    --raya-blue-mid: #2547a3;
+    --raya-blue-light: #3a6fd8;
+    --raya-accent: #f0c030;
+    --raya-accent-dark: #d4a820;
+    --bg-dark: #0d1b3e;
+    --bg-panel: #111f4a;
+    --bg-card: #162254;
+    --bg-light: #f4f6fc;
+    --bg-white: #ffffff;
+    --text-primary: #0d1b3e;
+    --text-secondary: #4a5a8a;
+    --text-light: #8fa0c0;
+    --border-color: #d0d8f0;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --chat-user-bg: #1a2f6e;
+    --chat-bot-bg: #f0f4ff;
+    --shadow-sm: 0 2px 8px rgba(26,47,110,0.08);
+    --shadow-md: 0 4px 20px rgba(26,47,110,0.14);
+    --shadow-lg: 0 8px 40px rgba(26,47,110,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOP NAV ─── */
+  .top-nav {
+    background: var(--bg-dark);
+    padding: 0 28px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nav-logo {
+    background: var(--raya-accent);
+    color: var(--bg-dark);
+    font-weight: 900;
+    font-size: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -1px;
+  }
+  .nav-title {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .nav-subtitle {
+    color: var(--raya-accent);
+    font-size: 11px;
+    font-weight: 400;
+    display: block;
+    margin-top: -3px;
+  }
+  .nav-badge {
+    background: rgba(240,192,48,0.18);
+    border: 1px solid rgba(240,192,48,0.4);
+    color: var(--raya-accent);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .app-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 0;
+    flex: 1;
+    height: calc(100vh - 62px);
+    overflow: hidden;
+  }
+
+  /* ─── LEFT PANEL: MANUAL ─── */
+  .manual-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid var(--border-color);
+    background: var(--bg-white);
+  }
+
+  .panel-header {
+    padding: 18px 24px 14px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-white);
+    flex-shrink: 0;
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--raya-blue);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-title-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--raya-blue), var(--raya-blue-light));
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+  }
+
+  /* ─── SEARCH BAR ─── */
+  .search-wrapper {
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    padding: 10px 44px 10px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-light);
+    transition: all 0.2s;
+    direction: rtl;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--raya-blue-light);
+    background: var(--bg-white);
+    box-shadow: 0 0 0 3px rgba(58,111,216,0.1);
+  }
+  .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 16px;
+    pointer-events: none;
+  }
+  .search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 16px;
+    display: none;
+    padding: 2px;
+  }
+  .search-stats {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 6px;
+    min-height: 18px;
+  }
+  .search-stats .count { color: var(--raya-blue-light); font-weight: 700; }
+
+  /* ─── TABLE OF CONTENTS ─── */
+  .toc-bar {
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-light);
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    scrollbar-width: thin;
+  }
+  .toc-bar::-webkit-scrollbar { height: 3px; }
+  .toc-bar::-webkit-scrollbar-track { background: transparent; }
+  .toc-bar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+  .toc-chip {
+    white-space: nowrap;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--border-color);
+    background: var(--bg-white);
+    color: var(--text-secondary);
+    transition: all 0.18s;
+    flex-shrink: 0;
+  }
+  .toc-chip:hover, .toc-chip.active {
+    background: var(--raya-blue);
+    color: white;
+    border-color: var(--raya-blue);
+  }
+
+  /* ─── CONTENT AREA ─── */
+  .content-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+  }
+  .content-scroll::-webkit-scrollbar { width: 5px; }
+  .content-scroll::-webkit-scrollbar-track { background: transparent; }
+  .content-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+  /* ─── SEARCH RESULTS ─── */
+  .search-results-container { display: none; }
+  .search-results-container.active { display: block; }
+
+  .search-result-card {
+    background: var(--bg-white);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .search-result-card:hover {
+    border-color: var(--raya-blue-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+  .result-section-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--raya-blue-light);
+    background: rgba(58,111,216,0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .result-text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .result-text mark {
+    background: var(--raya-accent);
+    color: var(--bg-dark);
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  /* ─── MANUAL SECTIONS ─── */
+  .manual-content { display: block; }
+  .manual-content.hidden { display: none; }
+
+  .section-block {
+    margin-bottom: 20px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1.5px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+  }
+  .section-header {
+    background: linear-gradient(135deg, var(--raya-blue) 0%, var(--raya-blue-mid) 100%);
+    color: white;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-header:hover { opacity: 0.95; }
+  .section-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .section-toggle {
+    margin-right: auto;
+    margin-left: 0;
+    font-size: 18px;
+    transition: transform 0.25s;
+    display: inline-block;
+  }
+  .section-block.collapsed .section-toggle { transform: rotate(-90deg); }
+
+  .section-body {
+    background: var(--bg-white);
+    padding: 18px 20px;
+    display: block;
+  }
+  .section-block.collapsed .section-body { display: none; }
+
+  .subsection {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-color);
+  }
+  .subsection:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .subsection-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--raya-blue-mid);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subsection-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 16px;
+    background: var(--raya-accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .content-text {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--text-secondary);
+  }
+  .content-text mark {
+    background: var(--raya-accent);
+    color: var(--bg-dark);
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  .info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .info-badge {
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge-blue { background: rgba(26,47,110,0.1); color: var(--raya-blue); }
+  .badge-green { background: rgba(34,197,94,0.1); color: #15803d; }
+  .badge-yellow { background: rgba(240,192,48,0.18); color: #92660a; }
+  .badge-red { background: rgba(239,68,68,0.1); color: #b91c1c; }
+
+  .rule-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+  }
+  .rule-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 5px 0 5px 16px;
+    border-bottom: 1px solid var(--bg-light);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.7;
+  }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-list li .bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--raya-blue-light);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .do-dont-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .do-box, .dont-box {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .do-box { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); color: #15803d; }
+  .dont-box { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #b91c1c; }
+  .do-box .box-label, .dont-box .box-label {
+    font-weight: 800;
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .guest-steps {
+    display: flex;
+    gap: 0;
+    margin: 12px 0;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+  .guest-step {
+    flex: 1;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--bg-light);
+    color: var(--text-secondary);
+    border-left: 1px solid var(--border-color);
+    cursor: default;
+  }
+  .guest-step:last-child { border-left: none; }
+  .guest-step.active-step { background: var(--raya-blue); color: white; }
+  .guest-step .step-letter { display: block; font-size: 18px; font-weight: 900; color: var(--raya-accent); }
+  .guest-step.active-step .step-letter { color: white; }
+
+  .personality-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .personality-card {
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    border: 1.5px solid var(--border-color);
+  }
+  .personality-card .p-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--raya-blue);
+    margin-bottom: 6px;
+  }
+  .personality-card .p-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
+
+  .protocol-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .protocol-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--raya-blue);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .protocol-step-content { flex: 1; }
+  .protocol-step-title { font-size: 13px; font-weight: 700; color: var(--raya-blue-mid); margin-bottom: 4px; }
+  .protocol-step-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .value-card {
+    background: linear-gradient(135deg, var(--raya-blue) 0%, var(--raya-blue-mid) 100%);
+    border-radius: var(--radius-sm);
+    padding: 16px 14px;
+    color: white;
+    text-align: center;
+  }
+  .value-card .v-icon { font-size: 24px; margin-bottom: 8px; }
+  .value-card .v-name { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+  .value-card .v-desc { font-size: 11.5px; opacity: 0.85; line-height: 1.5; }
+
+  .escalation-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .escalation-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-color);
+    background: var(--bg-white);
+  }
+  .escalation-step .e-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .e-num-1 { background: rgba(26,47,110,0.12); color: var(--raya-blue); }
+  .e-num-2 { background: rgba(34,197,94,0.12); color: #15803d; }
+  .e-num-3 { background: rgba(245,158,11,0.15); color: #92660a; }
+  .e-num-4 { background: rgba(239,68,68,0.1); color: #b91c1c; }
+  .e-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .e-desc { font-size: 12px; color: var(--text-secondary); }
+
+  .policy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 10px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+  .policy-table th {
+    background: var(--raya-blue);
+    color: white;
+    padding: 9px 12px;
+    text-align: right;
+    font-weight: 700;
+  }
+  .policy-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .policy-table tr:last-child td { border-bottom: none; }
+  .policy-table tr:nth-child(even) td { background: var(--bg-light); }
+
+  /* ─── RIGHT PANEL: CHATBOT ─── */
+  .chat-panel {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-white);
+    border-right: none;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-panel) 100%);
+    padding: 16px 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--raya-blue-light), var(--raya-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .chat-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    border-radius: 50%;
+    border: 2px solid var(--bg-dark);
+  }
+  .chat-info .chat-name { font-size: 15px; font-weight: 700; color: white; }
+  .chat-info .chat-status { font-size: 11.5px; color: var(--raya-accent); margin-top: 1px; }
+  .chat-model-tag {
+    margin-right: auto;
+    background: rgba(240,192,48,0.15);
+    border: 1px solid rgba(240,192,48,0.3);
+    color: var(--raya-accent);
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: #f8faff;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+  .msg {
+    display: flex;
+    gap: 10px;
+    max-width: 88%;
+    animation: msgIn 0.2s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .msg.user { flex-direction: row-reverse; align-self: flex-end; }
+  .msg.bot { align-self: flex-start; }
+
+  .msg-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .msg.user .msg-avatar-small { background: var(--raya-blue); color: white; }
+  .msg.bot .msg-avatar-small { background: linear-gradient(135deg, var(--raya-blue-light), var(--raya-blue-mid)); color: white; }
+
+  .msg-bubble {
+    padding: 11px 15px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    position: relative;
+  }
+  .msg.user .msg-bubble {
+    background: var(--raya-blue);
+    color: white;
+    border-bottom-left-radius: 4px;
+  }
+  .msg.bot .msg-bubble {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    border: 1.5px solid var(--border-color);
+    border-bottom-right-radius: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+  .msg-source {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .msg-source-tag {
+    background: rgba(58,111,216,0.1);
+    color: var(--raya-blue-light);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .msg-time { font-size: 10.5px; color: rgba(255,255,255,0.55); margin-top: 4px; text-align: left; }
+  .msg.bot .msg-time { color: var(--text-light); }
+
+  /* ─── TYPING INDICATOR ─── */
+  .typing-indicator {
+    display: none;
+    align-self: flex-start;
+    background: var(--bg-white);
+    border: 1.5px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: 16px;
+    border-bottom-right-radius: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+  .typing-indicator.visible { display: flex; gap: 4px; align-items: center; }
+  .typing-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--raya-blue-light);
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* ─── QUICK QUESTIONS ─── */
+  .quick-questions {
+    padding: 10px 16px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-white);
+    flex-shrink: 0;
+    scrollbar-width: none;
+  }
+  .quick-questions::-webkit-scrollbar { display: none; }
+  .quick-q {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--raya-blue);
+    color: var(--raya-blue);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    transition: all 0.18s;
+    flex-shrink: 0;
+  }
+  .quick-q:hover { background: var(--raya-blue); color: white; }
+
+  /* ─── CHAT INPUT ─── */
+  .chat-input-area {
+    padding: 14px 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-white);
+    flex-shrink: 0;
+  }
+  .chat-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .chat-textarea {
+    flex: 1;
+    border: 2px solid var(--border-color);
+    border-radius: 22px;
+    padding: 10px 18px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    resize: none;
+    max-height: 100px;
+    overflow-y: auto;
+    background: var(--bg-light);
+    transition: all 0.2s;
+    direction: rtl;
+    line-height: 1.5;
+  }
+  .chat-textarea:focus {
+    outline: none;
+    border-color: var(--raya-blue-light);
+    background: var(--bg-white);
+    box-shadow: 0 0 0 3px rgba(58,111,216,0.1);
+  }
+  .chat-textarea::placeholder { color: var(--text-light); }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--raya-blue), var(--raya-blue-light));
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(26,47,110,0.35);
+  }
+  .send-btn:hover { transform: scale(1.06); box-shadow: 0 4px 15px rgba(26,47,110,0.45); }
+  .send-btn:active { transform: scale(0.97); }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .input-disclaimer {
+    font-size: 11px;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  /* ─── WELCOME MSG ─── */
+  .welcome-msg {
+    background: linear-gradient(135deg, var(--raya-blue) 0%, var(--raya-blue-light) 100%);
+    color: white;
+    padding: 16px;
+    border-radius: 16px;
+    border-bottom-right-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    box-shadow: var(--shadow-md);
+    align-self: flex-start;
+    max-width: 88%;
+  }
+  .welcome-msg strong { color: var(--raya-accent); }
+
+  /* ─── EMPTY STATE ─── */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+  }
+  .empty-state-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+  .empty-state-text { font-size: 14px; }
+
+  /* ─── LOADING SKELETON ─── */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-light) 25%, var(--border-color) 50%, var(--bg-light) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-load 1.2s infinite;
+    border-radius: 6px;
+  }
+  @keyframes skeleton-load {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ─── NO RESULTS ─── */
+  .no-results {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+  }
+  .no-results-icon { font-size: 36px; margin-bottom: 10px; }
+  .no-results-text { font-size: 14px; }
+  .no-results-sub { font-size: 12px; margin-top: 6px; opacity: 0.7; }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: var(--bg-dark);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+    z-index: 999;
+    pointer-events: none;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── SCROLLBAR GLOBAL ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 6px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .app-layout { grid-template-columns: 1fr; }
+    .chat-panel {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 65vh;
+      border-top: 2px solid var(--raya-blue);
+      z-index: 50;
+      display: none;
+    }
+    .chat-panel.mobile-open { display: flex; }
+    .mobile-chat-toggle {
+      display: flex;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--raya-blue), var(--raya-blue-light));
+      color: white;
+      font-size: 22px;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      z-index: 51;
+      box-shadow: 0 4px 20px rgba(26,47,110,0.4);
+    }
+  }
+  @media (min-width: 901px) {
+    .mobile-chat-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-brand">
+    <div class="nav-logo">Rᴬᵞᴬ</div>
+    <div>
+      <span class="nav-title">دليل مستشار راية</span>
+      <span class="nav-subtitle">المنصة الذكية للتدريب والمراجعة</span>
+    </div>
+  </div>
+  <span class="nav-badge">🔒 محتوى مخصص من الدليل الرسمي</span>
+</nav>
+
+<!-- APP LAYOUT -->
+<div class="app-layout">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- LEFT PANEL: MANUAL VIEWER -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="manual-panel">
+
+    <!-- Search Header -->
+    <div class="panel-header">
+      <div class="panel-title">
+        <span class="panel-title-icon">📖</span>
+        محتويات الدليل
+      </div>
+      <div class="search-wrapper">
+        <input type="text" class="search-input" id="searchInput" placeholder="ابحث في الدليل... مثال: ترحيب، تقسيط، استرجاع" autocomplete="off" />
+        <span class="search-icon">🔍</span>
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="search-stats" id="searchStats"></div>
+    </div>
+
+    <!-- TOC Chips -->
+    <div class="toc-bar" id="tocBar">
+      <button class="toc-chip active" onclick="filterSection('all', this)">الكل</button>
+      <button class="toc-chip" onclick="filterSection('culture', this)">ثقافة راية</button>
+      <button class="toc-chip" onclick="filterSection('experience', this)">تجربة العميل</button>
+      <button class="toc-chip" onclick="filterSection('skills', this)">المهارات الأساسية</button>
+      <button class="toc-chip" onclick="filterSection('guest', this)">GUEST</button>
+      <button class="toc-chip" onclick="filterSection('complaints', this)">شكاوى</button>
+      <button class="toc-chip" onclick="filterSection('policies', this)">السياسات</button>
+      <button class="toc-chip" onclick="filterSection('installment', this)">التقسيط</button>
+      <button class="toc-chip" onclick="filterSection('protocols', this)">البروتوكولات</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content-scroll" id="contentArea">
+
+      <!-- SEARCH RESULTS -->
+      <div class="search-results-container" id="searchResults"></div>
+
+      <!-- MANUAL CONTENT -->
+      <div class="manual-content" id="manualContent">
+
+        <!-- ── SECTION: RAYA CULTURE ── -->
+        <div class="section-block" data-category="culture" id="sec-culture">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">🏛️</span>
+            ثقافة راية – الهوية الاستراتيجية
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">رؤيتنا</div>
+              <div class="content-text">أن نكون الشريك التجاري الأكثر تأثيراً وثقة، من خلال وضع معايير جديدة في تجربة العملاء، وتقديم حلول قائمة على القيمة، والتميز في خدمات ما بعد البيع، والتمكين المالي — بما يرسخ شراكات طويلة الأمد تُسهم في تشكيل المستقبل.</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">مهمتنا</div>
+              <div class="content-text">قيادة تحوّل السوق عبر شراكات استراتيجية، وابتكار مستدام، وحلول تركّز على العميل، بهدف توسيع نطاق الوصول ووضع معايير جديدة للقطاع.</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">القيم الأساسية</div>
+              <div class="values-grid">
+                <div class="value-card">
+                  <div class="v-icon">🎯</div>
+                  <div class="v-name">التركيز على العملاء</div>
+                  <div class="v-desc">المبادئ الثابتة التي توجه القرارات</div>
+                </div>
+                <div class="value-card">
+                  <div class="v-icon">⭐</div>
+                  <div class="v-name">التميز</div>
+                  <div class="v-desc">أفضل الممارسات والمعايير الدولية</div>
+                </div>
+                <div class="value-card">
+                  <div class="v-icon">🤝</div>
+                  <div class="v-name">احترام الآخرين</div>
+                  <div class="v-desc">التوازن بين التكيف والمبادئ</div>
+                </div>
+                <div class="value-card">
+                  <div class="v-icon">👥</div>
+                  <div class="v-name">العمل الجماعي</div>
+                  <div class="v-desc">قيادة تحوّل السوق عبر شراكات</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">ثقافتنا وقيمنا</div>
+              <div class="content-text">تلتزم الشركة بتطبيق أفضل الممارسات العالمية في التشغيل، وأمن المعلومات، وإدارة الخدمات، بما يضمن جودة الخدمة واستمرارية الأعمال وفقًا للمعايير الدولية المعتمدة. رغم قدرتنا العالية على التكيف والاستجابة للتغيير، تظل قيمنا الأساسية ثابتة لا تتزعزع.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: CUSTOMER EXPERIENCE ── -->
+        <div class="section-block" data-category="experience" id="sec-experience">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">✨</span>
+            تجربة العميل – الفرق بين الخدمة والتجربة
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">خدمة العميل</div>
+              <div class="content-text">تقدم للعميل اللي بيدور عليه وتجاوب على أسئلته. ده رد فعل مباشر على طلب واضح.</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">تجربة العميل</div>
+              <div class="content-text">الرحلة اللي العميل بيعيشها من أول ما بيوصل الفرع لحد خدمة ما بعد البيع. سلسلة بتتجمع وبتكون الإنطباع النهائي عن الشركة. مش مجرد بيع وبس... دي تجربة كاملة.</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">عوامل التجربة</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">🏢 الفرع</span>
+                  <ul style="list-style:none;padding:0">
+                    <li>• نظافة الفرع والمنتجات</li>
+                    <li>• خريطة عرض المنتجات</li>
+                    <li>• الموسيقى</li>
+                  </ul>
+                </div>
+                <div style="background:rgba(26,47,110,0.07); border:1px solid rgba(26,47,110,0.2); padding:12px 14px; border-radius:8px; font-size:12.5px; color:#1a2f6e;">
+                  <span class="box-label" style="color:#1a2f6e; font-weight:800; font-size:12px; margin-bottom:6px; display:block;">👥 الفريق</span>
+                  <ul style="list-style:none;padding:0; color:#4a5a8a;">
+                    <li>• الاستقبال والتوديع</li>
+                    <li>• تعامل الفريق مع بعضه</li>
+                    <li>• طريقة التواصل مع العملاء</li>
+                    <li>• المظهر والنظافة الشخصية</li>
+                    <li>• تسهيل الإجراءات</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">نظرة صاحب البيت لتقديم تجربة ناجحة</div>
+              <div class="content-text">هنحقق تجربة ناجحة للعميل لما نتعامل بمنظور مختلف.. تكون شايف العميل كأنه <strong>ضيفك</strong> والضيف دا جايلك <strong>بيتك</strong> اللي هو الفرع. فتقدمله أحسن تجربة يفضل دايما فاكرك بيها عشان يكون عميل دائم. انت هدفك تكسب العميل مش تكسب بس مجرد عملية البيع.</div>
+              <div class="info-row" style="margin-top:10px;">
+                <span class="info-badge badge-blue">🚫 ليس: زبون</span>
+                <span class="info-badge badge-green">✅ العميل = ضيف</span>
+                <span class="info-badge badge-blue">🚫 ليس: محل</span>
+                <span class="info-badge badge-green">✅ الفرع = بيتك</span>
+                <span class="info-badge badge-blue">🚫 ليس: بياع</span>
+                <span class="info-badge badge-green">✅ استشاري بيع</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: BASIC SKILLS ── -->
+        <div class="section-block" data-category="skills" id="sec-skills">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">💡</span>
+            المهارات الأساسية – التواصل والاستماع
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">1- مهارة التواصل الفعال</div>
+              <div class="content-text">اللي هو القدرة على توصيل أفكارك بطريقة يفهمها العميل بشكل صحيح، من خلال الكلام (لفظي) ومن خلال لغة الجسد ونبرة الصوت (غير لفظي). 93% غير لفظي (لغة الجسد ونبرة الصوت) و7% لفظي (الكلمات).</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">التواصل غير اللفظي (93%)</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>التواصل البصري:</strong> استخدام طريقة المثلث (العينين مع الجبهة) + (العينين مع الأنف) - من 3 لـ 5 ثواني. تجنب النظر للشفاه.</li>
+                <li><span class="bullet"></span><strong>الابتسامة:</strong> بنستخدمها في الترحيب، بدون إظهار الأسنان أو المبالغة. لا تُستخدم أثناء غضب العميل.</li>
+                <li><span class="bullet"></span><strong>تعبيرات الوجه:</strong> تعبير وجه بشوش ومفرود بدون تكشير. تعبير عن التضامن عند المشكلات.</li>
+                <li><span class="bullet"></span><strong>وضعية الجسد:</strong> اتجاه الجسد بكلا الكتفين نحو العميل. استقامة الوقوف وعدم تربيع اليدين.</li>
+                <li><span class="bullet"></span><strong>نبرة الصوت:</strong> مستوى صوت متوسط لا عالي ولا منخفض. نبرة مناسبة مع الموقف. تيمبو متوسط.</li>
+                <li><span class="bullet"></span><strong>المسافة مع العميل:</strong> 1م (مقدار ذراع) رجل-رجل / امرأة-امرأة. 1.5م (مقدار ذراع ونصف) رجل-امرأة.</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">التواصل اللفظي (7%) – ألفاظ مناسبة</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">✅ استخدم</span>
+                  حضرتك / فندم / أستاذ / أستاذة / مدام / آنسة
+                </div>
+                <div class="dont-box">
+                  <span class="box-label">🚫 لا تستخدم</span>
+                  أخويا / باشا / بيه / عسوله / حاج / كبير / غالي / معلم
+                </div>
+              </div>
+              <div style="margin-top:10px;">
+                <div class="do-box" style="margin-bottom:8px;">
+                  <span class="box-label">✅ بدلاً من الردود المختصرة قل:</span>
+                  "ممكن أستفسر لحضرتك وأرد عليك حالاً" - "أقترحلك بديل مناسب" - "نشوف مع بعض أنسب حل لحضرتك"
+                </div>
+                <div class="dont-box">
+                  <span class="box-label">🚫 تجنب:</span>
+                  ماعرفش / مش موجود / مش عارف / طيب خلاص / مش هينفع / هو ده الموجود / استنى شوية
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">2- مهارة الاستماع الفعال</div>
+              <div class="personality-grid">
+                <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
+                  <div class="p-title" style="color:#b91c1c;">❌ استماع تظاهري</div>
+                  <div class="p-desc">التظاهر بالاستماع من غير تركيز حقيقي. ردود عامة غير مرتبطة بما قيل.</div>
+                </div>
+                <div class="personality-card" style="border-color:rgba(239,68,68,0.3);">
+                  <div class="p-title" style="color:#b91c1c;">❌ استماع انتقائي</div>
+                  <div class="p-desc">التركيز على أجزاء معينة وتجاهل باقي الرسالة. يوصل انطباع سلبي.</div>
+                </div>
+                <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
+                  <div class="p-title" style="color:#15803d;">✅ استماع فعال</div>
+                  <div class="p-desc">الاستماع بتركيز كامل. اسأل أسئلة توضيحية. أعد صياغة الكلام. لا تقاطع.</div>
+                </div>
+                <div class="personality-card" style="border-color:rgba(34,197,94,0.3);">
+                  <div class="p-title" style="color:#15803d;">✅ استماع تضامني</div>
+                  <div class="p-desc">يُستخدم عند غضب العميل. إظهار التعاطف مع مشاعره. لا ابتسامة نهائياً.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">حواجز تؤثر على المهارات – الضغط</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>حط نفسك مكان العميل:</strong> إن العميل مش عارف ضغوطك، متوقع يعيش تجربة حلوة.</li>
+                <li><span class="bullet"></span><strong>افصل نفسك عند انفعالات العملاء:</strong> الموضوع مرتبط بسبب الانفعال، العميل بيكون منفعل بسبب إحباط من الخدمة مش منك.</li>
+                <li><span class="bullet"></span><strong>افصل مشاكلك الشخصية عن الشغل:</strong> عشان تكون قادر تتعامل مع أي مشكلة.</li>
+                <li><span class="bullet"></span><strong>راقب لغة جسدك:</strong> دا محتاج منك تمرين ورقابة على نفسك بشكل مستمر.</li>
+                <li><span class="bullet"></span><strong>اطلب دعم:</strong> لو مش قادر تتحكم في الموقف، استعين بزميل أو مديرك.</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">المظهر والنظافة الشخصية</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">✅ مسموح به</span>
+                  قميص بولو "راية" نظيف ومكوي<br>
+                  بنطلون جينز غير ممزق<br>
+                  أحذية كاجوال أنيقة
+                </div>
+                <div class="dont-box">
+                  <span class="box-label">🚫 ممنوع</span>
+                  شورت<br>
+                  قميص مجعد أو غير نظيف<br>
+                  شباشب، أحذية رياضية
+                </div>
+              </div>
+              <div class="content-text" style="margin-top:10px;">النظافة الشخصية: الأظافر – اللحية – الشعر – رائحة الفم – رائحة الجسد</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: GUEST METHOD ── -->
+        <div class="section-block" data-category="guest" id="sec-guest">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">🌟</span>
+            منهجية GUEST – خطوات البيع الاحترافي
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <!-- GUEST Steps Bar -->
+            <div class="guest-steps">
+              <div class="guest-step active-step"><span class="step-letter">G</span>Greeting الترحيب</div>
+              <div class="guest-step"><span class="step-letter">U</span>Understand الفهم</div>
+              <div class="guest-step"><span class="step-letter">E</span>Expose العرض</div>
+              <div class="guest-step"><span class="step-letter">S</span>Selling البيع</div>
+              <div class="guest-step"><span class="step-letter">T</span>Thank الشكر</div>
+            </div>
+
+            <div class="subsection" style="margin-top:16px;">
+              <div class="subsection-title">G – الترحيب (Greeting)</div>
+              <div class="content-text">هو أول سلوك بيلاحظه العميل منك لما بيدخل الفرع. عشان العميل يحس بأنه مرحب بيه وبيتعامل كضيف جايلك بيتك (الفرع).</div>
+              <div class="do-dont-grid" style="margin-top:10px;">
+                <div class="do-box">
+                  <span class="box-label">✅ غير لفظي</span>
+                  • ابتسامة صادقة مُرحبة<br>
+                  • تواصل بصري<br>
+                  • وضعية جسم مفتوحة (كلا الكتفين ناحية العميل)
+                </div>
+                <div class="do-box">
+                  <span class="box-label">✅ لفظي</span>
+                  1. صباح الخير / مساء الخير<br>
+                  2. مع حضرتك (اسمك)*<br>
+                  3. أقدر أساعدك ازاي؟**
+                </div>
+              </div>
+              <div class="info-row" style="margin-top:10px;">
+                <span class="info-badge badge-red">⚠️ ماتبدأش بالهزار مع العميل أو تخطي لأي حدود بحجة كسر الحاجز</span>
+              </div>
+              <div class="content-text" style="margin-top:8px; font-size:12px;">* انك تَعَرف العميل باسمك ويكلمك بيه دا بيخلق رابطة إنسانية بينك وبينه.<br>** الألفاظ اللي بتحسس العميل بحسن المعاملة: "تحت أمرك" - "زي ماحضرتك تحب" - "اختيار موفق"</div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">U – فهم العميل (Understand)</div>
+              <div class="content-text">الاستشاري الشاطر هو اللي يعرف يسأل صح فيوصل لاحتياج العميل بسرعة.</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>Value (القيمة):</strong> القيمة الوظيفية / الاقتصادية / الاجتماعية / العاطفية / التجريبية</li>
+                <li><span class="bullet"></span><strong>Pain (الألم):</strong> الحاجات اللي بتزعج العميل – تجربة سيئة سابقة – مشكلة سمع عنها</li>
+                <li><span class="bullet"></span><strong>الملاحظة:</strong> لاحظ طريقة دخوله ونظراته وتوقفه قدام منتج معين</li>
+                <li><span class="bullet"></span><strong>التساؤل:</strong> استخدم الأسئلة المفتوحة أولاً ثم المغلقة</li>
+                <li><span class="bullet"></span><strong>الاستماع الفعال:</strong> بعد السؤال بتيجي أهمية الاستماع</li>
+              </div>
+              <div class="info-row" style="margin-top:10px;">
+                <span class="info-badge badge-red">⚠️ لا تحكم مطلقاً على مظهر العميل في قدرته الشرائية أو طريقة الدفع</span>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">شخصيات العملاء (DISC)</div>
+              <div class="personality-grid">
+                <div class="personality-card">
+                  <div class="p-title">D – Dominant (المستعجل/العصبي)</div>
+                  <div class="p-desc">محدد وحاسم، غير صبور، يحب أن يكون صاحب القرار.<br><strong>افعل:</strong> لخص المنتجات بشكل محدد وكن سريعاً.<br><strong>تجنب:</strong> لا تفرض رؤيتك، لا تعطيه بدائل كثيرة.</div>
+                </div>
+                <div class="personality-card">
+                  <div class="p-title">I – Influencer (الاجتماعي/الودود)</div>
+                  <div class="p-desc">يستخدم لغة جسده كثيراً، يحب يتكلم، مركز الاهتمام.<br><strong>افعل:</strong> تفاعل معه وشارك الأمثلة.<br><strong>تجنب:</strong> لا تقاطعه، لا تهمل تعليقاته.</div>
+                </div>
+                <div class="personality-card">
+                  <div class="p-title">S – Steady (المتردد/الصامت)</div>
+                  <div class="p-desc">مش بيبادر بالكلام، صبور وهادئ، لا يميل للتغيير.<br><strong>افعل:</strong> تضامن معه، أخبره رأيك كخبير، أعطه بدائل قليلة.<br><strong>تجنب:</strong> لا تضغط عليه، لا تعطيه بدائل كثيرة.</div>
+                </div>
+                <div class="personality-card">
+                  <div class="p-title">C – Cautious (الشكاك/الناصح)</div>
+                  <div class="p-desc">دقيق ويهتم بالتفاصيل، منطقي وكثير التساؤلات.<br><strong>افعل:</strong> كن دقيقاً في معلوماتك، اذكرها بطريقة منطقية.<br><strong>تجنب:</strong> لا تتجاهل التفاصيل، لا ترد بإجابات عامة.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">E – عرض المنتج (Expose)</div>
+              <div class="content-text">دور الاستشاري مش بس إنه يبيع مواصفات الجهاز أو يعرض SPECs، دوره إنه يوضح للعميل ازاي المواصفات دي هتفيده هو بالتحديد.</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>المعلومة والفائدة:</strong> اعرض "المعلومة" ثم "الفائدة" = "ايه هو" + "هيفيدك ازاي" + "وهيوفر عليك ايه"</li>
+                <li><span class="bullet"></span><strong>المشكلة والحل:</strong> ابدأ بمشكلة واقعية العملاء ممكن يقابلوها، ثم وضح الحل اللي بيقدمه المنتج</li>
+                <li><span class="bullet"></span><strong>المقارنة:</strong> بتوضيح النقاط البيعية في البراندات المختلفة ومساعدة العميل في تحديد أنسب نوع</li>
+              </div>
+              <div class="dont-box" style="margin-top:10px;">
+                <span class="box-label">🚫 أشهر أخطاء المقارنة:</span>
+                مايسألش عن استخدام العميل / يقارن السعر قبل الأداء / يقول كلام عام من غير أرقام / يميل لبراند واحد / يسيء لبراند معين / يعرض بدائل كثيرة جداً بدون داعي
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">S – المهارات البيعية (Selling)</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">أ – بيع رأسي (Up-selling)</span>
+                  عرض نسخة أعلى من نفس نوع المنتج المطلوب (ضمن احتياج العميل)
+                </div>
+                <div class="do-box">
+                  <span class="box-label">ب – بيع أفقي (Cross-selling)</span>
+                  عرض منتج آخر (مكمل) للمنتج الأساسي
+                </div>
+              </div>
+              <div class="do-box" style="margin-top:8px;">
+                <span class="box-label">ج – بيع بديل</span>
+                عند عدم توافر منتج ما، يجب اقتراح بديل قريب في الجودة أو الاستخدام
+              </div>
+              <div class="subsection-title" style="margin-top:12px;">التفاوض</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>لم يشعر بالقيمة:</strong> ارجع لاحتياج العميل، اربط كلامك عن فائدة المنتج بالحاجة اللي هو فعلاً محتاجها (Value + Pain)</li>
+                <li><span class="bullet"></span><strong>سعر أقل:</strong> استخدم التقسيط كحل للعميل للوصول لمنطقة وسط</li>
+                <li><span class="bullet"></span><strong>مقارنة منافس:</strong> خصومات بناء على المنافس إذا وُضح إنه نفس المنتج بسعر أقل</li>
+                <li><span class="bullet"></span><strong>ركز على القيمة:</strong> لا تبدأ بالسعر، ابدأ بالفائدة. هيوفر ايه على المدى الطويل</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">T – الشكر والتوديع (Thank)</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>إغلاق البيعة:</strong> تلخيص مزايا المنتج مع احتياج العميل في النهاية لتأكيد أن هذا هو المنتج المناسب</li>
+                <li><span class="bullet"></span><strong>رسالة Survey:</strong> بعد إتمام عملية البيع قبل ما العميل يمشي، لازم نعرفه إنه هيجيله Survey في رسالة SMS على تليفونه</li>
+                <li><span class="bullet"></span><strong>التوديع اللفظي:</strong> "نورتنا يا فندم" - "نحب نشوف حضرتك تاني"</li>
+                <li><span class="bullet"></span><strong>التوديع غير اللفظي:</strong> ابتسامة بسيطة – وقفة معتدلة – تواصل بصري مع العميل</li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: COMPLAINTS ── -->
+        <div class="section-block" data-category="complaints" id="sec-complaints">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">🛡️</span>
+            التعامل مع شكاوى العملاء والاعتراضات
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">عند التعامل مع العميل الغاضب – ثلاث خطوات</div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">1</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">الوعي</div>
+                  <div class="protocol-step-text">قبل أي رد فعل، لازم تكون واعي ليه العميل متضايق: هل المشكلة معايا شخصياً؟ لو كنت مكانه، هل كنت هحس بنفس الانفعال؟</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">2</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">التضامن</div>
+                  <div class="protocol-step-text">أظهر تعاطفك بتعابير وجه حريصة: "متفهم موقف حضرتك" أو "لو كنت مكانك كنت هحس كده برضه". تجنب قول كلمات زي "أهدى". لا تستخدم ابتسامة أبداً والعميل متعصب.</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">3</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">الفهم والحل</div>
+                  <div class="protocol-step-text">اسأل أسئلة تساعدك تفهم المشكلة بعمق. رد بطريقة واضحة وصريحة. استخدم كلمات تعكس حرص الشركة: "احنا في RAYA حريصين على تحقيق رضا حضرتك".</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">التعامل مع الاعتراض</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span>الاستماع الجيد + تلخيص الكلام على العميل (عشان يحس أنه فعلاً وصلك رأيه)</li>
+                <li><span class="bullet"></span>شكر العميل على مشاركته لرأيه معنا وأنه رأيه مهم</li>
+                <li><span class="bullet"></span>التأكيد عليه أننا في RAYA بنحرص دايما على التطور والاستماع للعملاء</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">تصعيد الشكاوى – المسار الرسمي (أقصى 48 ساعة)</div>
+              <div class="escalation-flow">
+                <div class="escalation-step">
+                  <div class="e-num e-num-1">1</div>
+                  <div>
+                    <div class="e-title">الموظف (الوجهة الأولى)</div>
+                    <div class="e-desc">استقبال شكوى العميل ومحاولة الحل الفوري</div>
+                  </div>
+                </div>
+                <div class="escalation-step">
+                  <div class="e-num e-num-2">2</div>
+                  <div>
+                    <div class="e-title">مدير الفرع</div>
+                    <div class="e-desc">يتدخل ويحاول حل المشكلة إذا لم يتم الحل</div>
+                  </div>
+                </div>
+                <div class="escalation-step">
+                  <div class="e-num e-num-3">3</div>
+                  <div>
+                    <div class="e-title">مدير المنطقة</div>
+                    <div class="e-desc">يتخذ قراراً فورياً</div>
+                  </div>
+                </div>
+                <div class="escalation-step">
+                  <div class="e-num e-num-4">4</div>
+                  <div>
+                    <div class="e-title">مدير المبيعات</div>
+                    <div class="e-desc">المراجعة النهائية واتخاذ القرار – الحل المرضي لجميع الأطراف</div>
+                  </div>
+                </div>
+              </div>
+              <div class="info-badge badge-red" style="display:inline-block; margin-top:8px; font-size:13px; padding:6px 14px;">⏱️ إجمالي الوقت المسموح لجميع مراحل التصعيد: 48 ساعة كحد أقصى</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: POLICIES ── -->
+        <div class="section-block" data-category="policies" id="sec-policies">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">📋</span>
+            سياسات راية – الاستبدال والاسترجاع
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">الإطار الزمني للاسترجاع</div>
+              <table class="policy-table">
+                <tr>
+                  <th>المدة</th>
+                  <th>الشرط</th>
+                  <th>نوع الحق</th>
+                </tr>
+                <tr>
+                  <td>14 يوم</td>
+                  <td>المنتج بحالته الأصلية (مقفول ومتبرشم)</td>
+                  <td>تغيير الرأي</td>
+                </tr>
+                <tr>
+                  <td>30 يوم</td>
+                  <td>تقديم "تقرير فني" من وكيل المنتج يُثبت العيب</td>
+                  <td>عيوب الصناعة</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">شروط قبول الاسترجاع</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>الفاتورة أولاً:</strong> فاتورة الشراء هي جواز السفر لأي عملية استرجاع</li>
+                <li><span class="bullet"></span><strong>الأجهزة الذكية (الموبايل والتابلت):</strong> العلبة لازم تكون متبرشمة ولم يتم فتحها أو تفعيل الجهاز</li>
+                <li><span class="bullet"></span><strong>منتجات العناية الشخصية:</strong> لأسباب صحية بحتة، لا تُسترجع ولا تُستبدل بمجرد فتح علبتها (إلا في حالة إثبات عيب صيانة)</li>
+                <li><span class="bullet"></span><strong>سوء النقل والاستلام:</strong> لو العميل نقل الجهاز بشكل خاطئ وتضرر، هنا بنعتذر بلباقة عن الاسترجاع</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">طريقة إرجاع الفلوس</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">💵 كاش</span>
+                  العميل بيستلم قيمة المنتج نقداً من أي فرع من فروعنا
+                </div>
+                <div class="do-box">
+                  <span class="box-label">💳 فيزا/بطاقة</span>
+                  المبلغ بيرجع لحسابه خلال 14 يوم عمل عبر طلب Remedy
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">Omni-Channel – راية كلها بيت واحد</div>
+              <div class="content-text">معناها إننا بنقدم للضيف أفضل خدمة من خلال كل قنوات بيع راية، سواء كان أونلاين، في الفرع، أو عن طريق الكول سنتر.</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>سيناريو 1:</strong> المنتج مش عندي → ابحث في الفروع التانية، اعرض الحجز والدفع في فرعك والاستلام من الفرع الآخر</li>
+                <li><span class="bullet"></span><strong>سيناريو 2:</strong> ضيف الأونلاين والكول سنتر → رحب بيه جداً واطلب رقم الأوردر وسلمه المنتج فوراً</li>
+                <li><span class="bullet"></span><strong>سيناريو 3:</strong> شراء المنتج من فرع آخر واسترجاعه → رحب بيه واستلم المرتجع فوراً</li>
+                <li><span class="bullet"></span><strong>سيناريو 4:</strong> المنتج مش في الفروع نهائياً → افتح راية شوب Online وساعد العميل يطلبه</li>
+              </div>
+              <div class="info-row"><span class="info-badge badge-yellow">📞 للاستعلام والاستفسار: 19900</span></div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">C-SAT vs NPS – مقياس نجاح صاحب البيت</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">😊 C-SAT (رضا العميل)</span>
+                  مدى رضاه عن تجربته الآن. الهدف: رضا فوري.<br>
+                  الحساب: عدد التقييمات الإيجابية ÷ إجمالي عدد التقييمات × 100
+                </div>
+                <div class="do-box">
+                  <span class="box-label">📣 NPS (ولاء العميل)</span>
+                  مدى احتمالية ترشيحه لراية. الهدف: ولاء دائم.<br>
+                  الحساب: % المروجين (9-10) - % المنتقدين (0-6)
+                </div>
+              </div>
+              <div class="content-text" style="margin-top:8px; font-style:italic; color:var(--raya-blue);">الـ CSAT بيقيس نجاحك في بيعة النهاردة، لكن الـ NPS بيقيس نجاحك في بناء علاقة دائمة مع العميل.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: INSTALLMENT ── -->
+        <div class="section-block" data-category="installment" id="sec-installment">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">💳</span>
+            بروتوكولات التقسيط
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">برنامج الأفراد (العميل الأساسي)</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>السن:</strong> من 21 لحد 65 سنة (وممكن لحد 67 سنة لو جاب ضامن درجة أولى)</li>
+                <li><span class="bullet"></span><strong>الدخل:</strong> الحد الأدنى للدخل الشهري 3000 جنيه</li>
+                <li><span class="bullet"></span><strong>الشغل:</strong> لازم يكون بقاله في وظيفته الحالية 3 شهور على الأقل</li>
+                <li><span class="bullet"></span><strong>عبء الدين (DBR):</strong> أقساط العميل كلها متعديش 50% من دخله</li>
+                <li><span class="bullet"></span><strong>التعليم:</strong> لو هيقسط بالبطاقة (مكتوب فيها الوظيفة) بنعتمدها بس لازم دخله كحد أدنى 7000 جنيه</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">مناطق ومهن المحظورات (خطوط حمراء)</div>
+              <div class="do-dont-grid">
+                <div class="dont-box">
+                  <span class="box-label">🚫 مناطق Blacklisted</span>
+                  شمال سيناء، حاليب وشلاتين، الواحات، مرسى مطروح، قنطرة شرق
+                </div>
+                <div class="dont-box">
+                  <span class="box-label">🚫 مهن Blacklisted</span>
+                  ضباط الشرطة (إلا لو مدنيين)، الصحفيون، موظفو هيئة الإسعاف، المحامي الحر/المستقل
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">برامج التقسيط الإضافية</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>حد ائتماني مقابل بطاقة:</strong> من 21-65 سنة، مؤهل جامعي، 6 شهور في الوظيفة، بطاقة ائتمان Unsecured</li>
+                <li><span class="bullet"></span><strong>الحد الائتماني مقابل الحد الائتماني:</strong> من شركات: أمان، فاليو، سهولة، كليفر، حالاً، ترو</li>
+                <li><span class="bullet"></span><strong>دخل الراتب الافتراضي:</strong> من 21-65 سنة، مؤهل جامعي، لا تقل عن 3 أشهر في الوظيفة</li>
+                <li><span class="bullet"></span><strong>برنامج أصحاب الأعمال:</strong> سجل تجاري + كشف حساب 6 شهور + زيارة ميدانية للسكن والنشاط</li>
+                <li><span class="bullet"></span><strong>برنامج جيل Z (الطلاب):</strong> طلبة الجامعات الحكومية والخاصة. الضامن: الأب أو الأم بوظيفة مثبتة</li>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">إثبات الدخل – الورق المقبول 100%</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span>مفردات مرتب (مختومة وحديثة، صالحيتها 3 شهور)</li>
+                <li><span class="bullet"></span>كشف حساب بنكي (لآخر 6 شهور) باين فيه تحويل الراتب</li>
+                <li><span class="bullet"></span>الـ Payslip بنجيب بتاع الشهر الحالي + واحد أقدم</li>
+                <li><span class="bullet"></span>رسالة SMS موثقة من جهة العمل فيها صافي القبض</li>
+                <li><span class="bullet"></span>برنت تأميني (حديث مكملش 3 شهور)، مختوم بختم النسر أو طالع من "مصر الرقمية"</li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION: PROTOCOLS ── -->
+        <div class="section-block" data-category="protocols" id="sec-protocols">
+          <div class="section-header" onclick="toggleSection(this)">
+            <span class="section-icon">⚙️</span>
+            البروتوكولات التشغيلية الرئيسية
+            <span class="section-toggle">▾</span>
+          </div>
+          <div class="section-body">
+
+            <div class="subsection">
+              <div class="subsection-title">بروتوكول صاحب البيت (الفتح والإغلاق)</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">⏰ 9:30 صباحاً – الاستعداد</span>
+                  ✅ تأكد من تواجد جميع أفراد الفريق<br>
+                  ✅ تجهيز الفرع: تشغيل الإضاءة والتكييف والأجهزة<br>
+                  ✅ مراجعة سريعة للأهداف اليومية
+                </div>
+                <div class="do-box">
+                  <span class="box-label">⏰ 10:00 صباحاً – فتح الأبواب</span>
+                  ✅ فتح أبواب الفرع واستقبال العملاء بابتسامة واحترافية<br>
+                  <strong>الضيف الأول زي الضيف الأخير، بياخد أحسن خدمة</strong>
+                </div>
+              </div>
+              <div class="dont-box" style="margin-top:10px;">
+                <span class="box-label">🚫 عند الإغلاق:</span>
+                ممنوع تماماً نقفل الأنوار أو نلم الأجهزة أو نحسس العميل إننا مستعجلين. لو عميل دخل الفرع قبل موعد الإغلاق بدقيقة واحدة، يُتعامل كأنه أول عميل في اليوم.
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">بروتوكول إتمام البيع – الخطوات الرسمية</div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">1</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">الاستقبال وكشف الاحتياج</div>
+                  <div class="protocol-step-text">استقبل ضيفك بابتسامة. ابدأ اطرح أسئلة بسيطة وذكية عشان تفهم احتياجاته الفعلية والسبب الأساسي للشراء.</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">2</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">الاختيار والعرض</div>
+                  <div class="protocol-step-text">ساعد العميل يختار المنتج الأنسب. اقترح بدائل مناسبة أو منتجات إضافية (إكسسوارات/أجهزة تكميلية) مع شرح مميزاتها.</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">3</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">المراجعة والتأكيد (قبل السيستم)</div>
+                  <div class="protocol-step-text">راجع مع العميل تفاصيل الطلب كاملة (الموديل - الكمية - السعر النهائي) قبل ما تفتح السيستم. خطوة إلزامية!</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">4</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">شغل السيستم Dynamics</div>
+                  <div class="protocol-step-text">أدخل كود المنتج والكمية، ثم رقم السيريال للأجهزة اللي ليها سيريال. ابحث عن العميل برقم الموبايل.</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">5</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">مرحلة الدفع (Tender)</div>
+                  <div class="protocol-step-text">كاش / بطاقة ائتمان / بطاقة خصم مباشر / تقسيطي / شركات التكنولوجيا المالية (أمان، Valu، Sohoola، Halan). مرونة الدفع: جزء كاش + جزء تقسيط.</div>
+                </div>
+              </div>
+              <div class="protocol-step">
+                <div class="protocol-step-num">6</div>
+                <div class="protocol-step-content">
+                  <div class="protocol-step-title">التسليم وما بعد البيع</div>
+                  <div class="protocol-step-text">اطبع الفاتورة وسلمها للعميل في إيده مع المنتج. اشكره على اختياره لراية. اشرح الضمان بالتفصيل. بلغه بـ Survey التقييم.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">صيانة راية وصيانة الوكيل</div>
+              <div class="do-dont-grid">
+                <div class="do-box">
+                  <span class="box-label">📱 أجهزة صيانتها في راية</span>
+                  الموبايلات، الإكسسوارات، الشاشات (TV)، أجهزة التكنولوجيا واللاب توب، الأجهزة المنزلية الصغيرة والعناية الشخصية
+                </div>
+                <div class="do-box">
+                  <span class="box-label">🔧 أجهزة صيانتها عند الوكيل</span>
+                  سامسونج (19580) – بيكو (16165) – كونتكس TV (19501)
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">بروتوكول حارس البيت – مكافحة الاحتيال</div>
+              <div class="rule-list">
+                <li><span class="bullet"></span><strong>التسييل (الكاش الوهمي):</strong> إن عميل يدخل يشتري أجهزة غالية جداً بالتقسيط، مش عشان يستخدمها، لكن عشان ياخدها يبيعها بالخسارة عشان محتاج كاش</li>
+                <li><span class="bullet"></span><strong>انتحال الشخصية:</strong> شخص جاي يشتري ببطاقة أو بيانات شخص تاني ملوش علاقة بيه</li>
+                <li><span class="bullet"></span><strong>التزوير:</strong> اللعب في البيانات الجوهرية (تزوير مفردات المرتب، إيصالات النور، أو التلاعب في الرقم القومي)</li>
+              </div>
+              <div class="dont-box" style="margin-top:10px;">
+                <span class="box-label">🚫 الوصايا الذهبية – ممنوعات لا تقبل النقاش:</span>
+                • لا تقبل أو تمضي على "صورة" مستند – دائماً اطلب المستند الأصلي<br>
+                • لا توقع بالنيابة عن الضيف مهما كانت الأسباب (تهمة تزوير!)<br>
+                • لا للتعديل بدون إثبات على المستند الأصلي<br>
+                • شككت؟ ارفع سماعة التليفون فوراً وتواصل مع إدارة مكافحة الاحتيال (Fraud Team)
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-title">قاموس لغة صاحب البيت</div>
+              <table class="policy-table">
+                <tr><th>الاختصار</th><th>المصطلح الإنجليزي</th><th>تعريفه</th></tr>
+                <tr><td>HA/MDA</td><td>Home/Medium Domestic Appliances</td><td>الأجهزة المنزلية الكبيرة: الثلاجات، الغسالات، البوتاجازات</td></tr>
+                <tr><td>SDA</td><td>Small Domestic Appliances</td><td>الأجهزة المنزلية الصغيرة: الميكروويف، المكنسة، الخلاط</td></tr>
+                <tr><td>AC</td><td>Air Conditioners</td><td>أجهزة التكييف الموسمية</td></tr>
+                <tr><td>PC</td><td>Personal Care</td><td>أجهزة العناية الشخصية: الحلاقة، السيشوار</td></tr>
+                <tr><td>ACC</td><td>Accessories</td><td>الإكسسوارات: الساعات الذكية، الشواحن، الكابلات</td></tr>
+                <tr><td>POSM</td><td>Point of Sales Materials</td><td>المواد التسويقية: كروت الأسعار، "الأكثر مبيعاً"، "وصل حديثاً"</td></tr>
+                <tr><td>USP</td><td>Unique Selling Proposition</td><td>الميزة التنافسية نقطة البيع الفريدة</td></tr>
+                <tr><td>ASP</td><td>Average Selling Price</td><td>متوسط سعر البيع – مقياس Up-selling</td></tr>
+                <tr><td>DBR</td><td>Debt Burden Ratio</td><td>عبء الدين: أقساط العميل كلها متعديش 50% من دخله</td></tr>
+                <tr><td>MTD</td><td>Month To Date</td><td>مبيعات الشهر حتى تاريخه</td></tr>
+                <tr><td>YOY</td><td>Year Over Year</td><td>المقارنة السنوية</td></tr>
+                <tr><td>VM</td><td>Visual Merchandising</td><td>العرض المرئي – فن شياكة واجهة بيتك</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end manualContent -->
+    </div><!-- end content-scroll -->
+  </div><!-- end manual-panel -->
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- RIGHT PANEL: AI CHATBOT -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="chat-panel" id="chatPanel">
+
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-avatar">🤖</div>
+      <div class="chat-info">
+        <div class="chat-name">مساعد راية الذكي</div>
+        <div class="chat-status">● متصل الآن – يعمل من الدليل الرسمي فقط</div>
+      </div>
+      <span class="chat-model-tag">Claude AI</span>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="welcome-msg">
+        أهلاً وسهلاً! 👋<br><br>
+        أنا <strong>مساعد راية الذكي</strong>، هنا عشان أساعدك تفهم وتراجع كل حاجة في دليل مستشار راية.<br><br>
+        📌 <strong>ملاحظة مهمة:</strong> إجاباتي محدودة بـ<strong>محتوى الدليل الرسمي</strong> فقط. لو سألت عن حاجة مش موجودة فيه، هقولك بصراحة.
+      </div>
+    </div>
+
+    <!-- Typing -->
+    <div class="typing-indicator" id="typingIndicator">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Quick Questions -->
+    <div class="quick-questions" id="quickQuestions">
+      <button class="quick-q" onclick="sendQuickQ(this)">ما هو منهج GUEST؟</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">شروط التقسيط للأفراد</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">كيف أتعامل مع العميل الغاضب؟</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">سياسة الاسترجاع</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">قيم راية الأساسية</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">أنواع شخصيات العملاء</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">المناطق الـ Blacklisted</button>
+      <button class="quick-q" onclick="sendQuickQ(this)">ما هو الـ C-SAT والـ NPS؟</button>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <textarea class="chat-textarea" id="chatInput" placeholder="اسأل أي سؤال عن الدليل..." rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+      </div>
+      <div class="input-disclaimer">
+        🔒 الإجابات من دليل مستشار راية فقط
+      </div>
+    </div>
+
+  </div><!-- end chat-panel -->
+
+</div><!-- end app-layout -->
+
+<!-- Mobile Chat Toggle -->
+<button class="mobile-chat-toggle" onclick="toggleMobileChat()">💬</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<script>
+// ─── KNOWLEDGE BASE (extracted from the PDF) ────────────────────────
+const KNOWLEDGE_BASE = [
+  {
+    id: "culture_vision",
+    section: "ثقافة راية – الهوية الاستراتيجية",
+    category: "culture",
+    keywords: ["رؤية", "مهمة", "هوية", "استراتيجية", "قيم", "ثقافة", "رسالة"],
+    content: `رؤية راية: أن نكون الشريك التجاري الأكثر تأثيراً وثقة، من خلال وضع معايير جديدة في تجربة العملاء، وتقديم حلول قائمة على القيمة، والتميز في خدمات ما بعد البيع، والتمكين المالي — بما يرسخ شراكات طويلة الأمد تُسهم في تشكيل المستقبل. مهمة راية: قيادة تحوّل السوق عبر شراكات استراتيجية، وابتكار مستدام، وحلول تركّز على العميل، بهدف توسيع نطاق الوصول ووضع معايير جديدة للقطاع. القيم الأساسية: التركيز على العملاء، التميز، احترام الآخرين، العمل الجماعي.`
+  },
+  {
+    id: "experience_difference",
+    section: "تجربة العميل",
+    category: "experience",
+    keywords: ["تجربة", "خدمة", "فرق", "ضيف", "عميل", "صاحب البيت", "رحلة"],
+    content: `الفرق بين خدمة وتجربة العميل: خدمة العميل هي رد فعل مباشر على طلب واضح. تجربة العميل هي الرحلة اللي العميل بيعيشها من أول ما بيوصل الفرع لحد خدمة ما بعد البيع. لتقديم تجربة ناجحة يجب أن تعامل العميل كأنه ضيفك والفرع هو بيتك. المصطلحات الصحيحة: العميل (وليس زبون)، الفرع (وليس محل)، استشاري بيع (وليس بياع).`
+  },
+  {
+    id: "communication_skills",
+    section: "مهارة التواصل الفعال",
+    category: "skills",
+    keywords: ["تواصل", "لغة الجسد", "نبرة", "صوت", "ابتسامة", "مسافة", "بصري", "مهارة"],
+    content: `مهارة التواصل الفعال: القدرة على توصيل الأفكار بطريقة صحيحة من خلال الكلام (لفظي 7%) ولغة الجسد ونبرة الصوت (غير لفظي 93%). التواصل البصري: استخدام طريقة المثلث (العينين مع الجبهة + العينين مع الأنف) من 3 لـ 5 ثواني. المسافة مع العميل: 1م رجل-رجل أو امرأة-امرأة، 1.5م رجل-امرأة. الابتسامة: بنستخدمها في الترحيب فقط، بدون إظهار الأسنان، لا تُستخدم أثناء غضب العميل. نبرة الصوت: متوسطة لا عالية ولا منخفضة، مناسبة للموقف.`
+  },
+  {
+    id: "listening_skills",
+    section: "مهارة الاستماع الفعال",
+    category: "skills",
+    keywords: ["استماع", "فعال", "تضامني", "انتقائي", "تظاهري", "إعادة صياغة", "مقاطعة"],
+    content: `أنواع الاستماع: 1) استماع تظاهري (❌): التظاهر بالاستماع بدون تركيز حقيقي. 2) استماع انتقائي (❌): التركيز على أجزاء معينة وتجاهل باقي الرسالة. 3) استماع فعال (✅): الاستماع بتركيز كامل، اسأل أسئلة توضيحية، لا تقاطع، أعد صياغة الكلام للتأكيد. 4) استماع تضامني (✅): يُستخدم عند غضب العميل أو حدوث مشكلة، إظهار التعاطف، لا ابتسامة نهائياً.`
+  },
+  {
+    id: "greeting",
+    section: "G – الترحيب (Greeting)",
+    category: "guest",
+    keywords: ["ترحيب", "greeting", "G", "استقبال", "صباح", "مساء", "اسم", "أساعدك"],
+    content: `الترحيب هو أول سلوك بيلاحظه العميل. غير اللفظي: ابتسامة صادقة مُرحبة، تواصل بصري، وضعية جسم مفتوحة. اللفظي: 1- صباح الخير / مساء الخير (من 8ص-12ظ | من 12ظ-12ص) 2- مع حضرتك (اسمك) 3- أقدر أساعدك ازاي؟. تعريف باسمك يخلق رابطة إنسانية. الألفاظ المحببة: "تحت أمرك" - "زي ماحضرتك تحب" - "اختيار موفق". تحذير: ماتبدأش بالهزار مع العميل أو تخطي لأي حدود بحجة كسر الحاجز. الاستشاري مسؤول عن استقبال العميل وليس البروموتر.`
+  },
+  {
+    id: "understand_value",
+    section: "U – فهم احتياج العميل",
+    category: "guest",
+    keywords: ["فهم", "understand", "U", "احتياج", "value", "pain", "قيمة", "وظيفية", "اقتصادية", "عاطفية"],
+    content: `فهم احتياج العميل: الاستشاري الشاطر يسأل صح. Value (القيمة): القيمة الوظيفية (يؤدي الغرض)، القيمة الاقتصادية (توفير المال)، القيمة الاجتماعية (المظهر والترند)، القيمة العاطفية (الأمان والراحة والسعادة)، القيمة التجريبية (سهولة الاستخدام والخدمة). Pain (الألم): تجربة سيئة سابقة، مشكلة سمع عنها، إحباط من منتج قديم. 3 حاجات لتحديد الاحتياج: الملاحظة (طريقة الدخول والتوقف) - التساؤل (أسئلة مفتوحة ثم مغلقة) - الاستماع.`
+  },
+  {
+    id: "customer_types",
+    section: "شخصيات العملاء DISC",
+    category: "guest",
+    keywords: ["شخصية", "dominant", "influencer", "steady", "cautious", "عصبي", "ودود", "متردد", "شكاك", "DISC"],
+    content: `شخصيات العملاء: D (Dominant/المستعجل): محدد وحاسم، غير صبور. افعل: لخص المنتجات بسرعة. تجنب: لا تفرض رؤيتك، لا تعطيه بدائل كثيرة. I (Influencer/الاجتماعي): يستخدم لغة جسده كثيراً، مركز الاهتمام. افعل: تفاعل معه وشارك الأمثلة والترند. تجنب: لا تقاطعه، لا تهمل تعليقاته. S (Steady/المتردد): صبور وهادئ، لا يميل للتغيير، محتاج توجيه. افعل: تضامن معه وأعطه بدائل قليلة. تجنب: لا تضغط عليه، لا تعطيه بدائل كثيرة. C (Cautious/الشكاك): دقيق ومنطقي وكثير التساؤلات. افعل: كن دقيقاً في معلوماتك، اذكرها بطريقة منطقية. تجنب: لا تتجاهل التفاصيل، لا ترد بإجابات عامة.`
+  },
+  {
+    id: "expose_product",
+    section: "E – عرض المنتج (Expose)",
+    category: "guest",
+    keywords: ["عرض", "expose", "E", "منتج", "مواصفات", "فائدة", "مقارنة", "براند"],
+    content: `طرق عرض المنتج: 1) المعلومة والفائدة: عرض "ايه هو" ثم "هيفيدك ازاي" ثم "هيوفر عليك ايه". المعلومة من أي مصدر، الفائدة مخصصة لاحتياج العميل. 2) المشكلة والحل: ابدأ بمشكلة واقعية يواجهها العميل في الاستخدام اليومي، ثم وضح الحل اللي بيقدمه المنتج. 3) المقارنة: بتوضيح النقاط البيعية في البراندات المختلفة. أشهر أخطاء المقارنة: مايسألش عن استخدام العميل / يقارن السعر قبل الأداء / يميل لبراند واحد / يسيء لبراند معين / يعرض بدائل كثيرة.`
+  },
+  {
+    id: "selling_skills",
+    section: "S – المهارات البيعية (Selling)",
+    category: "guest",
+    keywords: ["بيع", "selling", "S", "up-selling", "cross-selling", "بيع رأسي", "بيع أفقي", "بديل", "تفاوض"],
+    content: `المهارات البيعية: أ) بيع رأسي (Up-selling): عرض نسخة أعلى من نفس نوع المنتج ضمن احتياج العميل. ب) بيع أفقي (Cross-selling): عرض منتج آخر مكمل للمنتج الأساسي. ج) بيع بديل: عند عدم توافر منتج ما، يجب اقتراح بديل قريب في الجودة. شروط النجاح: مرتبط باحتياج العميل / في التوقيت المناسب / المعرفة الجيدة بالمنتجات. التفاوض: ركز على القيمة Framing، لا تبدأ بالسعر ابدأ بالفائدة، استخدم التقسيط كحل وسط.`
+  },
+  {
+    id: "thank_close",
+    section: "T – الشكر والتوديع (Thank)",
+    category: "guest",
+    keywords: ["شكر", "thank", "T", "إغلاق", "توديع", "بيعة", "ملخص", "survey", "تقييم"],
+    content: `إغلاق البيعة: المرحلة الفاصلة التي تؤكد قرار العميل. إغلاق الملخص: تلخيص مزايا المنتج مع احتياج العميل. إجراءات التقسيط: تحفيز العميل لاتخاذ خطوة نحو قرار الشراء. بعد إتمام البيع: أخبر العميل أنه هيجيله Survey في رسالة SMS على تليفونه عبارة عن سؤالين. التوديع اللفظي: "نورتنا يا فندم" - "نحب نشوف حضرتك تاني". التوديع غير اللفظي: ابتسامة بسيطة، وقفة معتدلة، تواصل بصري.`
+  },
+  {
+    id: "complaints_handling",
+    section: "شكاوى العملاء",
+    category: "complaints",
+    keywords: ["شكوى", "غضب", "مشكلة", "اعتراض", "تعامل", "عميل غاضب", "حل", "تضامن"],
+    content: `التعامل مع شكاوى العملاء: عند التعامل مع العميل الغاضب نركز على أمرين: 1) احتواء غضبه + 2) تقديم حل. الخطوات: الوعي: قبل أي رد فعل، لازم تكون واعي ليه العميل متضايق. التضامن: أظهر تعاطفك: "متفهم موقف حضرتك" أو "لو كنت مكانك كنت هحس كده برضه". لا تستخدم ابتسامة أبداً والعميل متعصب. الفهم: اسأل أسئلة تساعدك تفهم المشكلة بعمق. الرد/الحل: رد بطريقة واضحة وصريحة. "احنا في RAYA حريصين على تحقيق رضا حضرتك". مسار التصعيد (أقصى 48 ساعة): الموظف ← مدير الفرع ← مدير المنطقة ← مدير المبيعات.`
+  },
+  {
+    id: "return_policy",
+    section: "سياسة الاستبدال والاسترجاع",
+    category: "policies",
+    keywords: ["استرجاع", "استبدال", "سياسة", "14 يوم", "30 يوم", "فاتورة", "فلوس", "رجوع", "إرجاع"],
+    content: `سياسة الاسترجاع "حق الضيف وحق البيت": فترة 14 يوم (تغيير الرأي): من حق الضيف يستبدل أو يسترجع المنتج خلال 14 يوم من تاريخ الشراء بشرط أن المنتج بحالته الأصلية (مقفول ومتبرشم). فترة 30 يوم (عيوب الصناعة): لو ظهر عيب فني في المنتج، الشرط الأساسي تقديم "تقرير فني" من وكيل المنتج. شروط قبول الاسترجاع: الفاتورة أولاً / الأجهزة الذكية: العلبة متبرشمة / منتجات العناية الشخصية: لا تُسترجع بعد الفتح / سوء النقل: نعتذر بلباقة. طريقة إرجاع الفلوس: كاش = نقداً من أي فرع. فيزا = المبلغ بيرجع لحسابه خلال 14 يوم عمل.`
+  },
+  {
+    id: "installment_basic",
+    section: "بروتوكول التقسيط – برنامج الأفراد",
+    category: "installment",
+    keywords: ["تقسيط", "أفراد", "شروط", "دخل", "سن", "وظيفة", "DBR", "تقسيطي"],
+    content: `شروط التقسيط للأفراد: السن: من 21 لحد 65 سنة (وممكن لحد 67 سنة لو جاب ضامن درجة أولى). الدخل: الحد الأدنى 3000 جنيه شهرياً. الشغل: لازم يكون بقاله في وظيفته الحالية 3 شهور على الأقل. عبء الدين (DBR): أقساط العميل كلها متعديش 50% من دخله. لو هيقسط بالبطاقة (مكتوب فيها الوظيفة): لازم دخله كحد أدنى 7000 جنيه. الوظائف الحكومية المؤقتة: بنقبلها بشرط يجيب برنت تأميني ودخله لا يقل عن 7000 جنيه.`
+  },
+  {
+    id: "installment_blacklist",
+    section: "بروتوكول التقسيط – المحظورات",
+    category: "installment",
+    keywords: ["محظور", "blacklist", "مناطق", "مهن", "ممنوع", "سيناء", "محامي", "صحفي"],
+    content: `المحظورات (خطوط حمراء): مناطق لا نقسط لها (Blacklisted Areas): شمال سيناء، حاليب وشلاتين، الواحات، مرسى مطروح، قنطرة شرق. مهن لا نقسط لها (Blacklisted Professions): ضباط الشرطة (إلا لو مدنيين)، الصحفيون، موظفو هيئة الإسعاف، المحامي الحر/المستقل (بنقبل المحامي بس لو بطاقته مكتوب فيها إنه موظف جوه شركة). ورق مرفوض تماماً: شهادة الدخل من أي محاسب قانوني، أو الوظائف الحكومية بنظام "اليومية".`
+  },
+  {
+    id: "installment_programs",
+    section: "برامج التقسيط الإضافية",
+    category: "installment",
+    keywords: ["بطاقة", "ائتمان", "حد ائتماني", "أمان", "فاليو", "سهولة", "كليفر", "حالاً", "ترو", "أصحاب أعمال", "طلاب"],
+    content: `برنامج حد ائتماني مقابل بطاقة: من 21-65 سنة، مؤهل جامعي، 6 شهور في الوظيفة، بطاقة ائتمان Unsecured (غير مضمنة). برنامج الحد الائتماني مقابل الحد الائتماني (شركات التقسيط): الشركات المعتمدة: أمان (Aman)، فاليو (Valu)، سهولة (Souhoula)، كليفر (Clever)، حالاً (Halan)، ترو (True). برنامج أصحاب الأعمال (Self-Employed): سجل تجاري + كشف حساب 6 شهور + زيارة ميدانية. برنامج جيل Z (الطلاب): طلبة الجامعات الحكومية والخاصة. الضامن: الأب أو الأم بوظيفة مثبتة.`
+  },
+  {
+    id: "omni_channel",
+    section: "Omni-Channel – راية كلها بيت واحد",
+    category: "policies",
+    keywords: ["omni", "channel", "قنوات", "أونلاين", "كول سنتر", "فروع", "شحن", "طلب"],
+    content: `Omni-Channel: تقديم أفضل خدمة من خلال كل قنوات بيع راية. السيناريوهات: 1) المنتج مش عندي في الفرع: ابحث في الفروع التانية، اعرض الحجز والدفع في فرعك والاستلام من الفرع الآخر. 2) ضيف الأونلاين والكول سنتر: رحب بيه جداً واطلب رقم الأوردر وسلمه المنتج فوراً. 3) شراء من فرع آخر واسترجاع: استلمه فوراً وساعده. 4) المنتج مش في الفروع نهائياً: افتح راية شوب Online وساعد العميل يطلبه. للاستعلام والاستفسار: 19900.`
+  },
+  {
+    id: "csat_nps",
+    section: "C-SAT vs NPS",
+    category: "policies",
+    keywords: ["csat", "nps", "تقييم", "رضا", "ولاء", "مروجون", "منتقدون", "سلبيون", "مؤشر"],
+    content: `C-SAT (Customer Satisfaction): مقياس رضا العميل عن تجربته الآن. الهدف: رضا فوري. الحساب: عدد التقييمات الإيجابية ÷ إجمالي عدد التقييمات × 100. NPS (Net Promoter Score): صافي نقاط الترويج. الهدف: ولاء دائم. الحساب: % المروجين (تقييم 9-10) - % المنتقدين (تقييم 0-6). السلبيون (تقييم 7-8): عملاء راضين لكن بولاء والم. الـ CSAT بيقيس نجاحك في بيعة النهاردة، لكن الـ NPS بيقيس نجاحك في بناء علاقة دائمة مع العميل.`
+  },
+  {
+    id: "teamwork",
+    section: "العمل كفريق",
+    category: "culture",
+    keywords: ["فريق", "تعاون", "إدارات", "فروع", "بروموتر", "شركة", "موحد"],
+    content: `العمل كفريق: التجربة الناجحة للعميل مش فردية، بترجع للفريق. كلنا بالنسبة للعميل بنمثل راية. التعاون بين الإدارات: لو العميل اشتكى من إدارة معينة (IT أو المخازن)، لا تقول "المشكلة من قسم كذا مش مننا". الصح إننا كلنا حاجة واحدة. لا تدخل العميل أبداً أو تحكيله عن مشاكل الشركة الداخلية. التعاون داخل الفرع: كلنا لازم نكون بنتعامل بنفس الطريقة وبنتكلم بنفس اللغة مع العميل. أنت صاحب البيت والعميل ضيفك. البروموتر يقوم بدور مساعد ليك. التعاون بين الفروع: الزم كل الفروع يكون مُوحد فيها طريقة التعامل.`
+  },
+  {
+    id: "protocols_opening",
+    section: "بروتوكول صاحب البيت (الفتح والإغلاق)",
+    category: "protocols",
+    keywords: ["فتح", "إغلاق", "بروتوكول", "9:30", "10", "أجهزة العرض", "تجهيز", "آخر ضيف"],
+    content: `بروتوكول صاحب البيت: 9:30 صباحاً – الاستعداد: تأكد من تواجد جميع أفراد الفريق / تجهيز الفرع: تشغيل الإضاءة والتكييف وأجهزة العرض / مراجعة سريعة للأهداف اليومية / لبس اليونيفورم. سياسة الملابس: مسموح: قميص بولو راية نظيف ومكوي، بنطلون جينز غير ممزق، أحذية كاجوال أنيقة. ممنوع: شورت، قميص مجعد، شباشب، أحذية رياضية. 10:00 صباحاً – فتح الأبواب: استقبال العملاء بابتسامة. بروتوكول الإغلاق: لو عميل دخل الفرع قبل موعد الإغلاق بدقيقة، يُتعامل كأنه أول عميل في اليوم. ممنوع نقفل الأنوار أو نلم الأجهزة أو نحسس العميل باستعجال.`
+  },
+  {
+    id: "protocols_completion",
+    section: "بروتوكول إتمام البيع",
+    category: "protocols",
+    keywords: ["إتمام البيع", "dynamics", "سيريال", "tender", "دفع", "فاتورة", "ضمان", "QR"],
+    content: `بروتوكول إتمام البيع: 1) الاستقبال وكشف الاحتياج 2) الاختيار والعرض 3) المراجعة والتأكيد (قبل السيستم) – خطوة إلزامية 4) شغل السيستم Dynamics: أدخل كود المنتج والكمية + رقم السيريال للأجهزة اللي ليها سيريال. 5) مرحلة الدفع Tender: كاش / بطاقة ائتمان / بطاقة خصم / تقسيطي / Valu/Sohoola/Halan/أمان. 6) التسليم وما بعد البيع: اطبع الفاتورة + شرح الضمان بالتفصيل (من المسئول؟ عناوين الصيانة؟ تفعيل QR للبراندات: De'Longhi, Kenwood, Philips, Sary, Braun). إبلاغ العميل بـ Survey التقييم.`
+  },
+  {
+    id: "maintenance",
+    section: "صيانة راية وصيانة الوكيل",
+    category: "policies",
+    keywords: ["صيانة", "وكيل", "سامسونج", "بيكو", "كونتكس", "مراكز صيانة"],
+    content: `أجهزة صيانتها في راية (تتدخل صيانة راية): الموبايلات والإكسسوارات (ACE, AllCall, Aukey, Benco, CMF, HMD, Hoco, Huawei, IKU, Infinix, itel, Lenovo, Micromax, Motorola, Nokia, Nothing, Oraimo, TECNO, SARY) / أجهزة التكنولوجيا واللاب توب (Asus, Canon, Lexmark, Xerox, MSI) / الشاشات (TV): Beko, SARY / الأجهزة المنزلية الصغيرة والعناية الشخصية: Braun, DELONGHI, Kenwood, Philips, SARY. أجهزة صيانتها عند الوكيل الخارجي: سامسونج (19580) – بيكو – الأجهزة المنزلية الكبيرة (16165) / كونتكس – الشاشات (19501).`
+  },
+  {
+    id: "antifraud",
+    section: "بروتوكول حارس البيت – مكافحة الاحتيال",
+    category: "protocols",
+    keywords: ["احتيال", "حارس", "تزوير", "انتحال", "تسييل", "KYC", "fraud", "شك", "مستند"],
+    content: `بروتوكول حارس البيت: أنواع الاحتيال الشائعة: 1) التسييل (الكاش الوهمي): شراء أجهزة غالية بالتقسيط وبيعها فوراً بالخسارة للحصول على كاش. 2) انتحال الشخصية: شراء ببطاقة أو بيانات شخص آخر. 3) التزوير: تزوير مفردات المرتب أو إيصالات النور أو التلاعب في الرقم القومي. الوصايا الذهبية: راجع الأصل بنفسك (دائماً اطلب المستند الأصلي) / لا توقع بالنيابة عن الضيف (تهمة تزوير!) / لا للتعديل بدون إثبات / شككت؟ تواصل فوراً مع إدارة مكافحة الاحتيال (Fraud Team). قاعدة KYC: "متبيعش لمجهول".`
+  },
+  {
+    id: "glossary",
+    section: "قاموس لغة صاحب البيت",
+    category: "protocols",
+    keywords: ["قاموس", "HA", "MDA", "SDA", "AC", "ACC", "POSM", "USP", "ASP", "DBR", "MTD", "YOY", "VM", "مصطلح"],
+    content: `قاموس المصطلحات: HA/MDA = الأجهزة المنزلية الكبيرة (ثلاجات، غسالات، بوتاجازات) / SDA = الأجهزة المنزلية الصغيرة (ميكروويف، مكنسة، خلاط) / AC = أجهزة التكييف / PC = أجهزة العناية الشخصية / ACC = الإكسسوارات / POSM = المواد التسويقية البيعية (كروت الأسعار) / USP = الميزة التنافسية الفريدة / ASP = متوسط سعر البيع / DBR = عبء الدين (لا تتعدى 50% من الدخل) / MTD = مبيعات الشهر حتى تاريخه / YOY = المقارنة السنوية / VM = العرض المرئي / Attach Rate = معدل المرفقات (Cross-selling) / Target = الهدف اليومي / Ach = المحقق الفعلي / Incentive = العمولة / Contest = المسابقات البيعية.`
+  },
+  {
+    id: "visual_merchandising",
+    section: "بروتوكول واجهة بيتك – العرض والكروت",
+    category: "protocols",
+    keywords: ["عرض", "كروت", "POSM", "واجهة", "خريطة منتجات", "رص", "ترتيب", "best seller", "new arrival"],
+    content: `بروتوكول واجهة بيتك: كارت السعر إلزامي لكل منتج. خريطة عرض المنتجات: الإكسسوارات بترتيب تصاعدي (ساعات ذكية → سماعات → شواحن → كابلات). الشاشات والغسالات: من الأصغر للأكبر. الثلاجات: من الأكبر للأصغر. البوتاجازات: حسب المقاس ثم السعر تصاعدياً. الكروت البيعية: Best Seller = أسفل يمين المنتج / عرض خاص (قبل وبعد) = زاوية علوية يمنى / تقسيط زيرو = زاوية يمنى سفلى أو منتصف / هدية مجانية أو Clearance = لخلق الاستعجال. الكارت البيعي "آخر قطعة" = يُستخدم عند المخزون المحدود.`
+  }
+];
+
+// ─── SYSTEM PROMPT (exported for backend use) ─────────────────────
+const SYSTEM_PROMPT = `أنت "مساعد راية الذكي"، مساعد ذكاء اصطناعي متخصص حصرياً في دليل مستشار راية (Raya Advisor Guide).
+
+قواعد صارمة لا تقبل الاستثناء:
+1. يجب أن تستخرج إجاباتك فقط وحصرياً من محتوى دليل مستشار راية المرفق.
+2. يُمنع منعاً باتاً استخدام أي معلومات خارجية أو تأليف إجابات أو الاستنتاج خارج النص.
+3. إذا سأل المستخدم عن معلومة غير موجودة صراحةً في الدليل، يجب أن تكون إجابتك: "عذراً، هذه المعلومة غير متوفرة في دليل الاستخدام الحالي."
+4. دائماً أشر إلى القسم أو الموضوع الذي جلبت منه الإجابة.
+5. استخدم اللغة العربية العامية المصرية المهنية (كما في الدليل).
+6. لا تُجب بـ"نعم" أو "لا" فقط، بل قدم إجابة مفصلة مبنية على نص الدليل.
+7. إذا كان السؤال غامضاً، اطلب توضيحاً.
+8. رتب الإجابة بشكل واضح ومنظم مع نقاط إذا كانت الإجابة متعددة العناصر.
+
+البيانات المتاحة: ${JSON.stringify(KNOWLEDGE_BASE.map(k => ({ id: k.id, section: k.section, content: k.content })))}`;
+
+// ─── SEARCH ENGINE ─────────────────────────────────────────────────
+let searchTimeout = null;
+let currentQuery = '';
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  const q = e.target.value.trim();
+  document.getElementById('searchClear').style.display = q ? 'block' : 'none';
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => performSearch(q), 280);
+});
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  document.getElementById('searchStats').textContent = '';
+  document.getElementById('searchResults').classList.remove('active');
+  document.getElementById('manualContent').classList.remove('hidden');
+  currentQuery = '';
+}
+
+function performSearch(query) {
+  currentQuery = query;
+  const resultsEl = document.getElementById('searchResults');
+  const manualEl = document.getElementById('manualContent');
+  const statsEl = document.getElementById('searchStats');
+
+  if (!query || query.length < 2) {
+    resultsEl.classList.remove('active');
+    manualEl.classList.remove('hidden');
+    statsEl.textContent = '';
+    return;
+  }
+
+  resultsEl.classList.add('active');
+  manualEl.classList.add('hidden');
+
+  const q = query.toLowerCase().trim();
+  const results = [];
+
+  KNOWLEDGE_BASE.forEach(item => {
+    const fullText = item.content + ' ' + item.keywords.join(' ') + ' ' + item.section;
+    if (fullText.toLowerCase().includes(q)) {
+      const idx = item.content.toLowerCase().indexOf(q);
+      let snippet = item.content;
+      if (idx > -1) {
+        const start = Math.max(0, idx - 100);
+        const end = Math.min(item.content.length, idx + query.length + 120);
+        snippet = (start > 0 ? '...' : '') + item.content.substring(start, end) + (end < item.content.length ? '...' : '');
+      }
+      snippet = snippet.replace(new RegExp('(' + escapeRe(query) + ')', 'gi'), '<mark>$1</mark>');
+      results.push({ section: item.section, snippet, id: item.id });
+    }
+  });
+
+  if (results.length === 0) {
+    resultsEl.innerHTML = `<div class="no-results"><div class="no-results-icon">🔍</div><div class="no-results-text">لا توجد نتائج لـ "${query}"</div><div class="no-results-sub">جرب كلمات أخرى أو تحقق من التهجئة</div></div>`;
+    statsEl.innerHTML = '';
+    return;
+  }
+
+  statsEl.innerHTML = `<span class="count">${results.length}</span> نتيجة لـ "<strong>${query}</strong>"`;
+  resultsEl.innerHTML = results.map(r => `
+    <div class="search-result-card" onclick="scrollToSection('${r.id}')">
+      <div class="result-section-tag">📌 ${r.section}</div>
+      <div class="result-text">${r.snippet}</div>
+    </div>
+  `).join('');
+}
+
+function escapeRe(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function scrollToSection(id) {
+  clearSearch();
+  const mapping = {
+    'culture_vision': 'sec-culture',
+    'experience_difference': 'sec-experience',
+    'communication_skills': 'sec-skills',
+    'listening_skills': 'sec-skills',
+    'greeting': 'sec-guest',
+    'understand_value': 'sec-guest',
+    'customer_types': 'sec-guest',
+    'expose_product': 'sec-guest',
+    'selling_skills': 'sec-guest',
+    'thank_close': 'sec-guest',
+    'complaints_handling': 'sec-complaints',
+    'return_policy': 'sec-policies',
+    'installment_basic': 'sec-installment',
+    'installment_blacklist': 'sec-installment',
+    'installment_programs': 'sec-installment',
+    'omni_channel': 'sec-policies',
+    'csat_nps': 'sec-policies',
+    'teamwork': 'sec-culture',
+    'protocols_opening': 'sec-protocols',
+    'protocols_completion': 'sec-protocols',
+    'maintenance': 'sec-policies',
+    'antifraud': 'sec-protocols',
+    'glossary': 'sec-protocols',
+    'visual_merchandising': 'sec-protocols'
+  };
+  const secId = mapping[id] || id;
+  const el = document.getElementById(secId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.style.outline = '2px solid #3a6fd8';
+    setTimeout(() => { el.style.outline = ''; }, 2000);
+    const block = el.querySelector('.section-block');
+    if (block && block.classList.contains('collapsed')) {
+      block.classList.remove('collapsed');
+    }
+  }
+}
+
+// ─── TOC FILTER ─────────────────────────────────────────────────────
+function filterSection(category, chip) {
+  document.querySelectorAll('.toc-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  clearSearch();
+  const sections = document.querySelectorAll('.section-block');
+  sections.forEach(s => {
+    if (category === 'all') {
+      s.style.display = '';
+    } else {
+      s.style.display = s.dataset.category === category ? '' : 'none';
+    }
+  });
+}
+
+// ─── SECTION COLLAPSE ─────────────────────────────────────────────
+function toggleSection(header) {
+  const block = header.parentElement;
+  block.classList.toggle('collapsed');
+}
+
+// ─── AI CHATBOT ─────────────────────────────────────────────────────
+let isTyping = false;
+
+function getCurrentTime() {
+  const now = new Date();
+  return now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+}
+
+function sendQuickQ(btn) {
+  const text = btn.textContent;
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+function handleKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function appendMessage(role, text, source) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatarIcon = role === 'user' ? '👤' : '🤖';
+  const timeStr = getCurrentTime();
+  const sourceHtml = (role === 'bot' && source) ? `<div class="msg-source">📌 المصدر: <span class="msg-source-tag">${source}</span></div>` : '';
+  div.innerHTML = `
+    <div class="msg-avatar-small">${avatarIcon}</div>
+    <div>
+      <div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>
+      ${sourceHtml}
+      <div class="msg-time">${timeStr}</div>
+    </div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping(show) {
+  const ti = document.getElementById('typingIndicator');
+  ti.className = show ? 'typing-indicator visible' : 'typing-indicator';
+  if (show) {
+    const msgs = document.getElementById('chatMessages');
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
+
+function sendMessage() {
+  if (isTyping) return;
+  const input = document.getElementById('chatInput');
+  const q = input.value.trim();
+  if (!q) return;
+
+  appendMessage('user', q);
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+  isTyping = true;
+  showTyping(true);
+
+  setTimeout(() => {
+    const answer = generateAnswer(q);
+    showTyping(false);
+    appendMessage('bot', answer.text, answer.source);
+    document.getElementById('sendBtn').disabled = false;
+    isTyping = false;
+  }, 900 + Math.random() * 600);
+}
+
+function generateAnswer(question) {
+  const q = question.toLowerCase().trim();
+  const words = q.split(/\s+/);
+  let bestMatch = null;
+  let bestScore = 0;
+
+  KNOWLEDGE_BASE.forEach(item => {
+    let score = 0;
+    const fullText = (item.content + ' ' + item.keywords.join(' ') + ' ' + item.section).toLowerCase();
+    words.forEach(w => {
+      if (w.length > 2 && fullText.includes(w)) score += 2;
+    });
+    item.keywords.forEach(kw => {
+      if (q.includes(kw.toLowerCase())) score += 5;
+    });
+    if (fullText.includes(q.substring(0, Math.min(q.length, 20)))) score += 10;
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = item;
+    }
+  });
+
+  if (!bestMatch || bestScore < 3) {
+    return {
+      text: `عذراً، هذه المعلومة غير متوفرة في دليل الاستخدام الحالي.\n\nيمكنك البحث في الدليل باستخدام شريط البحث على اليسار، أو اسأل عن: منهجية GUEST، شروط التقسيط، سياسة الاسترجاع، شخصيات العملاء، بروتوكولات التشغيل، قيم راية.`,
+      source: null
+    };
+  }
+
+  const answer = formatAnswer(bestMatch, question);
+  return { text: answer, source: bestMatch.section };
+}
+
+function formatAnswer(item, question) {
+  const q = question.toLowerCase();
+  let response = `📚 **${item.section}**\n\n`;
+  const content = item.content;
+
+  if (content.length > 600) {
+    const lines = content.split('. ').filter(l => l.trim().length > 10);
+    const relevant = lines.filter(l => {
+      const lq = q.split(' ');
+      return lq.some(w => w.length > 3 && l.toLowerCase().includes(w));
+    });
+    if (relevant.length > 0) {
+      response += relevant.slice(0, 5).join('.\n\n') + '.';
+    } else {
+      response += lines.slice(0, 4).join('.\n\n') + '.';
+    }
+  } else {
+    response += content;
+  }
+
+  response += '\n\n───\n🔍 يمكنك البحث عن هذا الموضوع في شريط البحث للاطلاع على التفاصيل الكاملة.';
+  return response;
+}
+
+// ─── MOBILE TOGGLE ─────────────────────────────────────────────────
+function toggleMobileChat() {
+  document.getElementById('chatPanel').classList.toggle('mobile-open');
+}
+
+// ─── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // All sections start expanded
+  document.querySelectorAll('.section-block').forEach(b => b.classList.remove('collapsed'));
+});
+</script>
+</body>
+</html>
