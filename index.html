@@ -6517,10 +6517,21 @@ function render(){
       else if(l2 === 'ovens') kws = ['فرن'];
       else if(l2 === 'hobs') kws = ['مسطح', 'هوب'];
       else if(l2 === 'hoods') kws = ['شفاط', 'هود'];
-      else if(l2 === 'wh') kws = ['سخان'];
-      else if(l2 === 'tv') kws = ['شاش', 'تلفزيون'];
+      else if(l2 === 'wh' || l2 === 'heaters') kws = ['سخان'];
+      else if(l2 === 'tv' || l2 === 'tvs') kws = ['شاش', 'تلفزيون'];
       else if(l2 === 'mobiles') kws = ['موبايل', 'هاتف'];
-      else if(l2 === 'laptops') kws = ['لاب'];
+      else if(l2 === 'laptops') kws = ['لاب توب', 'لابتوب'];
+      else if(l2 === 'small') kws = ['مكنس', 'مبرد', 'ميكسر', 'مفرم', 'شواي'];
+      else if(l2 === 'blenders') kws = ['خلاط', 'هاند بلندر', 'عجان'];
+      else if(l2 === 'juicers') kws = ['عصار'];
+      else if(l2 === 'afry') kws = ['قلاي', 'محضر'];
+      else if(l2 === 'coffee') kws = ['قهو', 'اسبريسو'];
+      else if(l2 === 'personal') kws = ['شعر', 'حلاق', 'سيشوار'];
+      else if(l2 === 'garment') kws = ['مكوا'];
+      else if(l2 === 'kettles') kws = ['غلاي', 'كاتيل'];
+      else if(l2 === 'fans') kws = ['مروح'];
+      else if(l2 === 'audio') kws = ['صوت', 'سماع', 'مسرح'];
+      else if(l2 === 'gaming') kws = ['لعب', 'بلايستيشن', 'جيمنج'];
       else kws = [norm(l2)];
       validKws = validKws.concat(kws.map(norm));
     });
@@ -6528,7 +6539,8 @@ function render(){
     const items=CS.filter(x=>{
       const h=norm(x.main+' '+x.rec+' '+x.reason);
       const mq=!useQ||expandQ(useQ).some(t=>h.includes(t));
-      const ml=(validKws.length===0)||validKws.some(kw=>h.includes(kw));
+      const mText=norm(x.main||'');
+      const ml=(validKws.length===0)||validKws.some(kw=>mText.includes(kw));
       return mq&&ml;
     }).sort((a,b)=>pw(a.priority)-pw(b.priority));
 
@@ -6555,10 +6567,21 @@ function render(){
       else if(l2 === 'ovens') kws = ['فرن'];
       else if(l2 === 'hobs') kws = ['مسطح', 'هوب'];
       else if(l2 === 'hoods') kws = ['شفاط', 'هود'];
-      else if(l2 === 'wh') kws = ['سخان'];
-      else if(l2 === 'tv') kws = ['شاش', 'تلفزيون'];
+      else if(l2 === 'wh' || l2 === 'heaters') kws = ['سخان'];
+      else if(l2 === 'tv' || l2 === 'tvs') kws = ['شاش', 'تلفزيون'];
       else if(l2 === 'mobiles') kws = ['موبايل', 'هاتف'];
-      else if(l2 === 'laptops') kws = ['لاب'];
+      else if(l2 === 'laptops') kws = ['لاب توب', 'لابتوب'];
+      else if(l2 === 'small') kws = ['مكنس', 'مبرد', 'ميكسر', 'مفرم', 'شواي'];
+      else if(l2 === 'blenders') kws = ['خلاط', 'هاند بلندر', 'عجان'];
+      else if(l2 === 'juicers') kws = ['عصار'];
+      else if(l2 === 'afry') kws = ['قلاي', 'محضر'];
+      else if(l2 === 'coffee') kws = ['قهو', 'اسبريسو'];
+      else if(l2 === 'personal') kws = ['شعر', 'حلاق', 'سيشوار'];
+      else if(l2 === 'garment') kws = ['مكوا'];
+      else if(l2 === 'kettles') kws = ['غلاي', 'كاتيل'];
+      else if(l2 === 'fans') kws = ['مروح'];
+      else if(l2 === 'audio') kws = ['صوت', 'سماع', 'مسرح'];
+      else if(l2 === 'gaming') kws = ['لعب', 'بلايستيشن', 'جيمنج'];
       else kws = [norm(l2)];
       validKws = validKws.concat(kws.map(norm));
     });
@@ -6566,7 +6589,8 @@ function render(){
     const items=US.filter(x=>{
       const h=norm(x.from+' '+x.to+' '+x.reason);
       const mq=!useUpQ||expandQ(useUpQ).some(t=>h.includes(t));
-      const ml=(validKws.length===0)||validKws.some(kw=>h.includes(kw));
+      const mText=norm(x.from||'');
+      const ml=(validKws.length===0)||validKws.some(kw=>mText.includes(kw));
       return mq&&ml;
     }).sort((a,b)=>pw(a.priority)-pw(b.priority));
 
