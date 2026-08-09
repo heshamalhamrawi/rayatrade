@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -3332,9 +3332,297 @@ function showSubProtocolTab(tabId, el) {
                   <div style="background:linear-gradient(135deg, #003399 0%, #1a3755 100%); color:white; padding:10px 18px; border-radius:12px; font-weight:bold; font-size:16px; text-align:center; margin:25px 0 15px 0;">
                     🔐 المرحلة الثالثة: التقفيلة الإدارية للعهدة بعد إيميل المخزن
                   </div>
-                  <div style="text-align:center; font-weight:bold; margin-bottom:15px; color:#003399;">بمجرد ما المخزن يبلغك إنه استلم الجهاز القديم، لازم تقفل البيعة �</div>
+                  <div style="text-align:center; font-weight:bold; margin-bottom:15px; color:#003399;">بمجرد ما المخزن يبلغك إنه استلم الجهاز القديم، لازم تقفل البيعة على السيستم عشان عهدتك:</div>
+                  <div class="rule-list">
+                    <li><span class="bullet"></span><strong>1. تنفيذ المرتجع:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>ادخل على السيستم واضغط: <strong>Action ⬅️ Return Transaction</strong>.</li>
+                        <li>ابحث برقم الإيصال واضغط <strong>Enter</strong>.</li>
+                        <li>اضغط <strong>Return</strong> وحدد سبب الإرجاع.</li>
+                      </ul>
+                    </li>
+                    <li><span class="bullet"></span><strong>2. إنشاء تحويل مخزني:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>ابعت إيميل لـ مدير المنطقة Area Manager عشان يعمل تحويل للمنتج من الفرع للمخزن.</li>
+                        <li>مدير المنطقة هيعمل التحويل ويبعتلك "رقم التحويل".</li>
+                      </ul>
+                    </li>
+                    <li><span class="bullet"></span><strong>3. إغلاق العملية:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>حدث حالة التحويل على السيستم إلى <strong>Shipped</strong>.</li>
+                        <li>فريق المخزن هيستلم التحويل ويقفل عملية المرتجع بنجاح 100%.</li>
+                      </ul>
+                    </li>
+                  </div>
                   </div>
 
+              </div>
+
+                            <!-- Content for large_appliance_returns -->
+              <div id="sub-protocol-large_appliance_returns" class="sub-protocol-tab-content" style="display:none;">
+                <div class="subsection">
+                  <div class="subsection-title" style="text-align: center; font-size: 22px; margin-bottom: 8px;">بروتوكول الإرجاع والاسترداد للأجهزة الكبيرة</div>
+                  <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #003399;">"حق ضيفك محفوظ لحد باب بيته"</div>
+                  <div class="content-text" style="text-align: center; margin-bottom: 20px; line-height: 1.6;">
+                    لما العميل يطلب إرجاع جهاز كبير واسترداد قيمته، ومش هينفع يجيبه الفرع، دورك كـ "صاحب بيت" إنك تدير العملية دي باحترافية لأنها بتشمل أطراف كتير إدارة، مخازن، شحن، وحسابات. دي الخطوات الرسمية متقسمة حسب الوقت:
+                  </div>
+
+                  <!-- Step 1 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">1 المحطة الأولى: الاستقبال والفحص المبدئي العميل قدامك</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span><strong>الترحيب وفهم الموقف:</strong> استقبل ضيفك بلباقة، وافهم منه سبب الإرجاع بهدوء لامتصاص أي غضب.</li>
+                    <li><span class="bullet"></span><strong>مراجعة الفاتورة والشروط CPA:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>اطلب الفاتورة، أو ابحث عن بيانات الشراء على السيستم بـ رقم الموبايل / رقم الطلب.</li>
+                        <li><strong>خلال 14 يوم:</strong> متاح الإرجاع لو الجهاز بحالته الأصلية ومشتملاته ومتفتحش.</li>
+                        <li><strong>خلال 30 يوم أو لو اتفتح 🔧:</strong> لازم تقرير فني معتمد من مركز الصيانة.</li>
+                      </ul>
+                    </li>
+                    <li><span class="bullet"></span><strong>القرار الحاسم:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>❌ <strong>لو مفيش تقرير فني:</strong> وجّه العميل بلباقة لمركز الصيانة لفحص المنتج وإحضار التقرير قبل استكمال أي إجراء.</li>
+                        <li>✅ <strong>لو التقرير موجود:</strong> هنبدأ فوراً في الإجراءات الإدارية.</li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <!-- Step 2 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">2 المحطة الثانية: الموافقات وتحريك الشحن</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span><strong>1. طلب الموافقة:</strong> ابعت إيميل فوراً لفريق Merchandising Category Manager مرفق فيه رقم الطلب + التقرير الفني. الفريق هيراجع ويبعتلك الموافقة على الإيميل.</li>
+                    <li><span class="bullet"></span><strong>2. طلب الاستلام Supply Chain:</strong> بعد الموافقة، ادخل على سيستم الـ Supply Chain وأنشئ "شحنة مرتجع".</li>
+                    <li><span class="bullet"></span><strong>3. إبلاغ العميل:</strong> بلّغ العميل بوضوح إن المنتج هيتم استلامه من بيته خلال 48 ساعة، وإن فريق التوصيل هيكلمه ينسق معاه الميعاد.</li>
+                  </div>
+
+                  <!-- Step 3 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">3 المحطة الثالثة: ما وراء الكواليس الاستلام والفحص المخزني</div>
+                  <div style="margin-bottom:15px;">
+                    <div style="text-align:center; margin-bottom:10px; color:#003399; font-weight:bold;">المرحلة دي بتتم بعيد عنك، بس لازم تكون عارفها</div>
+                    <div class="rule-list">
+                      <li><span class="bullet"></span>الطلب بيوصل لفريق الشحن Fleet، بيعملوا خطة السير الساعة 7 مساءً، والسائق بيكلم العميل يأكد العنوان والميعاد.</li>
+                      <li><span class="bullet"></span>المندوب بيستلم الجهاز ويرجعه المخزن.</li>
+                      <li><span class="bullet"></span>فريق المخزن بيفحص حالة الجهاز، وبعدها بيبعتلك إيميل عشان يبلغك تكمل إجراءاتك على السيستم.</li>
+                    </div>
+                  </div>
+
+                  <!-- Step 4 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">4 المحطة الرابعة: تقفيل السيستم والعهدة Dynamics</div>
+                  <div style="margin-bottom:15px;">
+                    <div style="text-align:center; margin-bottom:10px; color:#003399; font-weight:bold;">بمجرد ما تستلم إيميل المخزن، لازم تقفل العملية فوراً عشان تظبط عهدتك:</div>
+                    <div class="rule-list">
+                      <li><span class="bullet"></span><strong>1. تنفيذ الإرجاع على السيستم:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>اضغط: <strong>Action</strong> ثم اختار <strong>Return Transaction</strong>.</li>
+                          <li>ابحث بـ "رقم الإيصال" واضغط <strong>Enter</strong>.</li>
+                          <li>اضغط ⬅️ <strong>Return</strong> وحدد سبب الإرجاع.</li>
+                        </ul>
+                      </li>
+                      <li><span class="bullet"></span><strong>2. تحويل العهدة للمخزن خطوة إلزامية:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>ابعت إيميل لـ مدير المنطقة لإنشاء طلب تحويل من فرعك للمخزن الرئيسي.</li>
+                          <li>مدير المنطقة هيعمل التحويل ويبعتلك "رقم التحويل".</li>
+                          <li>ادخل على السيستم وحدث حالة التحويل إلى <strong>Shipped</strong>.</li>
+                        </ul>
+                      </li>
+                    </div>
+                  </div>
+
+                  <!-- Step 5 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">5 المحطة الخامسة: تسوية الفلوس الاسترداد وختام الرحلة</div>
+                  <div style="margin-bottom:15px;">
+                    <div style="text-align:center; margin-bottom:10px; color:#003399; font-weight:bold;">بعد تقفيل السيستم، تواصل مع العميل لتبليغه بإتمام العملية، ونفذ الاسترداد حسب طريقة الدفع:</div>
+                    <div class="rule-list">
+                      <li><span class="bullet"></span>💵 <strong>لو الدفع كان كاش:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>اطلب من العميل زيارة الفرع لاستلام قيمة المرتجع نقداً.</li>
+                        </ul>
+                      </li>
+                      <li><span class="bullet"></span>💳 <strong>لو الدفع كان فيزا أو بطاقة بنكية:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>أنشئ طلب استرداد على سيستم <strong>Remedy</strong> وأرفق فيه: إيصال المرتجع + فاتورة البيع + رقم بطاقة الفيزا.</li>
+                          <li>بلّغ العميل إن المبلغ هيترد على حسابه/بطاقته خلال 14 يوم عمل.</li>
+                        </ul>
+                      </li>
+                    </div>
+                  </div>
+
+                  <!-- End Journey -->
+                  <div style="text-align:center; margin-top:20px;">
+                    <div style="background:#eef2f6; border:1px solid #003399; padding:15px; border-radius:12px; display:inline-block; max-width:80%;">
+                      ✨ <strong>الختام:</strong> اشكر العميل على ثقته في راية، وتأكد من رضاه التام عن مستوى الخدمة، وودعه باحترافية.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                            <!-- Content for taqsiti_system -->
+              <div id="sub-protocol-taqsiti_system" class="sub-protocol-tab-content" style="display:none;">
+                <div class="subsection">
+                  <div class="subsection-title" style="text-align: center; font-size: 22px; margin-bottom: 8px;">بروتوكول التقسيط بنظام "تقسيطى"</div>
+                  <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #003399;">"سهلها على ضيفك.. وقفل بيعتك صح"</div>
+                  <div class="content-text" style="text-align: center; margin-bottom: 20px; line-height: 1.6;">
+                    لما العميل يقرر يشتري قسط، دي فرصتك تقفل بيعة ممتازة. نظام "تقسيطى" معمول عشان ينجزك، بس محتاج تمشي على الخطوات دي بالمللي عشان تحمي العميل وتضمن الموافقة السريعة:
+                  </div>
+
+                  <!-- Step 1 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">المرحلة الأولى: الاستقبال وكشف الحساب المبدئي</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span><strong>1 الترحيب وفهم العميل:</strong> استقبل ضيفك، افهم احتياجاته واشرح له "بروتوكول التقسيط" ببساطة.</li>
+                    <li><span class="bullet"></span><strong>2 شغل السيستم المبدئي:</strong> اطلب بطاقة الرقم القومي، ودخل بياناته على سيستم "تقسيطى" عشان السيستم يعمل فحص الـ I-Score ويحدد هو "عميل جديد" ولا "عميل راية".</li>
+                    <li><span class="bullet"></span><strong>3 قرار السيستم اللحظي:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>❌ <strong>حالة الرفض المبدئي:</strong> السيستم بيحول الطلب تلقائياً لفريق الائتمان للمراجعة والتحقيق. دورك هنا انتهى مؤقتاً.</li>
+                        <li>✅ <strong>حالة الموافقة المبدئية:</strong> بنكمل الإجراءات فوراً حسب نوع العميل قديم ولا جديد.</li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <!-- Step 2 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">المحطة الثانية: تفريغ العملاء عميل قديم ولا جديد؟</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:20px; margin-bottom:15px;">
+                    <div style="flex:1; min-width:250px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:15px;">
+                      <div style="text-align:center; font-weight:bold; color:#003399; margin-bottom:10px;">أولاً: العميل القديم</div>
+                      <div class="rule-list">
+                        <li><span class="bullet"></span>اختار خطة التقسيط والمنتج، وأنشئ الطلب على سيستم تقسيطى.</li>
+                        <li><span class="bullet"></span>العميل بيوقع على "عقد الحد الائتماني" لو دي أول مرة يوقع فيها.</li>
+                        <li><span class="bullet"></span>إجراءات الـ KYC إلزامية: التقاط صورة حية Live Photo للعميل، وإدخال رمز الـ OTP اللي هيتبعتله.</li>
+                      </div>
+                    </div>
+                    <div style="flex:1; min-width:250px; background:#f0f4ff; border:1px solid #ccd6f5; border-radius:12px; padding:15px;">
+                      <div style="text-align:center; font-weight:bold; color:#003399; margin-bottom:10px;">ثانياً: العميل الجديد</div>
+                      <div style="font-weight:bold; margin-bottom:8px; font-size:13px; color:#1a3755;">السيستم هيحولك لإنشاء "حد ائتماني جديد":</div>
+                      <div class="rule-list" style="font-size:13px;">
+                        <li><span class="bullet"></span><strong>1. البيانات الأساسية:</strong> دخل الاسم بالكامل - الموبايل - الوظيفة ⬅️ ابعت رمز الـ OTP للعميل ودخله ⬅️ السيستم هيعمل فحص احتيال Fraud Check للتأكد من الأهلية.</li>
+                        <li><span class="bullet"></span><strong>2. استكمال البروفايل بعد الفحص:</strong> دخل الحالة الاجتماعية - العنوان - بيانات الوظيفة - عضوية النادي - بيانات الضامن إن لزم الأمر.</li>
+                        <li><span class="bullet"></span><strong>3. رفع الورق:</strong> ارفع المستندات المتاحة زي بطاقة التأمين الطبي / رخصة السيارة "اختياري".</li>
+                        <li><span class="bullet"></span><strong>4. المراجعة:</strong> السيستم بيبعت للعميل SMS بتفاصيل طلبه عشان يقدر يتابعه.</li>
+                        <li><span class="bullet"></span>🧑‍💻 <strong>هنا بيتدخل فريق الائتمان</strong> يراجع الورق، يعمل زيارة ميدانية لو لزم الأمر وياخد قرار الموافقة ويحدد الحد الائتماني، وبعدها العميل بيستلم SMS بالموافقة والليميت بتاعه.</li>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">المحطة الثالثة: تعلية الليميت Limit Increase خطوة استثنائية</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span>لو العميل الليميت بتاعه نزل بس محتاج يزوده عشان يشتري منتج أغلى:
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>اضغط على رابط "زيادة الحد الائتماني" على السيستم.</li>
+                        <li>ارفع مستندات إثبات الدخل زي: خطاب HR حديث - كشف حساب بنكي - بيانات الضامن.</li>
+                        <li>الطلب بيتبعت فوراً لفريق الائتمان للمراجعة.</li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <!-- Step 4 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">المحطة الرابعة: التفعيل وإتمام البيعة</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span>بمجرد ما الليميت يعتمد للعميل الجديد أو بعد التعلية:
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li><strong>التفعيل:</strong> العميل بيوقع عقد الحد الائتماني لأول مرة فقط ⬅️ بتعمل إجراءات الـ KYC صورة حية + OTP ⬅️ العميل بيستلم SMS بتأكيد التفعيل.</li>
+                        <li><strong>البيع:</strong> ساعد العميل يختار المنتج اللي يناسب الليميت بتاعه وقيمة القسط، وقفل البيعة على السيستم.</li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <!-- Step 5 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">المحطة الخامسة: التسليم وحفظ المستندات التقفيلة الصح</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span><strong>الاستلام من الفرع:</strong> العميل بيوقع على "نموذج استلام المنتج" وبياخده في إيده.</li>
+                    <li><span class="bullet"></span><strong>التوصيل للمنزل:</strong> بيتم في خلال 3-5 أيام للقاهرة والجيزة، و 5-7 أيام للمحافظات. السائق بيستلم إذن التسليم لأرشيف المخزن ليتسجل على السيستم.</li>
+                  </div>
+
+                  <!-- Behind the scenes info -->
+                  <div style="background:#eef2f6; border:1px solid #003399; padding:15px; border-radius:12px; margin-top:20px; margin-bottom:20px;">
+                    <div style="background:#003399; color:white; padding:6px 16px; border-radius:15px; font-weight:bold; text-align:center; width:fit-content; margin:0 auto 10px auto;">📁 ما وراء الكواليس حفظ الورق</div>
+                    <div style="text-align:center; font-weight:bold; color:#1a3755;">
+                      فريق الائتمان بيلف على الفروع مرتين شهرياً يجمع مستندات التقسيط الموقعة عشان يأرشفها. فحافظ على ورقك دايماً كامل ومترتب.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content for small_appliance_returns -->
+              <div id="sub-protocol-small_appliance_returns" class="sub-protocol-tab-content" style="display:none;">
+                <div class="subsection">
+                  <div class="subsection-title" style="text-align: center; font-size: 22px; margin-bottom: 8px;">بروتوكول مرتجعات الأجهزة الصغيرة واسترداد الفلوس</div>
+                  <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #003399;">"حق ضيفك محفوظ.. وعهدتك في أمان"</div>
+                  <div class="content-text" style="text-align: center; margin-bottom: 20px; line-height: 1.6;">
+                    لما العميل يقرر يرجع منتج صغير، دي فرصتك كـ "صاحب بيت" تثبت له إننا بنحترم حق العميل زي ما بنحترم فلوسه. العملية دي محتاجة تركيز عالي عشان الفلوس والعهدة تتسوى صح. هنمشيها على 4 مراحل:
+                  </div>
+
+                  <!-- Step 1 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">1- الاستقبال والفحص العميل قدامك</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span><strong>الترحيب وتحديد الطلب:</strong> استقبل العميل بابتسامة، وافهم منه سبب الإرجاع بهدوء. تذكر: من حقه يرجع منتج واحد بس من الفاتورة، أو الفاتورة كلها.</li>
+                    <li><span class="bullet"></span><strong>مراجعة الفاتورة:</strong> اطلب فاتورة الشراء أو راجعها على السيستم برقم الموبايل أو رقم الطلب.</li>
+                    <li><span class="bullet"></span><strong>الفحص القانوني قواعد حماية المستهلك CPA:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li><strong>خلال 14 يوم:</strong> متاح الإرجاع بشرط المنتج يكون بحالته الأصلية. ماتفتحش، بكامل مشتملاته وتغليفه، ومراجعة السيريال إن وجد.</li>
+                        <li><strong>خلال 30 يوم أو لو العميل فتح الكرتونة 🔧:</strong> لازم يكون معاه تقرير فني معتمد من مركز الصيانة.</li>
+                      </ul>
+                    </li>
+                    <li><span class="bullet"></span><strong>القرار الحاسم التقرير الفني:</strong>
+                      <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                        <li>❌ <strong>لو الجهاز مفتوح ومفيش تقرير:</strong> وجّه العميل بكل لباقة لمركز الصيانة المعتمد عشان يفحصوا المنتج ويطلعوله التقرير.</li>
+                        <li>✅ <strong>لو التقرير موجود أو الجهاز متفتحش:</strong> هنبدأ فوراً في خطوات الاسترداد.</li>
+                      </ul>
+                    </li>
+                  </div>
+
+                  <!-- Step 2 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">2- موافقة الإدارة خطوة إلزامية</div>
+                  <div class="rule-list" style="margin-bottom:15px;">
+                    <li><span class="bullet"></span>تواصل فوراً مع فريق <strong>Merchandising Category Manager</strong> عن طريق الإيميل وممكن تكلمهم في التليفون للسرعة.</li>
+                    <li><span class="bullet"></span>ابعت في الإيميل: رقم الطلب + التقرير الفني.</li>
+                    <li><span class="bullet"></span>فريق الـ Merchandising بيراجع الطلب، وهيتبعتلك الموافقة على الإيميل خلال 24 ساعة كحد أقصى.</li>
+                  </div>
+
+                  <!-- Step 3 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">3- السيستم وإيصال المرتجع Dynamics</div>
+                  <div style="margin-bottom:15px;">
+                    <div style="text-align:center; font-weight:bold; margin-bottom:10px; color:#003399;">بعد موافقة الإدارة، افتح السيستم ونفذ الآتي بالترتيب عشان تظبط عهدتك:</div>
+                    <div class="rule-list">
+                      <li><span class="bullet"></span><strong>1. تنفيذ الإرجاع:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>اضغط على: ⬅️ Action ثم اختار <strong>Return Transaction</strong>.</li>
+                          <li>ابحث باستخدام "رقم الإيصال" واضغط <strong>Enter</strong>.</li>
+                          <li>اضغط على ⬅️ <strong>Return</strong> ثم اختار "سبب الإرجاع".</li>
+                        </ul>
+                      </li>
+                      <li><span class="bullet"></span><strong>2. الحسبة التلقائية:</strong> السيستم هيعالج العملية ويحسب مبلغ الاسترداد تلقائياً بناءً على قيمة المنتج في الفاتورة.</li>
+                      <li><span class="bullet"></span><strong>3. إيصال المرتجع:</strong> السيستم هيصدر إيصال مكتوب فيه: رقم العملية، التاريخ والوقت، اسم الفرع، اسم العميل، بيانات المنتج المرتجع، وقيمة المبلغ.</li>
+                      <li><span class="bullet"></span><strong>4. مراجعة العميل:</strong> اطبع الإيصال، وخلّي العميل يراجعه ويأكد على بياناته بنفسه.</li>
+                    </div>
+                  </div>
+
+                  <!-- Step 4 -->
+                  <div style="background:#003399; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; text-align:center; margin:15px 0 10px 0;">4- تسليم الفلوس التسوية المالية</div>
+                  <div style="margin-bottom:15px;">
+                    <div style="font-weight:bold; margin-bottom:5px; color:#003399;">الخطوة دي بتختلف حسب طريقة دفع العميل الأصلية:</div>
+                    <div class="rule-list">
+                      <li><span class="bullet"></span>🪙 <strong>لو العميل كان دافع كاش:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>يتم رد قيمة المنتج <strong>نقداً للعميل فوراً</strong> في إيده.</li>
+                        </ul>
+                      </li>
+                      <li><span class="bullet"></span>💳 <strong>لو العميل كان دافع فيزا أو بطاقة بنكية:</strong>
+                        <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
+                          <li>الفلوس مش بترجع كاش، لازم تعمل طلب على سيستم <strong>Remedy</strong>.</li>
+                          <li>مرفقات الـ Remedy الإلزامية: صورة إيصال المرتجع + صورة فاتورة البيع + رقم بطاقة الفيزا.</li>
+                          <li>إبلاغ العميل: لازم توضح للعميل بابتسامة إن المبلغ هيترد على حسابه/بطاقته البنكية خلال <strong>14 يوم عمل</strong>.</li>
+                        </ul>
+                      </li>
+                    </div>
+                  </div>
+
+                  <!-- End Journey -->
+                  <div style="text-align:center; margin-top:20px;">
+                    <div style="font-size:20px; margin-bottom:10px;">✨ ختام الرحلة ✨</div>
+                    <div style="background:#eef2f6; border:1px solid #003399; padding:15px; border-radius:12px; display:inline-block; max-width:80%;">
+                      اشكر العميل جداً على وقته، واتأكد إنك قفلت العملية بنجاح. ودّعه بشكل لبق واحترافي يخليه يتأكد إن "راية" دايماً بيته المضمون.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -7546,7 +7834,7 @@ window.addEventListener('load',()=>{
     
     function cleanTerm(t) {
         let cl = norm(t);
-        const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن'];
+        const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن', 'تكون', 'فيها', 'فيه', 'يكون', 'موجود', 'بها', 'به', 'تحتوي', 'يحتوي', 'تتميز', 'يتميز', 'هات', 'عندي', 'معايا', 'اقدر', 'أقدر', 'وريني', 'ورينى'];
         stopWordsEx.forEach(w => { cl = cl.replace(new RegExp(`\\b${norm(w)}\\b`,'g'), ' '); });
         CAT_ALIASES.forEach(alias => {
             alias.kw.forEach(k => { cl = cl.replace(new RegExp(`\\b${norm(k)}\\b`,'g'), ' '); });
@@ -7653,6 +7941,21 @@ window.addEventListener('load',()=>{
   }
 
   // ---------- Rendering ----------
+    window.filterCbotList = function(inp, listId) {
+    const q = (inp.value || '').toLowerCase().trim();
+    const list = document.getElementById(listId);
+    if (!list) return;
+    const cards = list.querySelectorAll('.cbot-prod');
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(q)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  };
+
   function esc2(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
   function renderProductCard(p){
@@ -7668,17 +7971,43 @@ window.addEventListener('load',()=>{
   }
 
   function renderFeatureHit(item, prods, corrected){
-    const list = prods.map(renderProductCard).join('');
+    const maxVisible = 3;
+    let listHTML = '';
+    
+    if (prods.length > 0) {
+      const visibleProds = prods.slice(0, maxVisible);
+      const hiddenProds = prods.slice(maxVisible);
+      
+      listHTML += visibleProds.map(renderProductCard).join('');
+      
+      if (hiddenProds.length > 0) {
+        const uid = 'more_' + Math.random().toString(36).substr(2,9);
+        listHTML += `
+          <button class="cbot-show-more-btn" style="width:100%; background:#EEF2F7; color:#0A2540; border:1px solid #DDE4EE; border-radius:8px; padding:8px; font-weight:bold; cursor:pointer; margin-top:8px; font-family:inherit;" onclick="document.getElementById('${uid}').style.display='block'; this.style.display='none';">عرض باقي الأجهزة (${hiddenProds.length}) ⬇️</button>
+          <div id="${uid}" style="display:none; margin-top:12px; border-top:1px dashed #DDE4EE; padding-top:12px;">
+            <div style="margin-bottom:8px; font-size:12px; color:#0B6E6E; font-weight:bold;">💡 ابحث داخل النتائج للمستشار:</div>
+            <div style="position:relative; margin-bottom:10px;">
+              <span style="position:absolute; right:10px; top:8px; opacity:0.6;">🔍</span>
+              <input type="text" placeholder="مثال: شارب، انفرتر..." onkeyup="window.filterCbotList(this, '${uid}-list')" style="width:100%; box-sizing:border-box; padding:8px 30px 8px 10px; border-radius:8px; border:1px solid #0B6E6E; font-family:inherit; font-size:13px; outline:none; background:#fff;">
+            </div>
+            <div id="${uid}-list" class="cbot-list" style="max-height:220px; overflow-y:auto; padding-right:4px; display:flex; flex-direction:column; gap:6px;">
+              ${hiddenProds.map(renderProductCard).join('')}
+            </div>
+          </div>
+        `;
+      }
+    }
+
     const corr = corrected ? `<div class="cbot-corr">🔎 تصحيح تلقائي: <b>${esc2(corrected)}</b></div>` : '';
     return `<div class="cbot-blk">
       ${corr}
-      <div class="cbot-blk-h">✨ ${esc2(item.f)} <span class="cbot-cat">${esc2(item.c)}</span></div>
-      <div class="cbot-fab">
-        <div class="cbot-fab-a"><b>الخاصية:</b> ${esc2(item.a)}</div>
+      <div class="cbot-blk-h" style="font-size:16px;">✨ ${esc2(item.f)} <span class="cbot-cat">${esc2(item.c)}</span></div>
+      <div class="cbot-fab" style="border-inline-start:4px solid #14b8a6; background:#f0fdfa; padding:12px;">
+        <div class="cbot-fab-a" style="font-size:14px; margin-bottom:8px;"><b>الخاصية:</b> ${esc2(item.a)}</div>
         <div class="cbot-fab-b"><b>💬 كلم مستشارك بها:</b> ${esc2(item.b)}</div>
       </div>
-      <div class="cbot-cnt">🎯 عدد الأجهزة المطابقة: <b>${prods.length}</b></div>
-      <div class="cbot-list">${list||'<div class="cbot-empty">لا توجد أجهزة مطابقة حالياً.</div>'}</div>
+      <div class="cbot-cnt" style="margin-top:12px;">🎯 عدد الأجهزة المطابقة: <b>${prods.length}</b></div>
+      <div class="cbot-list" style="overflow:visible; max-height:none;">${listHTML||'<div class="cbot-empty">لا توجد أجهزة مطابقة حالياً.</div>'}</div>
     </div>`;
   }
 
@@ -7695,7 +8024,7 @@ window.addEventListener('load',()=>{
     return `<div class="cbot-blk cbot-us">
       <div class="cbot-blk-h">⬆️ فرص البيع الارتقائي (Upsell)</div>
       ${r}
-      ${pl?`<div class="cbot-us-alt"><b>موديلات أعلى ننصح بها:</b></div><div class="cbot-list">${pl}</div>`:''}
+      ${pl?`<div class="cbot-us-alt"><b>موديلات أعلى ننصح بها:</b></div><div class="cbot-list">${pl}</div>` : ''}
     </div>`;
   }
 
@@ -7715,14 +8044,12 @@ window.addEventListener('load',()=>{
   }
 
   // ---------- Query router ----------
-  // Track last extracted context for dynamic quick-reply chips
   const _ctx = { cat:null, feat:null, catType:null };
 
   function respond(q){
     q = String(q||'').trim();
     if(!q) return `<div class="cbot-hint">اسأل مستشارنا الذكي أي سؤال 🎓 — مثال: "أفضل غسالة فيها انفرتر" أو "قارن بين X و Y"</div>`;
 
-    // 1) Compare
     const pair = parseCompare(q);
     if(pair){
       const [a,b] = pair;
@@ -7730,10 +8057,7 @@ window.addEventListener('load',()=>{
       return renderCompare(a,b) + renderUpsellBlock(a) + renderCrossSellBlock(a);
     }
 
-    // 2) Exact product lookup (SKU / name) → upsell + cross-sell + FABs
     const cat  = detectCategory(q);
-    
-    // Create query without the category name or stop words to prevent false matches
     const nq = norm(q);
     let nq_clean = nq;
     if (cat) {
@@ -7745,16 +8069,15 @@ window.addEventListener('load',()=>{
             }
         }
     }
-    const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن'];
+    const stopWordsEx = ['ما','هي','كيف','مميزات','عيوب','ماهي','هل','يوجد','قارن','بين','و','عن','في','فى','خاصية','تقنية','الفرق','افضل','أفضل','احسن','أحسن','ارخص','أرخص','اغلى','أغلى','عايز','عاوز','اريد','أريد','ابحث','أبحث','من','ب','ل','ان','أن','انا','أنا','لو','سمحت','ممكن', 'تكون', 'فيها', 'فيه', 'يكون', 'موجود', 'بها', 'به', 'تحتوي', 'يحتوي', 'تتميز', 'يتميز', 'هات', 'عندي', 'معايا', 'اقدر', 'أقدر', 'وريني', 'ورينى'];
     stopWordsEx.forEach(w => { nq_clean = nq_clean.replace(new RegExp(`\\b${norm(w)}\\b`,'g'), ' '); });
-    nq_clean = nq_clean.replace(/\s+/g, ' ').trim();
+    nq_clean = nq_clean.replace(/s+/g, ' ').trim();
 
     const searchQ = nq_clean.length > 0 ? nq_clean : q;
 
     const prod = findProduct(searchQ, cat);
     const feats = detectFeatures(searchQ, cat);
 
-    // --- Validation: Detect Illogical Combinations ---
     const allFeats = detectFeatures(searchQ, null);
     let detectedCats = new Set();
     CAT_ALIASES.forEach(alias => {
@@ -7763,32 +8086,24 @@ window.addEventListener('load',()=>{
         });
     });
 
-    // 1) Mixed Categories (e.g., "بوتاجاز وغسالة")
     if (detectedCats.size >= 2) {
         return `<div class="cbot-empty">عذراً طلبك غير متاح. لا يمكن خلط أجهزة من فئات مختلفة في نفس الطلب.</div>`;
     }
 
-    // 2) Category vs Feature Mismatch (e.g., "تلاجة توب لودينج" أو "غسالة بـ 3 أبواب")
     if (cat && allFeats.length && allFeats[0].score >= 8) {
        const userCat = TYPE_TO_FABCAT[cat]; 
        const bestGlobal = allFeats[0];
        const bestCatScore = feats.length ? feats[0].score : 0;
        
-       // Detect mismatch if the best global feature belongs to another category and significantly outscores any feature in the requested category.
        if (userCat && bestGlobal.item.c && bestGlobal.item.c !== userCat && bestGlobal.score >= 12 && bestCatScore < bestGlobal.score * 0.6) {
-           // Ensure we don't block if the products actually contain the requested text (e.g. Inverter in Fridge)
            const queryTerms = expandQ(nq);
            const possibleProds = productsByCategory(cat).filter(p => queryTerms.every(t => norm(p.n + ' ' + p.d).includes(t)));
-           
            if (possibleProds.length === 0) {
                return `<div class="cbot-empty">عذراً طلبك غير متاح. لا توجد أجهزة تجمع بين مواصفات <b>${esc2(cat)}</b> وميزة <b>${esc2(bestGlobal.item.f)}</b>.</div>`;
            }
        }
     }
-    // -------------------------------------------------
 
-    // STRICT FOCUS: When a feature is clearly matched, explain ONLY that feature
-    // and list ALL matching devices — no fluff, no unrelated features.
     if(feats.length && feats[0].score >= 6){
       const it = feats[0].item;
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = cat;
@@ -7808,7 +8123,7 @@ window.addEventListener('load',()=>{
       return `<div class="cbot-blk">
         <div class="cbot-blk-h">📱 ${esc2(prod.s)} — ${esc2(prod.t)}</div>
         <div class="cbot-prod-n">${esc2(prod.n||'')}</div>
-        ${fabList?`<div class="cbot-fab-list"><b>أبرز نقاط البيع (FAB):</b><ul>${fabList}</ul></div>`:''}
+        ${fabList?`<div class="cbot-fab-list"><b>أبرز نقاط البيع (FAB):</b><ul>${fabList}</ul></div>` : ''}
       </div>${renderUpsellBlock(prod)}${renderCrossSellBlock(prod)}`;
     }
 
@@ -7818,13 +8133,41 @@ window.addEventListener('load',()=>{
       }
       _ctx.catType = cat; _ctx.cat = TYPE_TO_FABCAT[cat]||null; _ctx.feat = null;
       const prods = productsByCategory(cat);
+      
+      const maxVisible = 3;
+      let listHTML = '';
+      if (prods.length > 0) {
+        const visibleProds = prods.slice(0, maxVisible);
+        const hiddenProds = prods.slice(maxVisible);
+        
+        listHTML += visibleProds.map(renderProductCard).join('');
+        
+        if (hiddenProds.length > 0) {
+          const uid = 'morecat_' + Math.random().toString(36).substr(2,9);
+          listHTML += `
+            <button class="cbot-show-more-btn" style="width:100%; background:#EEF2F7; color:#0A2540; border:1px solid #DDE4EE; border-radius:8px; padding:8px; font-weight:bold; cursor:pointer; margin-top:8px; font-family:inherit;" onclick="document.getElementById('${uid}').style.display='block'; this.style.display='none';">عرض باقي الأجهزة (${hiddenProds.length}) ⬇️</button>
+            <div id="${uid}" style="display:none; margin-top:12px; border-top:1px dashed #DDE4EE; padding-top:12px;">
+              <div style="margin-bottom:8px; font-size:12px; color:#0B6E6E; font-weight:bold;">💡 ابحث داخل الأجهزة المتاحة:</div>
+              <div style="position:relative; margin-bottom:10px;">
+                <span style="position:absolute; right:10px; top:8px; opacity:0.6;">🔍</span>
+                <input type="text" placeholder="مثال: سامسونج، 14 قدم..." onkeyup="window.filterCbotList(this, '${uid}-list')" style="width:100%; box-sizing:border-box; padding:8px 30px 8px 10px; border-radius:8px; border:1px solid #0B6E6E; font-family:inherit; font-size:13px; outline:none; background:#fff;">
+              </div>
+              <div id="${uid}-list" class="cbot-list" style="max-height:220px; overflow-y:auto; padding-right:4px; display:flex; flex-direction:column; gap:6px;">
+                ${hiddenProds.map(renderProductCard).join('')}
+              </div>
+            </div>
+          `;
+        }
+      }
+
       return `<div class="cbot-blk">
         <div class="cbot-blk-h">🗂️ ${esc2(cat)} — ${prods.length} جهاز متاح</div>
-        <div class="cbot-list">${prods.map(renderProductCard).join('')||'<div class="cbot-empty">لا توجد نتائج.</div>'}</div>
+        <div class="cbot-list" style="overflow:visible; max-height:none;">${listHTML||'<div class="cbot-empty">لا توجد نتائج.</div>'}</div>
       </div>`;
     }
 
-    // Fallback: single strongest FAB match across everything
+    
+// Fallback: single strongest FAB match across everything
     if(allFeats.length){
       const it = allFeats[0].item;
       _ctx.feat = it; _ctx.cat = it.c || null; _ctx.catType = null;
@@ -8429,6 +8772,15 @@ window.searchPdfManual = function(query) {
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 
 
