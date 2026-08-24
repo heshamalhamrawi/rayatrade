@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+.sku-specs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;padding:14px 16px 16px}
+.spec-item{padding:8px 12px;background:#F5F7FA;border:1px solid #E4EAF2;border-radius:8px;}
+.spec-key{font-size:10px;font-weight:700;color:#64748B;margin-bottom:3px}
+.spec-val{font-size:13px;font-weight:600;color:#0D1B2A}
+.spec-val.yes{color:#166534}
+.spec-val.no{color:#94A3B8;font-weight:400}
+</style>
+</head>
+<body>
+<div id="output"></div>
+<script src="data.js"></script>
+<script>
+const YES=['متاح','نعم','yes','true'];
+const NO=['غير متاح','لا','no','false','—','-'];
+
+function norm(t){
+  if(!t) return '';
+  return String(t).toLowerCase()
+    .replace(/[\u064B-\u065F\u0670]/g,'')
+    .replace(/[أإآا]/g,'ا').replace(/[ةه]/g,'ه').replace(/[يى]/g,'ي')
+    .replace(/[™®©]/g,'')
+    .replace(/\s+/g,' ').trim();
+}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Find GMF-00294
+const prod = AR.find(p => p.s === 'GMF-00294');
+const prod2 = AR.find(p => p.s === 'C6090SS-2SC-511-IDSP');
+
+function renderSpecs(p) {
+  if (!p) return '<div>NOT FOUND</div>';
+  
+  const specPairs = p.d.split(' | ').filter(Boolean).map(part => {
+    const raw = part.trim();
+    if (!raw) return null;
+    const ci = raw.indexOf(':');
+    if (ci > 0) return {k: raw.slice(0, ci).trim(), v: raw.slice(ci+1).trim()};
+    return {k: raw, v: 'متاح'};
+  }).filter(Boolean);
+  
+  let h = `<h3>${esc(p.s)}</h3>`;
+  h += '<div class="sku-specs-grid">';
+  for (const {k, v} of specPairs) {
+    const isYes = YES.includes(norm(v)) || norm(v) === 'متاح';
+    const isNo = NO.includes(norm(v));
+    const vDisp = isYes ? '✅ متاح' : isNo ? '— غير متاح' : v;
+    const cls = isYes ? 'yes' : isNo ? 'no' : '';
+    h += `<div class="spec-item"><div class="spec-key">${esc(k)}</div><div class="spec-val ${cls}">${esc(vDisp)}</div></div>`;
+  }
+  h += '</div>';
+  return h;
+}
+
+document.getElementById('output').innerHTML = 
+  '<h2>GMF-00294:</h2>' + renderSpecs(prod) +
+  '<hr><h2>C6090SS-2SC-511-IDSP:</h2>' + renderSpecs(prod2);
+</script>
+</body>
+</html>
