@@ -3770,6 +3770,7 @@
               <button class="toc-chip" onclick="filterSection('house_guard', this)">حارس البيت</button>
               <button class="toc-chip" onclick="filterSection('owner_dictionary', this)">قاموس صاحب البيت</button>
               <button class="toc-chip" onclick="filterSection('delivery_guest', this)">التوصيل للضيف</button>
+              <button class="toc-chip" onclick="filterSection('branches_directory', this); try{document.getElementById('sec-branches-directory').style.display='block'; document.querySelector('#sec-branches-directory .section-body').style.display='block';}catch(e){}">عناوين فروع راية</button>
               <button class="toc-chip"
                 style="background: var(--raya-accent); color: var(--bg-dark); font-weight: bold; border: 1px solid var(--raya-accent);"
                 onclick="toggleMobileChat()">🤖 مستشار راية الذكي</button>
@@ -3783,6 +3784,602 @@
 
               <!-- MANUAL CONTENT -->
               <div class="manual-content" id="manualContent">
+
+<!-- SECTION: BRANCHES DIRECTORY -->
+<div class="section-block" data-category="branches_directory" id="sec-branches-directory" style="display:none;">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🏢</span>
+        عناوين فروع راية
+        <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+        <style>
+            #sec-branches-directory .search-container {
+                background: #ffffff; padding: 16px; border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 25px;
+                display: flex; align-items: center; gap: 12px; border: 1px solid #e2e8f0;
+            }
+            #sec-branches-directory .search-input {
+                flex: 1; border: none; outline: none; font-size: 1.05rem; background: transparent; font-family: inherit;
+            }
+            #sec-branches-directory .branches-grid {
+                display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+            }
+            #sec-branches-directory .branch-card {
+                background: #ffffff; border-radius: 12px; padding: 18px; border: 1px solid #e2e8f0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; position: relative; overflow: hidden;
+            }
+            #sec-branches-directory .branch-card::before {
+                content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: #0056b3;
+            }
+            #sec-branches-directory .branch-header { margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+            #sec-branches-directory .branch-title { font-size: 1.15rem; font-weight: 700; color: #0056b3; margin-bottom: 4px; }
+            #sec-branches-directory .branch-region { font-size: 0.8rem; background: #f8f9fa; color: #718096; padding: 3px 8px; border-radius: 12px; font-weight: 600; display: inline-block; }
+            #sec-branches-directory .branch-details { font-size: 0.9rem; margin-bottom: 16px; color: #2d3748; flex: 1; }
+            #sec-branches-directory .branch-actions { display: flex; gap: 8px; margin-top: auto; }
+            #sec-branches-directory .btn { padding: 8px; border: none; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; font-family: inherit; }
+            #sec-branches-directory .btn-copy { flex: 1; background-color: #25D366; color: white; }
+            #sec-branches-directory .btn-map { flex: 0 0 auto; width: 40px; background-color: #f8f9fa; border: 1px solid #e2e8f0; color: #2d3748; text-decoration: none; }
+            #sec-branches-directory .hidden-card { display: none !important; }
+        </style>
+
+        <div style="background:#f0f4ff; border:1px solid #ccd6f5; border-radius:12px; padding:16px; margin-bottom:20px; text-align:center;">
+            <h3 style="color:#003399; margin-bottom:10px; font-weight:bold; font-size:20px;">🏢 عناوين فروع راية</h3>
+            <p style="margin:0; font-size:15px; color:#4a5a8a; line-height:1.7;">ابحث عن الفرع، انسخ العنوان بضغطة زر، وشاركه مع العميل عبر واتساب بسهولة.</p>
+        </div>
+
+        <div class="search-container">
+            <span>🔍</span>
+            <input type="text" id="branchesSearchInput" class="search-input" placeholder="ابحث باسم الفرع، المنطقة، أو المحافظة..." onkeyup="filterBranchesStatic()">
+        </div>
+
+        <div class="branches-grid" id="branchesGrid">
+            <div class="branch-card" data-search="راية ميجا ستور جسر السويس 43 شارع الليث - جسر السويس- الزيتون Cairo Al Zayton">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور جسر السويس</div>
+                    <div class="branch-region">Cairo - Al Zayton</div>
+                </div>
+                <div class="branch-details">43 شارع الليث - جسر السويس- الزيتون</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AC%D8%B3%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%B3%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2043%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%84%D9%8A%D8%AB%20-%20%D8%AC%D8%B3%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%B3-%20%D8%A7%D9%84%D8%B2%D9%8A%D8%AA%D9%88%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fjh8zJSFNbvF6YvGN7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/jh8zJSFNbvF6YvGN7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كايرو فيستفال سيتي مول راية  كايرو فيستفال  وحده (2-551)  الدور الثالث بجانب صيدليه العزبي امام كارفور Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية كايرو فيستفال سيتي مول</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">راية  كايرو فيستفال  وحده (2-551)  الدور الثالث بجانب صيدليه العزبي امام كارفور</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%81%D9%8A%D8%B3%D8%AA%D9%81%D8%A7%D9%84%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D9%85%D9%88%D9%84%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%81%D9%8A%D8%B3%D8%AA%D9%81%D8%A7%D9%84%20%20%D9%88%D8%AD%D8%AF%D9%87%20(2-551)%20%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%AB%D8%A7%D9%84%D8%AB%20%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B9%D8%B2%D8%A8%D9%8A%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FcMLoZZDtteb2DaJ68')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/cMLoZZDtteb2DaJ68" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المعادي 1 ميدان الجزائر - المعادي الجديده Cairo Maadi">
+                <div class="branch-header">
+                    <div class="branch-title">راية المعادي</div>
+                    <div class="branch-region">Cairo - Maadi</div>
+                </div>
+                <div class="branch-details">1 ميدان الجزائر - المعادي الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%201%20%D9%85%D9%8A%D8%AF%D8%A7%D9%86%20%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2F9tp2ySKKBjpExYux8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/9tp2ySKKBjpExYux8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور مكرم عبيد 1 شارع عبد الحميد لطفي امتداد مكرم عبيد - مدينه نصر Cairo Nasr City">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور مكرم عبيد</div>
+                    <div class="branch-region">Cairo - Nasr City</div>
+                </div>
+                <div class="branch-details">1 شارع عبد الحميد لطفي امتداد مكرم عبيد - مدينه نصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D9%83%D8%B1%D9%85%20%D8%B9%D8%A8%D9%8A%D8%AF%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%201%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D8%AD%D9%85%D9%8A%D8%AF%20%D9%84%D8%B7%D9%81%D9%8A%20%D8%A7%D9%85%D8%AA%D8%AF%D8%A7%D8%AF%20%D9%85%D9%83%D8%B1%D9%85%20%D8%B9%D8%A8%D9%8A%D8%AF%20-%20%D9%85%D8%AF%D9%8A%D9%86%D9%87%20%D9%86%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FCfdHE3mhJWvxvTBp8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/CfdHE3mhJWvxvTBp8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور حلوان 39  ب تنظيم- شارع محمد مصطفى المراغي -ناصيه شارع راغب امام سوبر ماركت المحمل- Cairo Helwan">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور حلوان</div>
+                    <div class="branch-region">Cairo - Helwan</div>
+                </div>
+                <div class="branch-details">39  ب تنظيم- شارع محمد مصطفى المراغي -ناصيه شارع راغب امام سوبر ماركت المحمل-</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AD%D9%84%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2039%20%20%D8%A8%20%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%85%D8%AD%D9%85%D8%AF%20%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D8%BA%D9%8A%20-%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B1%D8%A7%D8%BA%D8%A8%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%B3%D9%88%D8%A8%D8%B1%20%D9%85%D8%A7%D8%B1%D9%83%D8%AA%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%84-%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FGyoSEFfWLonwojg69')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/GyoSEFfWLonwojg69" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي سنتر المعادي كارفور سيتي سنتر المعادي Cairo Maadi">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي سنتر المعادي</div>
+                    <div class="branch-region">Cairo - Maadi</div>
+                </div>
+                <div class="branch-details">كارفور سيتي سنتر المعادي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FSK2kiL3PcmmnXVsz6')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/SK2kiL3PcmmnXVsz6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور حدائق القبة 116 مصر و السودان، حدائق القبة، قسم حدائق القبة، محافظة القاهرة Cairo Hadayek AlQubbah">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور حدائق القبة</div>
+                    <div class="branch-region">Cairo - Hadayek AlQubbah</div>
+                </div>
+                <div class="branch-details">116 مصر و السودان، حدائق القبة، قسم حدائق القبة، محافظة القاهرة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20116%20%D9%85%D8%B5%D8%B1%20%D9%88%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%D8%8C%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%D8%8C%20%D9%82%D8%B3%D9%85%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FZz6SVPh1kpfey3jVA')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Zz6SVPh1kpfey3jVA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي ستارز سيتي ستارز مول - الدور الارضي - مدينه نصر Cairo Nasr City">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي ستارز</div>
+                    <div class="branch-region">Cairo - Nasr City</div>
+                </div>
+                <div class="branch-details">سيتي ستارز مول - الدور الارضي - مدينه نصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%B2%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%B2%20%D9%85%D9%88%D9%84%20-%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B1%D8%B6%D9%8A%20-%20%D9%85%D8%AF%D9%8A%D9%86%D9%87%20%D9%86%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F3visYpVDn7JXkYgQ9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/3visYpVDn7JXkYgQ9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كونكورد بلازا - التجمع كونكورد بلازا مول - شارع التسعين الشمالي - التجمع الخامس Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية كونكورد بلازا - التجمع</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">كونكورد بلازا مول - شارع التسعين الشمالي - التجمع الخامس</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D9%88%D9%86%D9%83%D9%88%D8%B1%D8%AF%20%D8%A8%D9%84%D8%A7%D8%B2%D8%A7%20-%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D9%88%D9%86%D9%83%D9%88%D8%B1%D8%AF%20%D8%A8%D9%84%D8%A7%D8%B2%D8%A7%20%D9%85%D9%88%D9%84%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AA%D8%B3%D8%B9%D9%8A%D9%86%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%20-%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FRHbzJpntg15D8n1RA')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/RHbzJpntg15D8n1RA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الرحاب مول جيت واي، محل رقم G07 و G08 - الرحاب - القاهرة الجديدة Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية الرحاب</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">مول جيت واي، محل رقم G07 و G08 - الرحاب - القاهرة الجديدة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D8%AC%D9%8A%D8%AA%20%D9%88%D8%A7%D9%8A%D8%8C%20%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%20G07%20%D9%88%20G08%20-%20%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8%20-%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F6T1zzkVNoqVb3An1A')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/6T1zzkVNoqVb3An1A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور التجمع الخامس ٤٥ مركز خدمات التجمع الخامس امام مستشفى السلام الدولي - القاهرة الجديدة Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور التجمع الخامس</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">٤٥ مركز خدمات التجمع الخامس امام مستشفى السلام الدولي - القاهرة الجديدة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%A4%D9%A5%20%D9%85%D8%B1%D9%83%D8%B2%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%85%D8%B3%D8%AA%D8%B4%D9%81%D9%89%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A%20-%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FXRJuxYtahsS1W93y5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/XRJuxYtahsS1W93y5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية رشدي 28 شارع المعسكر الروماني - رشدي Alexandria Roushdy">
+                <div class="branch-header">
+                    <div class="branch-title">راية رشدي</div>
+                    <div class="branch-region">Alexandria - Roushdy</div>
+                </div>
+                <div class="branch-details">28 شارع المعسكر الروماني - رشدي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B1%D8%B4%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2028%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D8%B9%D8%B3%D9%83%D8%B1%20%D8%A7%D9%84%D8%B1%D9%88%D9%85%D8%A7%D9%86%D9%8A%20-%20%D8%B1%D8%B4%D8%AF%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2F71WjsdEy51BJic1H7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/71WjsdEy51BJic1H7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور دمنهور برج مطاريد الإداري , ش أحمد عرابى - أرض الميرى - دمنهور - البحيرة Delta Damanhour">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور دمنهور</div>
+                    <div class="branch-region">Delta - Damanhour</div>
+                </div>
+                <div class="branch-details">برج مطاريد الإداري , ش أحمد عرابى - أرض الميرى - دمنهور - البحيرة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AF%D9%85%D9%86%D9%87%D9%88%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A8%D8%B1%D8%AC%20%D9%85%D8%B7%D8%A7%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D9%8A%20%2C%20%D8%B4%20%D8%A3%D8%AD%D9%85%D8%AF%20%D8%B9%D8%B1%D8%A7%D8%A8%D9%89%20-%20%D8%A3%D8%B1%D8%B6%20%D8%A7%D9%84%D9%85%D9%8A%D8%B1%D9%89%20-%20%D8%AF%D9%85%D9%86%D9%87%D9%88%D8%B1%20-%20%D8%A7%D9%84%D8%A8%D8%AD%D9%8A%D8%B1%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fs8HFHMoZmwPv16ZQ6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/s8HFHMoZmwPv16ZQ6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الإسماعيلية 11 شارع شبين الكوم وسيناء - حي شبين الكوم - محافظة الإسماعيلية . Canal Ismailia">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الإسماعيلية</div>
+                    <div class="branch-region">Canal - Ismailia</div>
+                </div>
+                <div class="branch-details">11 شارع شبين الكوم وسيناء - حي شبين الكوم - محافظة الإسماعيلية .</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%A5%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2011%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%83%D9%88%D9%85%20%D9%88%D8%B3%D9%8A%D9%86%D8%A7%D8%A1%20-%20%D8%AD%D9%8A%20%D8%B4%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%83%D9%88%D9%85%20-%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D8%A5%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84%D9%8A%D8%A9%20.%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FpxvymoShqdXPSCMx5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/pxvymoShqdXPSCMx5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية مصدق 44 شارع مصدق - الدقي- المهندسين Giza Dokki">
+                <div class="branch-header">
+                    <div class="branch-title">راية مصدق</div>
+                    <div class="branch-region">Giza - Dokki</div>
+                </div>
+                <div class="branch-details">44 شارع مصدق - الدقي- المهندسين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D8%B5%D8%AF%D9%82%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2044%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%85%D8%B5%D8%AF%D9%82%20-%20%D8%A7%D9%84%D8%AF%D9%82%D9%8A-%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D8%AF%D8%B3%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fzr7pcjvhv8QevDms6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/zr7pcjvhv8QevDms6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية هايبرا وان هايبر وان - الشيخ زايد - 6 أكتوبر Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية هايبرا وان</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">هايبر وان - الشيخ زايد - 6 أكتوبر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%87%D8%A7%D9%8A%D8%A8%D8%B1%D8%A7%20%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%87%D8%A7%D9%8A%D8%A8%D8%B1%20%D9%88%D8%A7%D9%86%20-%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B2%D8%A7%D9%8A%D8%AF%20-%206%20%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FchKv9HGXAHmSh4W87')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/chKv9HGXAHmSh4W87" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور مول العرب مول العرب - بوابه 23  - محل رقم G-019 Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور مول العرب</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">مول العرب - بوابه 23  - محل رقم G-019</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20-%20%D8%A8%D9%88%D8%A7%D8%A8%D9%87%2023%20%20-%20%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%20G-019%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F4KmRoVLzxB3wLRm46')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/4KmRoVLzxB3wLRm46" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الغردقة شارع النصر أمام جو باص - الدهار، الغردقة - محافظة البحر الأحمر Upper Egypt Hurghada">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الغردقة</div>
+                    <div class="branch-region">Upper Egypt - Hurghada</div>
+                </div>
+                <div class="branch-details">شارع النصر أمام جو باص - الدهار، الغردقة - محافظة البحر الأحمر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%BA%D8%B1%D8%AF%D9%82%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%86%D8%B5%D8%B1%20%D8%A3%D9%85%D8%A7%D9%85%20%D8%AC%D9%88%20%D8%A8%D8%A7%D8%B5%20-%20%D8%A7%D9%84%D8%AF%D9%87%D8%A7%D8%B1%D8%8C%20%D8%A7%D9%84%D8%BA%D8%B1%D8%AF%D9%82%D8%A9%20-%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%20%D8%A7%D9%84%D8%A3%D8%AD%D9%85%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FAMc5EnUWNmwbuJB66')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/AMc5EnUWNmwbuJB66" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الأقصر 8  شارع التليفزيون - قسم الاقصر Upper Egypt Luxor">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الأقصر</div>
+                    <div class="branch-region">Upper Egypt - Luxor</div>
+                </div>
+                <div class="branch-details">8  شارع التليفزيون - قسم الاقصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%208%20%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AA%D9%84%D9%8A%D9%81%D8%B2%D9%8A%D9%88%D9%86%20-%20%D9%82%D8%B3%D9%85%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FvJWUXCQzvm6gkPg28')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/vJWUXCQzvm6gkPg28" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ستيلا مارينا الساحل الشمالي منتجع ستيلا مارينا مدينة العلمين Alexandria Matrouh - Alalamen">
+                <div class="branch-header">
+                    <div class="branch-title">راية ستيلا مارينا الساحل الشمالي</div>
+                    <div class="branch-region">Alexandria - Matrouh - Alalamen</div>
+                </div>
+                <div class="branch-details">منتجع ستيلا مارينا مدينة العلمين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D8%AA%D9%8A%D9%84%D8%A7%20%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%86%D8%AA%D8%AC%D8%B9%20%D8%B3%D8%AA%D9%8A%D9%84%D8%A7%20%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7%20%D9%85%D8%AF%D9%8A%D9%86%D8%A9%20%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FisgEjYyUKHP5TDUs5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/isgEjYyUKHP5TDUs5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي سنتر الاسكندرية كارفور سيتي سنتر - المرحله الثانيه- الاسكندريه Alexandria Alexandria">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي سنتر الاسكندرية</div>
+                    <div class="branch-region">Alexandria - Alexandria</div>
+                </div>
+                <div class="branch-details">كارفور سيتي سنتر - المرحله الثانيه- الاسكندريه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B1%D8%AD%D9%84%D9%87%20%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A%D9%87-%20%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FSUKvAArLBnEiWNox9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/SUKvAArLBnEiWNox9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="مول سكاي كورت الساحل الشمالي مرسى مطروح - طريق إسكندرية قسم الضبعة امام قرية أمواج الساحل الشمالي Alexandria Matrouh">
+                <div class="branch-header">
+                    <div class="branch-title">مول سكاي كورت الساحل الشمالي</div>
+                    <div class="branch-region">Alexandria - Matrouh</div>
+                </div>
+                <div class="branch-details">مرسى مطروح - طريق إسكندرية قسم الضبعة امام قرية أمواج الساحل الشمالي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D9%85%D9%88%D9%84%20%D8%B3%D9%83%D8%A7%D9%8A%20%D9%83%D9%88%D8%B1%D8%AA%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D8%B1%D8%B3%D9%89%20%D9%85%D8%B7%D8%B1%D9%88%D8%AD%20-%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A5%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%20%D9%82%D8%B3%D9%85%20%D8%A7%D9%84%D8%B6%D8%A8%D8%B9%D8%A9%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%82%D8%B1%D9%8A%D8%A9%20%D8%A3%D9%85%D9%88%D8%A7%D8%AC%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FvsmLntGL2fJEfcoa8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/vsmLntGL2fJEfcoa8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية محور جيهان السادات بنزينة شيل أوت - محور جيهان السادات -  منشية ناصر Cairo Mansheyet Nasser">
+                <div class="branch-header">
+                    <div class="branch-title">راية محور جيهان السادات</div>
+                    <div class="branch-region">Cairo - Mansheyet Nasser</div>
+                </div>
+                <div class="branch-details">بنزينة شيل أوت - محور جيهان السادات -  منشية ناصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D8%AD%D9%88%D8%B1%20%D8%AC%D9%8A%D9%87%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%A7%D8%AA%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A8%D9%86%D8%B2%D9%8A%D9%86%D8%A9%20%D8%B4%D9%8A%D9%84%20%D8%A3%D9%88%D8%AA%20-%20%D9%85%D8%AD%D9%88%D8%B1%20%D8%AC%D9%8A%D9%87%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%A7%D8%AA%20-%20%20%D9%85%D9%86%D8%B4%D9%8A%D8%A9%20%D9%86%D8%A7%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FJuxi9GGzQMszjByz7')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/Juxi9GGzQMszjByz7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الحجاز 50 شارع الحجاز بجانب بنزينه موبيل- مصر الجديده Cairo Masr elgededa">
+                <div class="branch-header">
+                    <div class="branch-title">راية الحجاز</div>
+                    <div class="branch-region">Cairo - Masr elgededa</div>
+                </div>
+                <div class="branch-details">50 شارع الحجاز بجانب بنزينه موبيل- مصر الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%AD%D8%AC%D8%A7%D8%B2%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2050%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AD%D8%AC%D8%A7%D8%B2%20%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%A8%D9%86%D8%B2%D9%8A%D9%86%D9%87%20%D9%85%D9%88%D8%A8%D9%8A%D9%84-%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FDBCQaNRC1Gwkz5Y9A')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/DBCQaNRC1Gwkz5Y9A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية عمارات العبور 12 عمارات العبور - شارع صلاح سالم - مصر الجديده Cairo Masr elgededa">
+                <div class="branch-header">
+                    <div class="branch-title">راية عمارات العبور</div>
+                    <div class="branch-region">Cairo - Masr elgededa</div>
+                </div>
+                <div class="branch-details">12 عمارات العبور - شارع صلاح سالم - مصر الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%A8%D9%88%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2012%20%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%A8%D9%88%D8%B1%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B5%D9%84%D8%A7%D8%AD%20%D8%B3%D8%A7%D9%84%D9%85%20-%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F7UMJrvJ1zJRxZc5CA')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/7UMJrvJ1zJRxZc5CA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور السيدة زينب 142 شارع السد - السيده زينب Cairo Sayeda Zainb">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور السيدة زينب</div>
+                    <div class="branch-region">Cairo - Sayeda Zainb</div>
+                </div>
+                <div class="branch-details">142 شارع السد - السيده زينب</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D8%A9%20%D8%B2%D9%8A%D9%86%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20142%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B3%D8%AF%20-%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D9%87%20%D8%B2%D9%8A%D9%86%D8%A8%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FaUG2KVwrgAAvXyU97')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/aUG2KVwrgAAvXyU97" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور شبرا 57  شارع شبرا بجوار بنك مصر- شبرا Cairo Shoubra">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور شبرا</div>
+                    <div class="branch-region">Cairo - Shoubra</div>
+                </div>
+                <div class="branch-details">57  شارع شبرا بجوار بنك مصر- شبرا</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%B4%D8%A8%D8%B1%D8%A7%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2057%20%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%A8%D9%86%D9%83%20%D9%85%D8%B5%D8%B1-%20%D8%B4%D8%A8%D8%B1%D8%A7%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F8qouK1hSnoBmAjT29')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/8qouK1hSnoBmAjT29" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور شبرا الخيمة 173 شارع 15 مايو امام البنك الاهلي- شبرا الخيمه Cairo Shubra AlKhaima">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور شبرا الخيمة</div>
+                    <div class="branch-region">Cairo - Shubra AlKhaima</div>
+                </div>
+                <div class="branch-details">173 شارع 15 مايو امام البنك الاهلي- شبرا الخيمه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20173%20%D8%B4%D8%A7%D8%B1%D8%B9%2015%20%D9%85%D8%A7%D9%8A%D9%88%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%A7%D9%87%D9%84%D9%8A-%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FsDnV5BBdHPFTnpvX6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/sDnV5BBdHPFTnpvX6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور محرم بك المحل التجاري الكائن ب، 85 Moharram Bek, Emberouz WA Moharram Beik, Moharam Bek, Alexandria Governorate 5413414 Alexandria Alexandria">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور محرم بك</div>
+                    <div class="branch-region">Alexandria - Alexandria</div>
+                </div>
+                <div class="branch-details">المحل التجاري الكائن ب، 85 Moharram Bek, Emberouz WA Moharram Beik, Moharam Bek, Alexandria Governorate 5413414</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D8%AD%D8%B1%D9%85%20%D8%A8%D9%83%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%84%20%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D9%8A%20%D8%A7%D9%84%D9%83%D8%A7%D8%A6%D9%86%20%D8%A8%D8%8C%2085%20Moharram%20Bek%2C%20Emberouz%20WA%20Moharram%20Beik%2C%20Moharam%20Bek%2C%20Alexandria%20Governorate%205413414%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FHMPc3tiCjxHReaa77')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/HMPc3tiCjxHReaa77" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور لوران 696 طريق الحريه لوران - شارع ابو قير-عند ناصيه شارع شعراوي- لوران Alexandria Louran">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور لوران</div>
+                    <div class="branch-region">Alexandria - Louran</div>
+                </div>
+                <div class="branch-details">696 طريق الحريه لوران - شارع ابو قير-عند ناصيه شارع شعراوي- لوران</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20696%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D9%84%D8%AD%D8%B1%D9%8A%D9%87%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D8%A8%D9%88%20%D9%82%D9%8A%D8%B1-%D8%B9%D9%86%D8%AF%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%8A-%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FxB9bSP1aEV6zLusA6')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/xB9bSP1aEV6zLusA6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المنشية 4 شارع صلاح سالم امام جراج الاتحاد الاشتراكي- المنشيه Alexandria Mansheya">
+                <div class="branch-header">
+                    <div class="branch-title">راية المنشية</div>
+                    <div class="branch-region">Alexandria - Mansheya</div>
+                </div>
+                <div class="branch-details">4 شارع صلاح سالم امام جراج الاتحاد الاشتراكي- المنشيه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%204%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B5%D9%84%D8%A7%D8%AD%20%D8%B3%D8%A7%D9%84%D9%85%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%AC%D8%B1%D8%A7%D8%AC%20%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%D9%8A-%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F6ZLkG2CWvYqyaFWx9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/6ZLkG2CWvYqyaFWx9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="ميجا العجمي العجمي، طريق اسكندرية مطروح، الكيلو 17 ، بجوار شارع الحديد والصلب Alexandria Al-Ajami">
+                <div class="branch-header">
+                    <div class="branch-title">ميجا العجمي</div>
+                    <div class="branch-region">Alexandria - Al-Ajami</div>
+                </div>
+                <div class="branch-details">العجمي، طريق اسكندرية مطروح، الكيلو 17 ، بجوار شارع الحديد والصلب</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%A7%D9%84%D8%B9%D8%AC%D9%85%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D8%B9%D8%AC%D9%85%D9%8A%D8%8C%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%20%D9%85%D8%B7%D8%B1%D9%88%D8%AD%D8%8C%20%D8%A7%D9%84%D9%83%D9%8A%D9%84%D9%88%2017%20%D8%8C%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AD%D8%AF%D9%8A%D8%AF%20%D9%88%D8%A7%D9%84%D8%B5%D9%84%D8%A8%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F9dbi59qLrUBZfMvt5')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/9dbi59qLrUBZfMvt5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الزقازيق ٢ شارع عطفي كامل مع شارع القومية- التقسيم الأول للمهنيين- ميدان القومية- الزقازيق- الشرقية Delta Zagazig">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الزقازيق</div>
+                    <div class="branch-region">Delta - Zagazig</div>
+                </div>
+                <div class="branch-details">٢ شارع عطفي كامل مع شارع القومية- التقسيم الأول للمهنيين- ميدان القومية- الزقازيق- الشرقية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B2%D9%82%D8%A7%D8%B2%D9%8A%D9%82%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%A2%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%B7%D9%81%D9%8A%20%D9%83%D8%A7%D9%85%D9%84%20%D9%85%D8%B9%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9-%20%D8%A7%D9%84%D8%AA%D9%82%D8%B3%D9%8A%D9%85%20%D8%A7%D9%84%D8%A3%D9%88%D9%84%20%D9%84%D9%84%D9%85%D9%87%D9%86%D9%8A%D9%8A%D9%86-%20%D9%85%D9%8A%D8%AF%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9-%20%D8%A7%D9%84%D8%B2%D9%82%D8%A7%D8%B2%D9%8A%D9%82-%20%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FU6rsbrKSFN9wvXTs5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/U6rsbrKSFN9wvXTs5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المنصورة 22 شارع الجمهوريه عالمشايه برج النورس امام بوابه الجامعه الرئيسيه Delta Mansoura">
+                <div class="branch-header">
+                    <div class="branch-title">راية المنصورة</div>
+                    <div class="branch-region">Delta - Mansoura</div>
+                </div>
+                <div class="branch-details">22 شارع الجمهوريه عالمشايه برج النورس امام بوابه الجامعه الرئيسيه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2022%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%88%D8%B1%D9%8A%D9%87%20%D8%B9%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D9%8A%D9%87%20%D8%A8%D8%B1%D8%AC%20%D8%A7%D9%84%D9%86%D9%88%D8%B1%D8%B3%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A8%D9%88%D8%A7%D8%A8%D9%87%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D9%87%20%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2Fo5WaBeqFUogSbiNA8')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/o5WaBeqFUogSbiNA8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور المنصورة المنصورة شارع بورسعيد - برج هلا التجاري - أمام الجمعية الشرعية Delta Mansoura">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور المنصورة</div>
+                    <div class="branch-region">Delta - Mansoura</div>
+                </div>
+                <div class="branch-details">المنصورة شارع بورسعيد - برج هلا التجاري - أمام الجمعية الشرعية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A8%D9%88%D8%B1%D8%B3%D8%B9%D9%8A%D8%AF%20-%20%D8%A8%D8%B1%D8%AC%20%D9%87%D9%84%D8%A7%20%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D9%8A%20-%20%D8%A3%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B4%D8%B1%D8%B9%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fifd4CtcXC3gE5g439')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/ifd4CtcXC3gE5g439" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الحصري المحور المركزي بجوار جامع الحصري- 6 اكتوبر Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الحصري</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">المحور المركزي بجوار جامع الحصري- 6 اكتوبر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%AD%D8%B5%D8%B1%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2%D9%8A%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%AC%D8%A7%D9%85%D8%B9%20%D8%A7%D9%84%D8%AD%D8%B5%D8%B1%D9%8A-%206%20%D8%A7%D9%83%D8%AA%D9%88%D8%A8%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FUspr5m6MkwVAVWBW6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Uspr5m6MkwVAVWBW6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كايرو مول الهرم 269 شارع الهرم - كايرو مول - الهرم Giza Haram">
+                <div class="branch-header">
+                    <div class="branch-title">راية كايرو مول الهرم</div>
+                    <div class="branch-region">Giza - Haram</div>
+                </div>
+                <div class="branch-details">269 شارع الهرم - كايرو مول - الهرم</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20269%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%20-%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%85%D9%88%D9%84%20-%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FY33Pq5Q372Eb2rJg7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Y33Pq5Q372Eb2rJg7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الهرم 2 166 شارع الهرم - محطه شارع العريش- الهرم Giza Haram">
+                <div class="branch-header">
+                    <div class="branch-title">راية الهرم 2</div>
+                    <div class="branch-region">Giza - Haram</div>
+                </div>
+                <div class="branch-details">166 شارع الهرم - محطه شارع العريش- الهرم</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20166%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%20-%20%D9%85%D8%AD%D8%B7%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B9%D8%B1%D9%8A%D8%B4-%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FLvi37v9LsEwPeBjh6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Lvi37v9LsEwPeBjh6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية مول مصر مول مصر الدور الاول امام كارفور Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية مول مصر</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">مول مصر الدور الاول امام كارفور</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%88%D9%84%20%D9%85%D8%B5%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D9%88%D9%84%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FVRHDb622QYqi6k73A')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/VRHDb622QYqi6k73A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور السودان 161 شارع السودان - على ناصيه شارع عدن امام السلام شوبينج سنتر- المهندسين Giza Mohandessen">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور السودان</div>
+                    <div class="branch-region">Giza - Mohandessen</div>
+                </div>
+                <div class="branch-details">161 شارع السودان - على ناصيه شارع عدن امام السلام شوبينج سنتر- المهندسين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20161%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%20-%20%D8%B9%D9%84%D9%89%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%AF%D9%86%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B4%D9%88%D8%A8%D9%8A%D9%86%D8%AC%20%D8%B3%D9%86%D8%AA%D8%B1-%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D8%AF%D8%B3%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FxXLh7WZNfpZ9PY5V7')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/xXLh7WZNfpZ9PY5V7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور فيصل 411 شارع الملك فيصل - محطه التميمي - ناصيه شارع ابن بطوطه- فيصل Giza Faisal">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور فيصل</div>
+                    <div class="branch-region">Giza - Faisal</div>
+                </div>
+                <div class="branch-details">411 شارع الملك فيصل - محطه التميمي - ناصيه شارع ابن بطوطه- فيصل</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20411%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D9%84%D9%83%20%D9%81%D9%8A%D8%B5%D9%84%20-%20%D9%85%D8%AD%D8%B7%D9%87%20%D8%A7%D9%84%D8%AA%D9%85%D9%8A%D9%85%D9%8A%20-%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D8%A8%D9%86%20%D8%A8%D8%B7%D9%88%D8%B7%D9%87-%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FYQjji4KkpKH2maQG8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/YQjji4KkpKH2maQG8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور فيصل 2 325 شارع الملك فيصل ناصيه حسن محمد - فيصل Giza Faisal">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور فيصل 2</div>
+                    <div class="branch-region">Giza - Faisal</div>
+                </div>
+                <div class="branch-details">325 شارع الملك فيصل ناصيه حسن محمد - فيصل</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%81%D9%8A%D8%B5%D9%84%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20325%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D9%84%D9%83%20%D9%81%D9%8A%D8%B5%D9%84%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%AD%D8%B3%D9%86%20%D9%85%D8%AD%D9%85%D8%AF%20-%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FJ9SS1m6KRARsxXZ38')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/J9SS1m6KRARsxXZ38" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور أسيوط 14 ب شارع الجمهوريه امام معامل البرج وألفا بجوار اشاره المساحه Upper Egypt Assiut">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور أسيوط</div>
+                    <div class="branch-region">Upper Egypt - Assiut</div>
+                </div>
+                <div class="branch-details">14 ب شارع الجمهوريه امام معامل البرج وألفا بجوار اشاره المساحه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A3%D8%B3%D9%8A%D9%88%D8%B7%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2014%20%D8%A8%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%88%D8%B1%D9%8A%D9%87%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%85%D8%B9%D8%A7%D9%85%D9%84%20%D8%A7%D9%84%D8%A8%D8%B1%D8%AC%20%D9%88%D8%A3%D9%84%D9%81%D8%A7%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%87%20%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D8%AD%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FtwXLwchMht5N4vsr9')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/twXLwchMht5N4vsr9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية طنطا 2 شارع المديرية - طنطا - الغربية Delta Tanta">
+                <div class="branch-header">
+                    <div class="branch-title">راية طنطا 2</div>
+                    <div class="branch-region">Delta - Tanta</div>
+                </div>
+                <div class="branch-details">شارع المديرية - طنطا - الغربية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B7%D9%86%D8%B7%D8%A7%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D8%B1%D9%8A%D8%A9%20-%20%D8%B7%D9%86%D8%B7%D8%A7%20-%20%D8%A7%D9%84%D8%BA%D8%B1%D8%A8%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fshare.google%2Ftg3xldpasBfX5RFDj')">نسخ للواتساب</button>
+                    <a href="https://share.google/tg3xldpasBfX5RFDj" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية  ميجا ستور أسوان 101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511 Upper Egypt Aswan">
+                <div class="branch-header">
+                    <div class="branch-title">راية  ميجا ستور أسوان</div>
+                    <div class="branch-region">Upper Egypt - Aswan</div>
+                </div>
+                <div class="branch-details">101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20101%20%D9%83%D9%88%D8%B1%D9%86%D9%8A%D8%B4%20%D8%A7%D9%84%D9%86%D9%8A%D9%84%D8%8C%20%D8%B4%D9%8A%D8%A7%D8%AE%D8%A9%20%D8%AB%D8%A7%D9%84%D8%AB%D8%A9%D8%8C%20%D8%A7%D9%88%D9%84%20%D8%A7%D8%B3%D9%88%D8%A7%D9%86%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%2081511%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.google.com%2F%3Fq%3D101%2520%25D9%2583%25D9%2588%25D8%25B1%25D9%2586%25D9%258A%25D8%25B4%2520%25D8%25A7%25D9%2584%25D9%2586%25D9%258A%25D9%2584%25D8%258C%2520%25D8%25B4%25D9%258A%25D8%25A7%25D8%25AE%25D8%25A9%2520%25D8%25AB%25D8%25A7%25D9%2584%25D8%25AB%25D8%25A9%25D8%258C%2520%25D8%25A7%25D9%2588%25D9%2584%2520%25D8%25A7%25D8%25B3%25D9%2588%25D8%25A7%25D9%2586%25D8%258C%2520%25D9%2585%25D8%25AD%25D8%25A7%25D9%2581%25D8%25B8%25D8%25A9%2520%25D8%25A3%25D8%25B3%25D9%2588%25D8%25A7%25D9%2586%252081511')">نسخ للواتساب</button>
+                    <a href="https://maps.google.com/?q=101%20%D9%83%D9%88%D8%B1%D9%86%D9%8A%D8%B4%20%D8%A7%D9%84%D9%86%D9%8A%D9%84%D8%8C%20%D8%B4%D9%8A%D8%A7%D8%AE%D8%A9%20%D8%AB%D8%A7%D9%84%D8%AB%D8%A9%D8%8C%20%D8%A7%D9%88%D9%84%20%D8%A7%D8%B3%D9%88%D8%A7%D9%86%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%2081511" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا سوهاج المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511 Upper Egypt Sohag">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا سوهاج</div>
+                    <div class="branch-region">Upper Egypt - Sohag</div>
+                </div>
+                <div class="branch-details">المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D9%88%D9%87%D8%A7%D8%AC%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%201%20%D8%A8%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B1%D8%B6%D9%89%2C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%86%D8%B5%D8%B1%2C%20Awlad%20Naseer%2C%20Sohag%202%2C%20Sohag%20Governorate%2082511%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fshare.google%2FaWEvgTQZf7n8bHlH7')">نسخ للواتساب</button>
+                    <a href="https://share.google/aWEvgTQZf7n8bHlH7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="RAYA HQ MAADI Maadi as Sarayat Al Gharbeyah, Tura, Cairo Governorate Headquarters ">
+                <div class="branch-header">
+                    <div class="branch-title">RAYA HQ MAADI</div>
+                    <div class="branch-region">Headquarters </div>
+                </div>
+                <div class="branch-details">Maadi as Sarayat Al Gharbeyah, Tura, Cairo Governorate</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20RAYA%20HQ%20MAADI%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20Maadi%20as%20Sarayat%20Al%20Gharbeyah%2C%20Tura%2C%20Cairo%20Governorate%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FaZG7Lw3ngFb6po1z9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/aZG7Lw3ngFb6po1z9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            function filterBranchesStatic() {
+                const term = document.getElementById('branchesSearchInput').value.toLowerCase();
+                const cards = document.querySelectorAll('#sec-branches-directory .branch-card');
+                cards.forEach(card => {
+                    const searchable = card.getAttribute('data-search').toLowerCase();
+                    if(searchable.includes(term)) card.classList.remove('hidden-card');
+                    else card.classList.add('hidden-card');
+                });
+            }
+            function copyBranchStatic(btn, textEnc) {
+                const text = decodeURIComponent(textEnc);
+                navigator.clipboard.writeText(text).then(() => {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '✔ تم النسخ';
+                    btn.style.backgroundColor = '#10B981';
+                    setTimeout(() => {
+                        btn.innerHTML = orig;
+                        btn.style.backgroundColor = '#25D366';
+                    }, 2000);
+                });
+            }
+        </script>
+    </div>
+</div>
+
+
+
 
                 <!-- ── SECTION: RAYA CULTURE ── -->
                 <div class="section-block" data-category="culture" id="sec-culture">
@@ -7106,7 +7703,615 @@
                     </div>
                     <div class="section-body">
                       <div id="main-protocol-delivery-guest" class="main-protocol-tab-content">
-                        <!-- Main Header Text -->
+                        
+
+<!-- SECTION: DELIVERY GUEST -->
+                  <div class="section-block" data-category="delivery_guest" id="sec-delivery-guest"
+                    style="display:none;">
+                    <div class="section-header" onclick="toggleSection(this)">
+                      <span class="section-icon">🚚</span>
+                      التوصيل للضيف
+                      <span class="section-toggle">▼</span>
+                    </div>
+                    <div class="section-body">
+                      <div id="main-protocol-delivery-guest" class="main-protocol-tab-content">
+                        
+
+<!-- SECTION: BRANCHES DIRECTORY -->
+<div class="section-block" data-category="branches_directory" id="sec-branches-directory" style="display:none; border: 10px solid red !important; min-height: 500px;">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-icon">🏢</span>
+        عناوين فروع راية
+        <span class="section-toggle">▼</span>
+    </div>
+    <div class="section-body">
+        <style>
+            #sec-branches-directory .search-container {
+                background: #ffffff; padding: 16px; border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 25px;
+                display: flex; align-items: center; gap: 12px; border: 1px solid #e2e8f0;
+            }
+            #sec-branches-directory .search-input {
+                flex: 1; border: none; outline: none; font-size: 1.05rem; background: transparent; font-family: inherit;
+            }
+            #sec-branches-directory .branches-grid {
+                display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+            }
+            #sec-branches-directory .branch-card {
+                background: #ffffff; border-radius: 12px; padding: 18px; border: 1px solid #e2e8f0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; position: relative; overflow: hidden;
+            }
+            #sec-branches-directory .branch-card::before {
+                content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: #0056b3;
+            }
+            #sec-branches-directory .branch-header { margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+            #sec-branches-directory .branch-title { font-size: 1.15rem; font-weight: 700; color: #0056b3; margin-bottom: 4px; }
+            #sec-branches-directory .branch-region { font-size: 0.8rem; background: #f8f9fa; color: #718096; padding: 3px 8px; border-radius: 12px; font-weight: 600; display: inline-block; }
+            #sec-branches-directory .branch-details { font-size: 0.9rem; margin-bottom: 16px; color: #2d3748; flex: 1; }
+            #sec-branches-directory .branch-actions { display: flex; gap: 8px; margin-top: auto; }
+            #sec-branches-directory .btn { padding: 8px; border: none; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; font-family: inherit; }
+            #sec-branches-directory .btn-copy { flex: 1; background-color: #25D366; color: white; }
+            #sec-branches-directory .btn-map { flex: 0 0 auto; width: 40px; background-color: #f8f9fa; border: 1px solid #e2e8f0; color: #2d3748; text-decoration: none; }
+            #sec-branches-directory .hidden-card { display: none !important; }
+        </style>
+
+        <div style="background:#f0f4ff; border:1px solid #ccd6f5; border-radius:12px; padding:16px; margin-bottom:20px; text-align:center;">
+            <h3 style="color:#003399; margin-bottom:10px; font-weight:bold; font-size:20px;">🏢 عناوين فروع راية</h3>
+            <p style="margin:0; font-size:15px; color:#4a5a8a; line-height:1.7;">ابحث عن الفرع، انسخ العنوان بضغطة زر، وشاركه مع العميل عبر واتساب بسهولة.</p>
+        </div>
+
+        <div class="search-container">
+            <span>🔍</span>
+            <input type="text" id="branchesSearchInput" class="search-input" placeholder="ابحث باسم الفرع، المنطقة، أو المحافظة..." onkeyup="filterBranchesStatic()">
+        </div>
+
+        <div class="branches-grid" id="branchesGrid">
+            <div class="branch-card" data-search="راية ميجا ستور جسر السويس 43 شارع الليث - جسر السويس- الزيتون Cairo Al Zayton">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور جسر السويس</div>
+                    <div class="branch-region">Cairo - Al Zayton</div>
+                </div>
+                <div class="branch-details">43 شارع الليث - جسر السويس- الزيتون</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AC%D8%B3%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%B3%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2043%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%84%D9%8A%D8%AB%20-%20%D8%AC%D8%B3%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D9%8A%D8%B3-%20%D8%A7%D9%84%D8%B2%D9%8A%D8%AA%D9%88%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fjh8zJSFNbvF6YvGN7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/jh8zJSFNbvF6YvGN7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كايرو فيستفال سيتي مول راية  كايرو فيستفال  وحده (2-551)  الدور الثالث بجانب صيدليه العزبي امام كارفور Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية كايرو فيستفال سيتي مول</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">راية  كايرو فيستفال  وحده (2-551)  الدور الثالث بجانب صيدليه العزبي امام كارفور</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%81%D9%8A%D8%B3%D8%AA%D9%81%D8%A7%D9%84%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D9%85%D9%88%D9%84%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%81%D9%8A%D8%B3%D8%AA%D9%81%D8%A7%D9%84%20%20%D9%88%D8%AD%D8%AF%D9%87%20(2-551)%20%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%AB%D8%A7%D9%84%D8%AB%20%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D9%87%20%D8%A7%D9%84%D8%B9%D8%B2%D8%A8%D9%8A%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FcMLoZZDtteb2DaJ68')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/cMLoZZDtteb2DaJ68" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المعادي 1 ميدان الجزائر - المعادي الجديده Cairo Maadi">
+                <div class="branch-header">
+                    <div class="branch-title">راية المعادي</div>
+                    <div class="branch-region">Cairo - Maadi</div>
+                </div>
+                <div class="branch-details">1 ميدان الجزائر - المعادي الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%201%20%D9%85%D9%8A%D8%AF%D8%A7%D9%86%20%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2F9tp2ySKKBjpExYux8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/9tp2ySKKBjpExYux8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور مكرم عبيد 1 شارع عبد الحميد لطفي امتداد مكرم عبيد - مدينه نصر Cairo Nasr City">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور مكرم عبيد</div>
+                    <div class="branch-region">Cairo - Nasr City</div>
+                </div>
+                <div class="branch-details">1 شارع عبد الحميد لطفي امتداد مكرم عبيد - مدينه نصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D9%83%D8%B1%D9%85%20%D8%B9%D8%A8%D9%8A%D8%AF%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%201%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D8%AD%D9%85%D9%8A%D8%AF%20%D9%84%D8%B7%D9%81%D9%8A%20%D8%A7%D9%85%D8%AA%D8%AF%D8%A7%D8%AF%20%D9%85%D9%83%D8%B1%D9%85%20%D8%B9%D8%A8%D9%8A%D8%AF%20-%20%D9%85%D8%AF%D9%8A%D9%86%D9%87%20%D9%86%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FCfdHE3mhJWvxvTBp8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/CfdHE3mhJWvxvTBp8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور حلوان 39  ب تنظيم- شارع محمد مصطفى المراغي -ناصيه شارع راغب امام سوبر ماركت المحمل- Cairo Helwan">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور حلوان</div>
+                    <div class="branch-region">Cairo - Helwan</div>
+                </div>
+                <div class="branch-details">39  ب تنظيم- شارع محمد مصطفى المراغي -ناصيه شارع راغب امام سوبر ماركت المحمل-</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AD%D9%84%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2039%20%20%D8%A8%20%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%85%D8%AD%D9%85%D8%AF%20%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D8%BA%D9%8A%20-%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B1%D8%A7%D8%BA%D8%A8%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%B3%D9%88%D8%A8%D8%B1%20%D9%85%D8%A7%D8%B1%D9%83%D8%AA%20%D8%A7%D9%84%D9%85%D8%AD%D9%85%D9%84-%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FGyoSEFfWLonwojg69')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/GyoSEFfWLonwojg69" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي سنتر المعادي كارفور سيتي سنتر المعادي Cairo Maadi">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي سنتر المعادي</div>
+                    <div class="branch-region">Cairo - Maadi</div>
+                </div>
+                <div class="branch-details">كارفور سيتي سنتر المعادي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%AF%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FSK2kiL3PcmmnXVsz6')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/SK2kiL3PcmmnXVsz6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور حدائق القبة 116 مصر و السودان، حدائق القبة، قسم حدائق القبة، محافظة القاهرة Cairo Hadayek AlQubbah">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور حدائق القبة</div>
+                    <div class="branch-region">Cairo - Hadayek AlQubbah</div>
+                </div>
+                <div class="branch-details">116 مصر و السودان، حدائق القبة، قسم حدائق القبة، محافظة القاهرة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20116%20%D9%85%D8%B5%D8%B1%20%D9%88%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%D8%8C%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%D8%8C%20%D9%82%D8%B3%D9%85%20%D8%AD%D8%AF%D8%A7%D8%A6%D9%82%20%D8%A7%D9%84%D9%82%D8%A8%D8%A9%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FZz6SVPh1kpfey3jVA')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Zz6SVPh1kpfey3jVA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي ستارز سيتي ستارز مول - الدور الارضي - مدينه نصر Cairo Nasr City">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي ستارز</div>
+                    <div class="branch-region">Cairo - Nasr City</div>
+                </div>
+                <div class="branch-details">سيتي ستارز مول - الدور الارضي - مدينه نصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%B2%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%B2%20%D9%85%D9%88%D9%84%20-%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B1%D8%B6%D9%8A%20-%20%D9%85%D8%AF%D9%8A%D9%86%D9%87%20%D9%86%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F3visYpVDn7JXkYgQ9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/3visYpVDn7JXkYgQ9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كونكورد بلازا - التجمع كونكورد بلازا مول - شارع التسعين الشمالي - التجمع الخامس Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية كونكورد بلازا - التجمع</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">كونكورد بلازا مول - شارع التسعين الشمالي - التجمع الخامس</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D9%88%D9%86%D9%83%D9%88%D8%B1%D8%AF%20%D8%A8%D9%84%D8%A7%D8%B2%D8%A7%20-%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D9%88%D9%86%D9%83%D9%88%D8%B1%D8%AF%20%D8%A8%D9%84%D8%A7%D8%B2%D8%A7%20%D9%85%D9%88%D9%84%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AA%D8%B3%D8%B9%D9%8A%D9%86%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%20-%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FRHbzJpntg15D8n1RA')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/RHbzJpntg15D8n1RA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الرحاب مول جيت واي، محل رقم G07 و G08 - الرحاب - القاهرة الجديدة Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية الرحاب</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">مول جيت واي، محل رقم G07 و G08 - الرحاب - القاهرة الجديدة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D8%AC%D9%8A%D8%AA%20%D9%88%D8%A7%D9%8A%D8%8C%20%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%20G07%20%D9%88%20G08%20-%20%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8%20-%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F6T1zzkVNoqVb3An1A')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/6T1zzkVNoqVb3An1A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور التجمع الخامس ٤٥ مركز خدمات التجمع الخامس امام مستشفى السلام الدولي - القاهرة الجديدة Cairo New Cairo">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور التجمع الخامس</div>
+                    <div class="branch-region">Cairo - New Cairo</div>
+                </div>
+                <div class="branch-details">٤٥ مركز خدمات التجمع الخامس امام مستشفى السلام الدولي - القاهرة الجديدة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%A4%D9%A5%20%D9%85%D8%B1%D9%83%D8%B2%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%85%D8%B3%D8%AA%D8%B4%D9%81%D9%89%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A%20-%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FXRJuxYtahsS1W93y5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/XRJuxYtahsS1W93y5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية رشدي 28 شارع المعسكر الروماني - رشدي Alexandria Roushdy">
+                <div class="branch-header">
+                    <div class="branch-title">راية رشدي</div>
+                    <div class="branch-region">Alexandria - Roushdy</div>
+                </div>
+                <div class="branch-details">28 شارع المعسكر الروماني - رشدي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B1%D8%B4%D8%AF%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2028%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D8%B9%D8%B3%D9%83%D8%B1%20%D8%A7%D9%84%D8%B1%D9%88%D9%85%D8%A7%D9%86%D9%8A%20-%20%D8%B1%D8%B4%D8%AF%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2F71WjsdEy51BJic1H7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/71WjsdEy51BJic1H7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور دمنهور برج مطاريد الإداري , ش أحمد عرابى - أرض الميرى - دمنهور - البحيرة Delta Damanhour">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور دمنهور</div>
+                    <div class="branch-region">Delta - Damanhour</div>
+                </div>
+                <div class="branch-details">برج مطاريد الإداري , ش أحمد عرابى - أرض الميرى - دمنهور - البحيرة</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%AF%D9%85%D9%86%D9%87%D9%88%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A8%D8%B1%D8%AC%20%D9%85%D8%B7%D8%A7%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D9%8A%20%2C%20%D8%B4%20%D8%A3%D8%AD%D9%85%D8%AF%20%D8%B9%D8%B1%D8%A7%D8%A8%D9%89%20-%20%D8%A3%D8%B1%D8%B6%20%D8%A7%D9%84%D9%85%D9%8A%D8%B1%D9%89%20-%20%D8%AF%D9%85%D9%86%D9%87%D9%88%D8%B1%20-%20%D8%A7%D9%84%D8%A8%D8%AD%D9%8A%D8%B1%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fs8HFHMoZmwPv16ZQ6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/s8HFHMoZmwPv16ZQ6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الإسماعيلية 11 شارع شبين الكوم وسيناء - حي شبين الكوم - محافظة الإسماعيلية . Canal Ismailia">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الإسماعيلية</div>
+                    <div class="branch-region">Canal - Ismailia</div>
+                </div>
+                <div class="branch-details">11 شارع شبين الكوم وسيناء - حي شبين الكوم - محافظة الإسماعيلية .</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%A5%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2011%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%83%D9%88%D9%85%20%D9%88%D8%B3%D9%8A%D9%86%D8%A7%D8%A1%20-%20%D8%AD%D9%8A%20%D8%B4%D8%A8%D9%8A%D9%86%20%D8%A7%D9%84%D9%83%D9%88%D9%85%20-%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D8%A5%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84%D9%8A%D8%A9%20.%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FpxvymoShqdXPSCMx5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/pxvymoShqdXPSCMx5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية مصدق 44 شارع مصدق - الدقي- المهندسين Giza Dokki">
+                <div class="branch-header">
+                    <div class="branch-title">راية مصدق</div>
+                    <div class="branch-region">Giza - Dokki</div>
+                </div>
+                <div class="branch-details">44 شارع مصدق - الدقي- المهندسين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D8%B5%D8%AF%D9%82%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2044%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D9%85%D8%B5%D8%AF%D9%82%20-%20%D8%A7%D9%84%D8%AF%D9%82%D9%8A-%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D8%AF%D8%B3%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fzr7pcjvhv8QevDms6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/zr7pcjvhv8QevDms6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية هايبرا وان هايبر وان - الشيخ زايد - 6 أكتوبر Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية هايبرا وان</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">هايبر وان - الشيخ زايد - 6 أكتوبر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%87%D8%A7%D9%8A%D8%A8%D8%B1%D8%A7%20%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%87%D8%A7%D9%8A%D8%A8%D8%B1%20%D9%88%D8%A7%D9%86%20-%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B2%D8%A7%D9%8A%D8%AF%20-%206%20%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FchKv9HGXAHmSh4W87')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/chKv9HGXAHmSh4W87" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور مول العرب مول العرب - بوابه 23  - محل رقم G-019 Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور مول العرب</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">مول العرب - بوابه 23  - محل رقم G-019</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%20-%20%D8%A8%D9%88%D8%A7%D8%A8%D9%87%2023%20%20-%20%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%20G-019%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F4KmRoVLzxB3wLRm46')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/4KmRoVLzxB3wLRm46" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الغردقة شارع النصر أمام جو باص - الدهار، الغردقة - محافظة البحر الأحمر Upper Egypt Hurghada">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الغردقة</div>
+                    <div class="branch-region">Upper Egypt - Hurghada</div>
+                </div>
+                <div class="branch-details">شارع النصر أمام جو باص - الدهار، الغردقة - محافظة البحر الأحمر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%BA%D8%B1%D8%AF%D9%82%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%86%D8%B5%D8%B1%20%D8%A3%D9%85%D8%A7%D9%85%20%D8%AC%D9%88%20%D8%A8%D8%A7%D8%B5%20-%20%D8%A7%D9%84%D8%AF%D9%87%D8%A7%D8%B1%D8%8C%20%D8%A7%D9%84%D8%BA%D8%B1%D8%AF%D9%82%D8%A9%20-%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%20%D8%A7%D9%84%D8%A3%D8%AD%D9%85%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FAMc5EnUWNmwbuJB66')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/AMc5EnUWNmwbuJB66" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الأقصر 8  شارع التليفزيون - قسم الاقصر Upper Egypt Luxor">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الأقصر</div>
+                    <div class="branch-region">Upper Egypt - Luxor</div>
+                </div>
+                <div class="branch-details">8  شارع التليفزيون - قسم الاقصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%208%20%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AA%D9%84%D9%8A%D9%81%D8%B2%D9%8A%D9%88%D9%86%20-%20%D9%82%D8%B3%D9%85%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FvJWUXCQzvm6gkPg28')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/vJWUXCQzvm6gkPg28" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ستيلا مارينا الساحل الشمالي منتجع ستيلا مارينا مدينة العلمين Alexandria Matrouh - Alalamen">
+                <div class="branch-header">
+                    <div class="branch-title">راية ستيلا مارينا الساحل الشمالي</div>
+                    <div class="branch-region">Alexandria - Matrouh - Alalamen</div>
+                </div>
+                <div class="branch-details">منتجع ستيلا مارينا مدينة العلمين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D8%AA%D9%8A%D9%84%D8%A7%20%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%86%D8%AA%D8%AC%D8%B9%20%D8%B3%D8%AA%D9%8A%D9%84%D8%A7%20%D9%85%D8%A7%D8%B1%D9%8A%D9%86%D8%A7%20%D9%85%D8%AF%D9%8A%D9%86%D8%A9%20%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FisgEjYyUKHP5TDUs5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/isgEjYyUKHP5TDUs5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية سيتي سنتر الاسكندرية كارفور سيتي سنتر - المرحله الثانيه- الاسكندريه Alexandria Alexandria">
+                <div class="branch-header">
+                    <div class="branch-title">راية سيتي سنتر الاسكندرية</div>
+                    <div class="branch-region">Alexandria - Alexandria</div>
+                </div>
+                <div class="branch-details">كارفور سيتي سنتر - المرحله الثانيه- الاسكندريه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%20%D8%B3%D9%8A%D8%AA%D9%8A%20%D8%B3%D9%86%D8%AA%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B1%D8%AD%D9%84%D9%87%20%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A%D9%87-%20%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FSUKvAArLBnEiWNox9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/SUKvAArLBnEiWNox9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="مول سكاي كورت الساحل الشمالي مرسى مطروح - طريق إسكندرية قسم الضبعة امام قرية أمواج الساحل الشمالي Alexandria Matrouh">
+                <div class="branch-header">
+                    <div class="branch-title">مول سكاي كورت الساحل الشمالي</div>
+                    <div class="branch-region">Alexandria - Matrouh</div>
+                </div>
+                <div class="branch-details">مرسى مطروح - طريق إسكندرية قسم الضبعة امام قرية أمواج الساحل الشمالي</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D9%85%D9%88%D9%84%20%D8%B3%D9%83%D8%A7%D9%8A%20%D9%83%D9%88%D8%B1%D8%AA%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D8%B1%D8%B3%D9%89%20%D9%85%D8%B7%D8%B1%D9%88%D8%AD%20-%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A5%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%20%D9%82%D8%B3%D9%85%20%D8%A7%D9%84%D8%B6%D8%A8%D8%B9%D8%A9%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%82%D8%B1%D9%8A%D8%A9%20%D8%A3%D9%85%D9%88%D8%A7%D8%AC%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AD%D9%84%20%D8%A7%D9%84%D8%B4%D9%85%D8%A7%D9%84%D9%8A%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FvsmLntGL2fJEfcoa8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/vsmLntGL2fJEfcoa8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية محور جيهان السادات بنزينة شيل أوت - محور جيهان السادات -  منشية ناصر Cairo Mansheyet Nasser">
+                <div class="branch-header">
+                    <div class="branch-title">راية محور جيهان السادات</div>
+                    <div class="branch-region">Cairo - Mansheyet Nasser</div>
+                </div>
+                <div class="branch-details">بنزينة شيل أوت - محور جيهان السادات -  منشية ناصر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D8%AD%D9%88%D8%B1%20%D8%AC%D9%8A%D9%87%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%A7%D8%AA%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A8%D9%86%D8%B2%D9%8A%D9%86%D8%A9%20%D8%B4%D9%8A%D9%84%20%D8%A3%D9%88%D8%AA%20-%20%D9%85%D8%AD%D9%88%D8%B1%20%D8%AC%D9%8A%D9%87%D8%A7%D9%86%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%A7%D8%AA%20-%20%20%D9%85%D9%86%D8%B4%D9%8A%D8%A9%20%D9%86%D8%A7%D8%B5%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FJuxi9GGzQMszjByz7')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/Juxi9GGzQMszjByz7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الحجاز 50 شارع الحجاز بجانب بنزينه موبيل- مصر الجديده Cairo Masr elgededa">
+                <div class="branch-header">
+                    <div class="branch-title">راية الحجاز</div>
+                    <div class="branch-region">Cairo - Masr elgededa</div>
+                </div>
+                <div class="branch-details">50 شارع الحجاز بجانب بنزينه موبيل- مصر الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%AD%D8%AC%D8%A7%D8%B2%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2050%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AD%D8%AC%D8%A7%D8%B2%20%D8%A8%D8%AC%D8%A7%D9%86%D8%A8%20%D8%A8%D9%86%D8%B2%D9%8A%D9%86%D9%87%20%D9%85%D9%88%D8%A8%D9%8A%D9%84-%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FDBCQaNRC1Gwkz5Y9A')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/DBCQaNRC1Gwkz5Y9A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية عمارات العبور 12 عمارات العبور - شارع صلاح سالم - مصر الجديده Cairo Masr elgededa">
+                <div class="branch-header">
+                    <div class="branch-title">راية عمارات العبور</div>
+                    <div class="branch-region">Cairo - Masr elgededa</div>
+                </div>
+                <div class="branch-details">12 عمارات العبور - شارع صلاح سالم - مصر الجديده</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%A8%D9%88%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2012%20%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D8%A8%D9%88%D8%B1%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B5%D9%84%D8%A7%D8%AD%20%D8%B3%D8%A7%D9%84%D9%85%20-%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F7UMJrvJ1zJRxZc5CA')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/7UMJrvJ1zJRxZc5CA" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور السيدة زينب 142 شارع السد - السيده زينب Cairo Sayeda Zainb">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور السيدة زينب</div>
+                    <div class="branch-region">Cairo - Sayeda Zainb</div>
+                </div>
+                <div class="branch-details">142 شارع السد - السيده زينب</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D8%A9%20%D8%B2%D9%8A%D9%86%D8%A8%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20142%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B3%D8%AF%20-%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D9%87%20%D8%B2%D9%8A%D9%86%D8%A8%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FaUG2KVwrgAAvXyU97')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/aUG2KVwrgAAvXyU97" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور شبرا 57  شارع شبرا بجوار بنك مصر- شبرا Cairo Shoubra">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور شبرا</div>
+                    <div class="branch-region">Cairo - Shoubra</div>
+                </div>
+                <div class="branch-details">57  شارع شبرا بجوار بنك مصر- شبرا</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%B4%D8%A8%D8%B1%D8%A7%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2057%20%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%A8%D9%86%D9%83%20%D9%85%D8%B5%D8%B1-%20%D8%B4%D8%A8%D8%B1%D8%A7%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F8qouK1hSnoBmAjT29')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/8qouK1hSnoBmAjT29" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور شبرا الخيمة 173 شارع 15 مايو امام البنك الاهلي- شبرا الخيمه Cairo Shubra AlKhaima">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور شبرا الخيمة</div>
+                    <div class="branch-region">Cairo - Shubra AlKhaima</div>
+                </div>
+                <div class="branch-details">173 شارع 15 مايو امام البنك الاهلي- شبرا الخيمه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20173%20%D8%B4%D8%A7%D8%B1%D8%B9%2015%20%D9%85%D8%A7%D9%8A%D9%88%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%A7%D9%87%D9%84%D9%8A-%20%D8%B4%D8%A8%D8%B1%D8%A7%20%D8%A7%D9%84%D8%AE%D9%8A%D9%85%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FsDnV5BBdHPFTnpvX6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/sDnV5BBdHPFTnpvX6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور محرم بك المحل التجاري الكائن ب، 85 Moharram Bek, Emberouz WA Moharram Beik, Moharam Bek, Alexandria Governorate 5413414 Alexandria Alexandria">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور محرم بك</div>
+                    <div class="branch-region">Alexandria - Alexandria</div>
+                </div>
+                <div class="branch-details">المحل التجاري الكائن ب، 85 Moharram Bek, Emberouz WA Moharram Beik, Moharam Bek, Alexandria Governorate 5413414</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%85%D8%AD%D8%B1%D9%85%20%D8%A8%D9%83%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%84%20%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D9%8A%20%D8%A7%D9%84%D9%83%D8%A7%D8%A6%D9%86%20%D8%A8%D8%8C%2085%20Moharram%20Bek%2C%20Emberouz%20WA%20Moharram%20Beik%2C%20Moharam%20Bek%2C%20Alexandria%20Governorate%205413414%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FHMPc3tiCjxHReaa77')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/HMPc3tiCjxHReaa77" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور لوران 696 طريق الحريه لوران - شارع ابو قير-عند ناصيه شارع شعراوي- لوران Alexandria Louran">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور لوران</div>
+                    <div class="branch-region">Alexandria - Louran</div>
+                </div>
+                <div class="branch-details">696 طريق الحريه لوران - شارع ابو قير-عند ناصيه شارع شعراوي- لوران</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20696%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D9%84%D8%AD%D8%B1%D9%8A%D9%87%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%20-%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D8%A8%D9%88%20%D9%82%D9%8A%D8%B1-%D8%B9%D9%86%D8%AF%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B4%D8%B9%D8%B1%D8%A7%D9%88%D9%8A-%20%D9%84%D9%88%D8%B1%D8%A7%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FxB9bSP1aEV6zLusA6')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/xB9bSP1aEV6zLusA6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المنشية 4 شارع صلاح سالم امام جراج الاتحاد الاشتراكي- المنشيه Alexandria Mansheya">
+                <div class="branch-header">
+                    <div class="branch-title">راية المنشية</div>
+                    <div class="branch-region">Alexandria - Mansheya</div>
+                </div>
+                <div class="branch-details">4 شارع صلاح سالم امام جراج الاتحاد الاشتراكي- المنشيه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%8A%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%204%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B5%D9%84%D8%A7%D8%AD%20%D8%B3%D8%A7%D9%84%D9%85%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%AC%D8%B1%D8%A7%D8%AC%20%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%D9%8A-%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F6ZLkG2CWvYqyaFWx9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/6ZLkG2CWvYqyaFWx9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="ميجا العجمي العجمي، طريق اسكندرية مطروح، الكيلو 17 ، بجوار شارع الحديد والصلب Alexandria Al-Ajami">
+                <div class="branch-header">
+                    <div class="branch-title">ميجا العجمي</div>
+                    <div class="branch-region">Alexandria - Al-Ajami</div>
+                </div>
+                <div class="branch-details">العجمي، طريق اسكندرية مطروح، الكيلو 17 ، بجوار شارع الحديد والصلب</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%A7%D9%84%D8%B9%D8%AC%D9%85%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D8%B9%D8%AC%D9%85%D9%8A%D8%8C%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9%20%D9%85%D8%B7%D8%B1%D9%88%D8%AD%D8%8C%20%D8%A7%D9%84%D9%83%D9%8A%D9%84%D9%88%2017%20%D8%8C%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AD%D8%AF%D9%8A%D8%AF%20%D9%88%D8%A7%D9%84%D8%B5%D9%84%D8%A8%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2F9dbi59qLrUBZfMvt5')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/9dbi59qLrUBZfMvt5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الزقازيق ٢ شارع عطفي كامل مع شارع القومية- التقسيم الأول للمهنيين- ميدان القومية- الزقازيق- الشرقية Delta Zagazig">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الزقازيق</div>
+                    <div class="branch-region">Delta - Zagazig</div>
+                </div>
+                <div class="branch-details">٢ شارع عطفي كامل مع شارع القومية- التقسيم الأول للمهنيين- ميدان القومية- الزقازيق- الشرقية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B2%D9%82%D8%A7%D8%B2%D9%8A%D9%82%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%A2%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%B7%D9%81%D9%8A%20%D9%83%D8%A7%D9%85%D9%84%20%D9%85%D8%B9%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9-%20%D8%A7%D9%84%D8%AA%D9%82%D8%B3%D9%8A%D9%85%20%D8%A7%D9%84%D8%A3%D9%88%D9%84%20%D9%84%D9%84%D9%85%D9%87%D9%86%D9%8A%D9%8A%D9%86-%20%D9%85%D9%8A%D8%AF%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9-%20%D8%A7%D9%84%D8%B2%D9%82%D8%A7%D8%B2%D9%8A%D9%82-%20%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FU6rsbrKSFN9wvXTs5')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/U6rsbrKSFN9wvXTs5" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية المنصورة 22 شارع الجمهوريه عالمشايه برج النورس امام بوابه الجامعه الرئيسيه Delta Mansoura">
+                <div class="branch-header">
+                    <div class="branch-title">راية المنصورة</div>
+                    <div class="branch-region">Delta - Mansoura</div>
+                </div>
+                <div class="branch-details">22 شارع الجمهوريه عالمشايه برج النورس امام بوابه الجامعه الرئيسيه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2022%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%88%D8%B1%D9%8A%D9%87%20%D8%B9%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D9%8A%D9%87%20%D8%A8%D8%B1%D8%AC%20%D8%A7%D9%84%D9%86%D9%88%D8%B1%D8%B3%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A8%D9%88%D8%A7%D8%A8%D9%87%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D9%87%20%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%8A%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2Fo5WaBeqFUogSbiNA8')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/o5WaBeqFUogSbiNA8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور المنصورة المنصورة شارع بورسعيد - برج هلا التجاري - أمام الجمعية الشرعية Delta Mansoura">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور المنصورة</div>
+                    <div class="branch-region">Delta - Mansoura</div>
+                </div>
+                <div class="branch-details">المنصورة شارع بورسعيد - برج هلا التجاري - أمام الجمعية الشرعية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%88%D8%B1%D8%A9%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A8%D9%88%D8%B1%D8%B3%D8%B9%D9%8A%D8%AF%20-%20%D8%A8%D8%B1%D8%AC%20%D9%87%D9%84%D8%A7%20%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D9%8A%20-%20%D8%A3%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B4%D8%B1%D8%B9%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2Fifd4CtcXC3gE5g439')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/ifd4CtcXC3gE5g439" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور الحصري المحور المركزي بجوار جامع الحصري- 6 اكتوبر Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور الحصري</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">المحور المركزي بجوار جامع الحصري- 6 اكتوبر</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%AD%D8%B5%D8%B1%D9%8A%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%B2%D9%8A%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%AC%D8%A7%D9%85%D8%B9%20%D8%A7%D9%84%D8%AD%D8%B5%D8%B1%D9%8A-%206%20%D8%A7%D9%83%D8%AA%D9%88%D8%A8%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FUspr5m6MkwVAVWBW6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Uspr5m6MkwVAVWBW6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية كايرو مول الهرم 269 شارع الهرم - كايرو مول - الهرم Giza Haram">
+                <div class="branch-header">
+                    <div class="branch-title">راية كايرو مول الهرم</div>
+                    <div class="branch-region">Giza - Haram</div>
+                </div>
+                <div class="branch-details">269 شارع الهرم - كايرو مول - الهرم</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%85%D9%88%D9%84%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20269%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%20-%20%D9%83%D8%A7%D9%8A%D8%B1%D9%88%20%D9%85%D9%88%D9%84%20-%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FY33Pq5Q372Eb2rJg7')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Y33Pq5Q372Eb2rJg7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية الهرم 2 166 شارع الهرم - محطه شارع العريش- الهرم Giza Haram">
+                <div class="branch-header">
+                    <div class="branch-title">راية الهرم 2</div>
+                    <div class="branch-region">Giza - Haram</div>
+                </div>
+                <div class="branch-details">166 شارع الهرم - محطه شارع العريش- الهرم</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20166%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%20-%20%D9%85%D8%AD%D8%B7%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B9%D8%B1%D9%8A%D8%B4-%20%D8%A7%D9%84%D9%87%D8%B1%D9%85%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FLvi37v9LsEwPeBjh6')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/Lvi37v9LsEwPeBjh6" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية مول مصر مول مصر الدور الاول امام كارفور Giza October">
+                <div class="branch-header">
+                    <div class="branch-title">راية مول مصر</div>
+                    <div class="branch-region">Giza - October</div>
+                </div>
+                <div class="branch-details">مول مصر الدور الاول امام كارفور</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%88%D9%84%20%D9%85%D8%B5%D8%B1%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D9%85%D9%88%D9%84%20%D9%85%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D9%88%D9%84%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%83%D8%A7%D8%B1%D9%81%D9%88%D8%B1%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FVRHDb622QYqi6k73A')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/VRHDb622QYqi6k73A" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور السودان 161 شارع السودان - على ناصيه شارع عدن امام السلام شوبينج سنتر- المهندسين Giza Mohandessen">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور السودان</div>
+                    <div class="branch-region">Giza - Mohandessen</div>
+                </div>
+                <div class="branch-details">161 شارع السودان - على ناصيه شارع عدن امام السلام شوبينج سنتر- المهندسين</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20161%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B3%D9%88%D8%AF%D8%A7%D9%86%20-%20%D8%B9%D9%84%D9%89%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%B9%D8%AF%D9%86%20%D8%A7%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B4%D9%88%D8%A8%D9%8A%D9%86%D8%AC%20%D8%B3%D9%86%D8%AA%D8%B1-%20%D8%A7%D9%84%D9%85%D9%87%D9%86%D8%AF%D8%B3%D9%8A%D9%86%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FxXLh7WZNfpZ9PY5V7')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/xXLh7WZNfpZ9PY5V7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور فيصل 411 شارع الملك فيصل - محطه التميمي - ناصيه شارع ابن بطوطه- فيصل Giza Faisal">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور فيصل</div>
+                    <div class="branch-region">Giza - Faisal</div>
+                </div>
+                <div class="branch-details">411 شارع الملك فيصل - محطه التميمي - ناصيه شارع ابن بطوطه- فيصل</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20411%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D9%84%D9%83%20%D9%81%D9%8A%D8%B5%D9%84%20-%20%D9%85%D8%AD%D8%B7%D9%87%20%D8%A7%D9%84%D8%AA%D9%85%D9%8A%D9%85%D9%8A%20-%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D8%A8%D9%86%20%D8%A8%D8%B7%D9%88%D8%B7%D9%87-%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FYQjji4KkpKH2maQG8')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/YQjji4KkpKH2maQG8" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور فيصل 2 325 شارع الملك فيصل ناصيه حسن محمد - فيصل Giza Faisal">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور فيصل 2</div>
+                    <div class="branch-region">Giza - Faisal</div>
+                </div>
+                <div class="branch-details">325 شارع الملك فيصل ناصيه حسن محمد - فيصل</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D9%81%D9%8A%D8%B5%D9%84%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20325%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D9%84%D9%83%20%D9%81%D9%8A%D8%B5%D9%84%20%D9%86%D8%A7%D8%B5%D9%8A%D9%87%20%D8%AD%D8%B3%D9%86%20%D9%85%D8%AD%D9%85%D8%AF%20-%20%D9%81%D9%8A%D8%B5%D9%84%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FJ9SS1m6KRARsxXZ38')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/J9SS1m6KRARsxXZ38" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا ستور أسيوط 14 ب شارع الجمهوريه امام معامل البرج وألفا بجوار اشاره المساحه Upper Egypt Assiut">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا ستور أسيوط</div>
+                    <div class="branch-region">Upper Egypt - Assiut</div>
+                </div>
+                <div class="branch-details">14 ب شارع الجمهوريه امام معامل البرج وألفا بجوار اشاره المساحه</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A3%D8%B3%D9%8A%D9%88%D8%B7%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%2014%20%D8%A8%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%88%D8%B1%D9%8A%D9%87%20%D8%A7%D9%85%D8%A7%D9%85%20%D9%85%D8%B9%D8%A7%D9%85%D9%84%20%D8%A7%D9%84%D8%A8%D8%B1%D8%AC%20%D9%88%D8%A3%D9%84%D9%81%D8%A7%20%D8%A8%D8%AC%D9%88%D8%A7%D8%B1%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%87%20%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D8%AD%D9%87%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fgoo.gl%2Fmaps%2FtwXLwchMht5N4vsr9')">نسخ للواتساب</button>
+                    <a href="https://goo.gl/maps/twXLwchMht5N4vsr9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية طنطا 2 شارع المديرية - طنطا - الغربية Delta Tanta">
+                <div class="branch-header">
+                    <div class="branch-title">راية طنطا 2</div>
+                    <div class="branch-region">Delta - Tanta</div>
+                </div>
+                <div class="branch-details">شارع المديرية - طنطا - الغربية</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%B7%D9%86%D8%B7%D8%A7%202%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D8%B1%D9%8A%D8%A9%20-%20%D8%B7%D9%86%D8%B7%D8%A7%20-%20%D8%A7%D9%84%D8%BA%D8%B1%D8%A8%D9%8A%D8%A9%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fshare.google%2Ftg3xldpasBfX5RFDj')">نسخ للواتساب</button>
+                    <a href="https://share.google/tg3xldpasBfX5RFDj" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية  ميجا ستور أسوان 101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511 Upper Egypt Aswan">
+                <div class="branch-header">
+                    <div class="branch-title">راية  ميجا ستور أسوان</div>
+                    <div class="branch-region">Upper Egypt - Aswan</div>
+                </div>
+                <div class="branch-details">101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D8%AA%D9%88%D8%B1%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20101%20%D9%83%D9%88%D8%B1%D9%86%D9%8A%D8%B4%20%D8%A7%D9%84%D9%86%D9%8A%D9%84%D8%8C%20%D8%B4%D9%8A%D8%A7%D8%AE%D8%A9%20%D8%AB%D8%A7%D9%84%D8%AB%D8%A9%D8%8C%20%D8%A7%D9%88%D9%84%20%D8%A7%D8%B3%D9%88%D8%A7%D9%86%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%2081511%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.google.com%2F%3Fq%3D101%2520%25D9%2583%25D9%2588%25D8%25B1%25D9%2586%25D9%258A%25D8%25B4%2520%25D8%25A7%25D9%2584%25D9%2586%25D9%258A%25D9%2584%25D8%258C%2520%25D8%25B4%25D9%258A%25D8%25A7%25D8%25AE%25D8%25A9%2520%25D8%25AB%25D8%25A7%25D9%2584%25D8%25AB%25D8%25A9%25D8%258C%2520%25D8%25A7%25D9%2588%25D9%2584%2520%25D8%25A7%25D8%25B3%25D9%2588%25D8%25A7%25D9%2586%25D8%258C%2520%25D9%2585%25D8%25AD%25D8%25A7%25D9%2581%25D8%25B8%25D8%25A9%2520%25D8%25A3%25D8%25B3%25D9%2588%25D8%25A7%25D9%2586%252081511')">نسخ للواتساب</button>
+                    <a href="https://maps.google.com/?q=101%20%D9%83%D9%88%D8%B1%D9%86%D9%8A%D8%B4%20%D8%A7%D9%84%D9%86%D9%8A%D9%84%D8%8C%20%D8%B4%D9%8A%D8%A7%D8%AE%D8%A9%20%D8%AB%D8%A7%D9%84%D8%AB%D8%A9%D8%8C%20%D8%A7%D9%88%D9%84%20%D8%A7%D8%B3%D9%88%D8%A7%D9%86%D8%8C%20%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9%20%D8%A3%D8%B3%D9%88%D8%A7%D9%86%2081511" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="راية ميجا سوهاج المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511 Upper Egypt Sohag">
+                <div class="branch-header">
+                    <div class="branch-title">راية ميجا سوهاج</div>
+                    <div class="branch-region">Upper Egypt - Sohag</div>
+                </div>
+                <div class="branch-details">المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20%D8%B1%D8%A7%D9%8A%D8%A9%20%D9%85%D9%8A%D8%AC%D8%A7%20%D8%B3%D9%88%D9%87%D8%A7%D8%AC%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20%D8%A7%D9%84%D9%85%D8%AD%D9%84%20%D8%B1%D9%82%D9%85%201%20%D8%A8%D8%A7%D9%84%D8%AF%D9%88%D8%B1%20%D8%A7%D9%84%D8%A7%D8%B1%D8%B6%D9%89%2C%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D9%86%D8%B5%D8%B1%2C%20Awlad%20Naseer%2C%20Sohag%202%2C%20Sohag%20Governorate%2082511%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fshare.google%2FaWEvgTQZf7n8bHlH7')">نسخ للواتساب</button>
+                    <a href="https://share.google/aWEvgTQZf7n8bHlH7" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+            <div class="branch-card" data-search="RAYA HQ MAADI Maadi as Sarayat Al Gharbeyah, Tura, Cairo Governorate Headquarters ">
+                <div class="branch-header">
+                    <div class="branch-title">RAYA HQ MAADI</div>
+                    <div class="branch-region">Headquarters </div>
+                </div>
+                <div class="branch-details">Maadi as Sarayat Al Gharbeyah, Tura, Cairo Governorate</div>
+                <div class="branch-actions">
+                    <button class="btn btn-copy" onclick="copyBranchStatic(this, '%F0%9F%93%8D%20*%D8%A7%D8%B3%D9%85%20%D8%A7%D9%84%D9%81%D8%B1%D8%B9%3A*%20RAYA%20HQ%20MAADI%0A%F0%9F%8F%A2%20*%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%3A*%20Maadi%20as%20Sarayat%20Al%20Gharbeyah%2C%20Tura%2C%20Cairo%20Governorate%0A%F0%9F%97%BA%EF%B8%8F%20*%D8%A7%D9%84%D9%84%D9%88%D9%83%D9%8A%D8%B4%D9%86%3A*%20https%3A%2F%2Fmaps.app.goo.gl%2FaZG7Lw3ngFb6po1z9')">نسخ للواتساب</button>
+                    <a href="https://maps.app.goo.gl/aZG7Lw3ngFb6po1z9" target="_blank" class="btn btn-map" title="خريطة">📍</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            function filterBranchesStatic() {
+                const term = document.getElementById('branchesSearchInput').value.toLowerCase();
+                const cards = document.querySelectorAll('#sec-branches-directory .branch-card');
+                cards.forEach(card => {
+                    const searchable = card.getAttribute('data-search').toLowerCase();
+                    if(searchable.includes(term)) card.classList.remove('hidden-card');
+                    else card.classList.add('hidden-card');
+                });
+            }
+            function copyBranchStatic(btn, textEnc) {
+                const text = decodeURIComponent(textEnc);
+                navigator.clipboard.writeText(text).then(() => {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = '✔ تم النسخ';
+                    btn.style.backgroundColor = '#10B981';
+                    setTimeout(() => {
+                        btn.innerHTML = orig;
+                        btn.style.backgroundColor = '#25D366';
+                    }, 2000);
+                });
+            }
+        </script>
+    </div>
+</div>
+
+
+<!-- Main Header Text -->
                         <div style="background:#f0f4ff; border:1px solid #ccd6f5; border-radius:12px; padding:16px; margin-bottom:20px; text-align:center;">
                           <h3 style="color:#003399; margin-bottom:10px; font-weight:bold; font-size:20px;">
                             🚚 💊 بروتوكول التوصيل لراحة ضيفك 🏠
@@ -7665,7 +8870,7 @@
                 if (category === 'all') {
                   s.style.display = '';
                 } else {
-                  s.style.display = s.dataset.category === category ? '' : 'none';
+                  if (category === 'branches_directory' && s.id === 'sec-branches-directory') { s.style.display = 'block'; } else { s.style.display = s.dataset.category === category ? '' : 'none'; }
                 }
               });
             }

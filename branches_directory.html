@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل عناوين فروع راية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --primary-hover: #004494;
+            --secondary: #f8f9fa;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --accent: #e2e8f0;
+            --whatsapp-color: #25D366;
+            --whatsapp-hover: #1EBE5D;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #007bff 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .search-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+        }
+
+        .search-container:focus-within {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .search-input::placeholder {
+            color: #cbd5e0;
+        }
+
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .branch-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .branch-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .branch-card:hover::before {
+            opacity: 1;
+        }
+
+        .branch-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 15px;
+        }
+
+        .branch-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+
+        .branch-region {
+            font-size: 0.85rem;
+            background: var(--secondary);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .branch-details {
+            flex: 1;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .detail-icon {
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .branch-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-copy {
+            background-color: var(--whatsapp-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-copy:hover {
+            background-color: var(--whatsapp-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-map {
+            background-color: var(--secondary);
+            color: var(--text-main);
+            border: 1px solid var(--accent);
+            flex: 0 0 auto;
+            width: 48px;
+        }
+
+        .btn-map:hover {
+            background-color: #e2e8f0;
+            color: var(--primary);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #cbd5e0;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #323232;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .branches-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>دليل عناوين فروع راية</h1>
+        <p>ابحث عن الفرع، انسخ العنوان بضغطة زر، وشاركه مع العميل عبر واتساب بسهولة.</p>
+    </header>
+
+    <main class="container">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="ابحث باسم الفرع، المنطقة، أو المحافظة...">
+        </div>
+
+        <div class="branches-grid" id="branchesGrid">
+            <!-- Branches will be populated here -->
+        </div>
+    </main>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>تم نسخ بيانات الفرع بنجاح! جاهز لللصق.</span>
+    </div>
+
+    <script>
+        // Raw TSV Data
+        const tsvData = `Arabic Store name	Eng. Store Name	System name	Branch shape	Branch Type	Region	Area	Address in English	Address in Arabic	Google Location
+راية ميجا ستور جسر السويس	Raya Mega Store Gesr Suez	Mega Gesr Suez	New	Mega	Cairo	Al Zayton	43th St. Al-Laith Street - Gesr Al-Suez - Al-Zaytoun	43 شارع الليث - جسر السويس- الزيتون	https://goo.gl/maps/jh8zJSFNbvF6YvGN7
+راية كايرو فيستفال سيتي مول	Raya Cairo Festival City Mall	Raya CFC	New	Raya	Cairo	New Cairo	Raya Cairo Festival Al Wahda (2-551), third floor, next to El-Ezaby Pharmacy, in front of Carrefour	راية  كايرو فيستفال  وحده (2-551)  الدور الثالث بجانب صيدليه العزبي امام كارفور	https://maps.app.goo.gl/cMLoZZDtteb2DaJ68
+راية المعادي	Raya Maadi 	Raya El Gazayer	New	Raya	Cairo	Maadi	1 Algeria Square - New Maadi	1 ميدان الجزائر - المعادي الجديده	https://goo.gl/maps/9tp2ySKKBjpExYux8
+راية ميجا ستور مكرم عبيد	Raya Mega Store Makram Ebeid	Mega Makram	New	Mega	Cairo	Nasr City	1th St. Lotfy, Makram Ebeid Extention, Nasr City	1 شارع عبد الحميد لطفي امتداد مكرم عبيد - مدينه نصر	https://goo.gl/maps/CfdHE3mhJWvxvTBp8
+ راية ميجا ستور حلوان	Raya Mega Store Helwan	Mega Helwan	New	Mega	Cairo	Helwan	39 B Tanzim - Mohamed Mustafa Al-Maraghi Street	39  ب تنظيم- شارع محمد مصطفى المراغي -ناصيه شارع راغب امام سوبر ماركت المحمل-	https://goo.gl/maps/GyoSEFfWLonwojg69
+راية سيتي سنتر المعادي	Raya City Center Maadi	Raya CityCenter Maadi	New	Raya	Cairo	Maadi	Carrefour City Center Maadi	كارفور سيتي سنتر المعادي	https://maps.app.goo.gl/SK2kiL3PcmmnXVsz6
+راية ميجا ستور حدائق القبة	Raya Mega Store Hadayek ElKoba	Mega Hadayek	New	Mega	Cairo	Hadayek AlQubbah	116th St. Masr We Al Sodan, Hadaeq Al Qubbah, Cairo	116 مصر و السودان، حدائق القبة، قسم حدائق القبة، محافظة القاهرة	https://goo.gl/maps/Zz6SVPh1kpfey3jVA
+راية سيتي ستارز	Raya City Stars 	Raya City Stars	New	Raya	Cairo	Nasr City	City Stars Mall, Ground floor, Nasr City	سيتي ستارز مول - الدور الارضي - مدينه نصر	https://maps.app.goo.gl/3visYpVDn7JXkYgQ9
+راية كونكورد بلازا - التجمع	Raya Concord Plaza	Raya Concorde Plaza	New	Raya	Cairo	New Cairo	Concorde Plaza Mall - North 90th Street - Fifth Settlement	كونكورد بلازا مول - شارع التسعين الشمالي - التجمع الخامس	https://maps.app.goo.gl/RHbzJpntg15D8n1RA
+راية الرحاب	Raya ElRehab	Raya ElRehab	New	Raya	Cairo	New Cairo	Gate Way Mall Stores #G07 & #G08- New Cairo	 مول جيت واي، محل رقم G07 و G08 - الرحاب - القاهرة الجديدة	https://maps.app.goo.gl/6T1zzkVNoqVb3An1A
+راية ميجا ستور التجمع الخامس	Raya Mega Store New Cairo 	Mega Tagmoa	New	Mega	Cairo	New Cairo	45 Fifth Settlement Service Center in front of Al Salam International Hospital - New Cairo	٤٥ مركز خدمات التجمع الخامس امام مستشفى السلام الدولي - القاهرة الجديدة	https://goo.gl/maps/XRJuxYtahsS1W93y5
+راية رشدي	Raya Roushdy	Raya Roushdy	Old	Raya	Alexandria	Roushdy	28th St. Al-Moaskar Al-Romani Street - Roushdy	28 شارع المعسكر الروماني - رشدي	https://goo.gl/maps/71WjsdEy51BJic1H7
+راية ميجا ستور دمنهور	Raya Mega Store Damanhour	Mega Damanhur	New	Mega	Delta	 Damanhour	Al Matreed Al Edary Bldg., Ahmed Orabi St., El-Miri El-Buhaira land	برج مطاريد الإداري , ش أحمد عرابى - أرض الميرى - دمنهور - البحيرة	https://goo.gl/maps/s8HFHMoZmwPv16ZQ6
+راية ميجا ستور الإسماعيلية	Raya Mega Store Ismailia	Mega Ismailia	New	Mega	Canal	Ismailia	11 Shebin El-Kom and Sinai Street - Shebin El-Kom District - Ismailia Governorate	11 شارع شبين الكوم وسيناء - حي شبين الكوم - محافظة الإسماعيلية .	https://goo.gl/maps/pxvymoShqdXPSCMx5
+راية مصدق	Raya Mosadak	Raya 44Musadak	New	Raya	Giza	Dokki	44th St. Mossadak, Ad Doqi, Dokki, Giza	44 شارع مصدق - الدقي- المهندسين	https://goo.gl/maps/zr7pcjvhv8QevDms6
+راية هايبرا وان	Raya Hyper one	Raya Hyper One	New	Raya	Giza	October	Hyper One - Sheikh Zayed - 6th of October	هايبر وان - الشيخ زايد - 6 أكتوبر	https://maps.app.goo.gl/chKv9HGXAHmSh4W87
+ راية ميجا ستور مول العرب	Raya Mega Store Mall of Arabia	Mega ArabMall	New	Mega	Giza	October	Mall of Arabia - Gate 23 - Store No. G-019	مول العرب - بوابه 23  - محل رقم G-019	https://maps.app.goo.gl/4KmRoVLzxB3wLRm46
+ راية ميجا ستور الغردقة	New Mega Hurghada	Mega Hurghada	New	Mega	Upper Egypt	Hurghada	Al-Nasr Street in front of Go Bus - Dahar, Hurghada - Red Sea Governorate	شارع النصر أمام جو باص - الدهار، الغردقة - محافظة البحر الأحمر	https://maps.app.goo.gl/AMc5EnUWNmwbuJB66
+راية ميجا ستور الأقصر 	Raya Mega Store Luxor	Mega Luxor 	New 	Mega	Upper Egypt	Luxor	8 -Television Street - Luxor section	8  شارع التليفزيون - قسم الاقصر	https://goo.gl/maps/vJWUXCQzvm6gkPg28
+راية ستيلا مارينا الساحل الشمالي	Raya Stella Marina	Raya Stella Marina	Old	Raya	Alexandria	Matrouh - Alalamen	Stella Marina Resort El Alamein City	منتجع ستيلا مارينا مدينة العلمين	https://goo.gl/maps/isgEjYyUKHP5TDUs5
+راية سيتي سنتر الاسكندرية	Raya City Center Alex	Raya Alex city center	New	Raya	Alexandria	Alexandria	Carrefour City Center - Phase Two - Alexandria	كارفور سيتي سنتر - المرحله الثانيه- الاسكندريه	https://maps.app.goo.gl/SUKvAArLBnEiWNox9
+مول سكاي كورت الساحل الشمالي	Raya Sky Court North Coast	Raya Sky Court Mall	New	Mega	Alexandria	Matrouh	Marsa Matrouh - Alex Road, Qesm El Dabaa, in front of Amwaj Village, North Coast	مرسى مطروح - طريق إسكندرية قسم الضبعة امام قرية أمواج الساحل الشمالي	https://goo.gl/maps/vsmLntGL2fJEfcoa8
+راية محور جيهان السادات	Raya Gihan El Sadat Axis	Raya Jehan ElSadat	New	Raya	Cairo	Mansheyet Nasser	Chillout Station - Jihan Sadat Corridor, Mansheyt Naser	 بنزينة شيل أوت - محور جيهان السادات -  منشية ناصر	https://maps.app.goo.gl/Juxi9GGzQMszjByz7
+راية الحجاز	Raya El Hegaz	Raya Hegaz	Old	Raya	Cairo	Masr elgededa	50th St. El Hegaz Street, next to Mobil Gas Station - Heliopolis	50 شارع الحجاز بجانب بنزينه موبيل- مصر الجديده	https://goo.gl/maps/DBCQaNRC1Gwkz5Y9A
+راية عمارات العبور	Raya Obour Buildings	Raya 12Obour	Old	Raya	Cairo	Masr elgededa	12 Obour Building، 7 El-Obour Parking Rd	12 عمارات العبور - شارع صلاح سالم - مصر الجديده	https://maps.app.goo.gl/7UMJrvJ1zJRxZc5CA
+راية ميجا ستور السيدة زينب	Raya Mega Store Sayeda Zaynab	Mega Sayeda Zeinab	Old	Mega	Cairo	Sayeda Zainb	El-Sayeda Zainab, El Sayeda Zeinab, Cairo	142 شارع السد - السيده زينب	https://goo.gl/maps/aUG2KVwrgAAvXyU97
+ راية ميجا ستور شبرا	Raya Mega Store Shubra	Mega Shoubra	New	Mega	Cairo	Shoubra	Al-Shamashergy, Qism Shubra, Cairo	57  شارع شبرا بجوار بنك مصر- شبرا 	https://maps.app.goo.gl/8qouK1hSnoBmAjT29
+ راية ميجا ستور شبرا الخيمة	Raya Mega Store Shubra El Khema	Mega Shubra Al Khaima	New	Mega	Cairo	Shubra AlKhaima	15th St. Next to Mohamed Abdo Mosque, next to the National Bank of Egypt, Shubra El-Kheima	173 شارع 15 مايو امام البنك الاهلي- شبرا الخيمه	https://goo.gl/maps/sDnV5BBdHPFTnpvX6
+راية ميجا ستور محرم بك 	Raya Mega Store Moharam 	Mega Moharam 	New	Mega	Alexandria	Alexandria	المحل التجاري الكائن ب، 85  شارع محرم بك - ناصية باولينو 	المحل التجاري الكائن ب، 85 Moharram Bek, Emberouz WA Moharram Beik, Moharam Bek, Alexandria Governorate 5413414	https://maps.app.goo.gl/HMPc3tiCjxHReaa77
+ راية ميجا ستور لوران	Raya Mega store Louran	Mega louran	New	Mega	Alexandria	Louran	 696 Horya Road - Abu Qir Street - at the corner of Shaarawy Street - Loran	 696 طريق الحريه لوران - شارع ابو قير-عند ناصيه شارع شعراوي- لوران 	https://maps.app.goo.gl/xB9bSP1aEV6zLusA6
+راية المنشية 	Raya El Manshya	Raya Mansheya	New	Raya	Alexandria	Mansheya	4th St. Salah Salem Street - Al-Mansheya	4 شارع صلاح سالم امام جراج الاتحاد الاشتراكي- المنشيه	https://maps.app.goo.gl/6ZLkG2CWvYqyaFWx9
+ميجا العجمي	Mega al-Ajami	Mega El Agamy	New	Mega	Alexandria	Al-Ajami	Al-Ajami, Alexandria-Matrouh Road, 17th Km, next to Al-Hadid we Al-Salb Street	العجمي، طريق اسكندرية مطروح، الكيلو 17 ، بجوار شارع الحديد والصلب	https://maps.app.goo.gl/9dbi59qLrUBZfMvt5
+راية ميجا ستور الزقازيق	Raya Mega Store Zagazig	Mega Zagazig	New	Mega	Delta	Zagazig	2 Atfi Street with the intersection of Al-Qawmia Street, Zagazig - Sharkia	٢ شارع عطفي كامل مع شارع القومية- التقسيم الأول للمهنيين- ميدان القومية- الزقازيق- الشرقية	https://goo.gl/maps/U6rsbrKSFN9wvXTs5
+راية المنصورة	Raya Mansoura	Raya Mansoura	Old	Raya	Delta	Mansoura	22th St. Al-Gomhoria Street, Al-Mashaya Al-Nawras Tower	22 شارع الجمهوريه عالمشايه برج النورس امام بوابه الجامعه الرئيسيه	https://maps.app.goo.gl/o5WaBeqFUogSbiNA8
+ راية ميجا ستور المنصورة	 Raya Mega Store Mansoura	Mega Mansoura	New	Mega	Delta	Mansoura	Mansoura, Port Said Street - Hala Commercial Tower - in front of the Sharia Association Mosque	المنصورة شارع بورسعيد - برج هلا التجاري - أمام الجمعية الشرعية	https://goo.gl/maps/ifd4CtcXC3gE5g439
+ راية ميجا ستور الحصري	Raya Mega Store El Hossary	Mega Hossary	Old	Mega	Giza	October	Central Axis, next to El Hosary Mosque - 6th of October	المحور المركزي بجوار جامع الحصري- 6 اكتوبر	https://goo.gl/maps/Uspr5m6MkwVAVWBW6
+راية كايرو مول الهرم	Raya Cairo Mall Haram	Raya Elharam	Old	Raya	Giza	Haram	269th St. Haram Street - Cairo Mall - Giza	269 شارع الهرم - كايرو مول - الهرم	https://goo.gl/maps/Y33Pq5Q372Eb2rJg7
+راية الهرم 2	Raya Haram 2	Raya Haram2	Old	Raya	Giza	Haram	166th St. Haram Street - Al-Arish Street station - Haram	166 شارع الهرم - محطه شارع العريش- الهرم	https://goo.gl/maps/Lvi37v9LsEwPeBjh6
+راية مول مصر	Raya Mall of Egypt	Raya Mall OF Egypt	New	Raya	Giza	October	Mall of Egypt, first floor, in front of Carrefour	مول مصر الدور الاول امام كارفور	https://maps.app.goo.gl/VRHDb622QYqi6k73A
+راية ميجا ستور السودان	Raya Mega Store Sudan 	Mega Sudan	Old	Mega	Giza	Mohandessen	161th St. Sudan Street - Aden Street in front of Salam Shopping Center - Mohandeseen	161 شارع السودان - على ناصيه شارع عدن امام السلام شوبينج سنتر- المهندسين	https://maps.app.goo.gl/xXLh7WZNfpZ9PY5V7
+ راية ميجا ستور فيصل	Raya Mega Store Faisal St	Mega Faisal	Old	Mega	Giza	Faisal	114th St. King Faisal St, Kafr Tohormos, Bulaq, Giza	411 شارع الملك فيصل - محطه التميمي - ناصيه شارع ابن بطوطه- فيصل	https://goo.gl/maps/YQjji4KkpKH2maQG8
+ راية ميجا ستور فيصل 2	Raya Mega Store Faisal 2 St	Mega Faisal 2	New	Mega	Giza	Faisal	325 King Faisal Street, corner of Hassan Muhammad - Faisal	325 شارع الملك فيصل ناصيه حسن محمد - فيصل	https://goo.gl/maps/J9SS1m6KRARsxXZ38
+ راية ميجا ستور أسيوط	Raya Mega Store Assiut 	Mega Assuit	New	Mega	Upper Egypt	 Assiut	14 B El Gomhoureya Street, Al Borg laboratories	14 ب شارع الجمهوريه امام معامل البرج وألفا بجوار اشاره المساحه	https://goo.gl/maps/twXLwchMht5N4vsr9
+راية طنطا 2 	Raya Tanta 2	Raya Tanta 2	New	Mega	Delta	Tanta	Al-Mudireya Street - Tanta - Gharbia Governorate., Tanta	شارع المديرية - طنطا - الغربية 	https://share.google/tg3xldpasBfX5RFDj
+ راية  ميجا ستور أسوان 	Raya Mega Store Aswan 	Mega Aswan 	New	Mega	Upper Egypt	Aswan	101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511	101 كورنيش النيل، شياخة ثالثة، اول اسوان، محافظة أسوان 81511	https://goo.gl/maps/aswan
+راية ميجا سوهاج	Raya Mega sohag	Mega sohag	New	Mega	Upper Egypt	Sohag	المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511	المحل رقم 1 بالدور الارضى, شارع النصر, Awlad Naseer, Sohag 2, Sohag Governorate 82511	https://share.google/aWEvgTQZf7n8bHlH7
+RAYA HQ MAADI	RAYA HQ MAADI	RAYA New HQ					Maadi as Sarayat Al Gharbeyah, Tura, Cairo Governorate 		https://maps.app.goo.gl/aZG7Lw3ngFb6po1z9`;
+
+        // Parse TSV
+        const branches = [];
+        const lines = tsvData.trim().split('\n');
+        
+        for (let i = 1; i < lines.length; i++) {
+            const cols = lines[i].split('\t');
+            if (cols.length >= 10) {
+                // Handle Aswan specific missing URL parsing issue in provided data
+                let location = cols[9].trim();
+                if(!location.startsWith('http')) location = 'https://maps.google.com/?q=' + encodeURIComponent(cols[8].trim());
+
+                branches.push({
+                    name: cols[0].trim(),
+                    region: cols[5].trim() || 'Headquarters',
+                    area: cols[6].trim() || '',
+                    address: cols[8].trim() || cols[7].trim(), // fallback to English if Arabic is missing
+                    location: location
+                });
+            }
+        }
+
+        const grid = document.getElementById('branchesGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderBranches(data) {
+            grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                grid.innerHTML = \`
+                    <div class="no-results">
+                        <i class="fas fa-search-minus"></i>
+                        <p>عفواً، لا يوجد فرع يطابق بحثك.</p>
+                    </div>
+                \`;
+                return;
+            }
+
+            data.forEach(branch => {
+                const card = document.createElement('div');
+                card.className = 'branch-card';
+                
+                // Construct the text to copy
+                const copyText = \`📍 *اسم الفرع:* \${branch.name}\\n🏢 *العنوان:* \${branch.address}\\n🗺️ *اللوكيشن:* \${branch.location}\`;
+                
+                card.innerHTML = \`
+                    <div class="branch-header">
+                        <h3 class="branch-title">\${branch.name}</h3>
+                        <span class="branch-region">\${branch.region} \${branch.area ? '- ' + branch.area : ''}</span>
+                    </div>
+                    <div class="branch-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt detail-icon"></i>
+                            <span>\${branch.address}</span>
+                        </div>
+                    </div>
+                    <div class="branch-actions">
+                        <button class="btn btn-copy" onclick="copyToClipboard(this, \`\${encodeURIComponent(copyText)}\`)">
+                            <i class="fas fa-copy"></i>
+                            نسخ للواتساب
+                        </button>
+                        <a href="\${branch.location}" target="_blank" class="btn btn-map" title="عرض على الخريطة">
+                            <i class="fas fa-location-arrow"></i>
+                        </a>
+                    </div>
+                \`;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial Render
+        renderBranches(branches);
+
+        // Search Functionality
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = branches.filter(b => 
+                b.name.toLowerCase().includes(term) || 
+                b.address.toLowerCase().includes(term) || 
+                b.region.toLowerCase().includes(term) ||
+                b.area.toLowerCase().includes(term)
+            );
+            renderBranches(filtered);
+        });
+
+        // Copy to Clipboard
+        function copyToClipboard(button, encodedText) {
+            const text = decodeURIComponent(encodedText);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Visual feedback on button
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+                button.style.backgroundColor = '#10B981';
+                
+                // Show toast
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.backgroundColor = '';
+                    toast.classList.remove('show');
+                }, 2500);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('حدث خطأ أثناء النسخ. يرجى المحاولة مرة أخرى.');
+            });
+        }
+    </script>
+</body>
+</html>

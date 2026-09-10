@@ -1,21 +1,28 @@
 const fs = require('fs');
-const html = fs.readFileSync('index.html', 'utf8');
-const startIdx = html.indexOf('<div class="section-block" data-category="store_front">');
-if(startIdx === -1) {
-    console.log('Not found');
-    process.exit(0);
-}
+const text = fs.readFileSync('index.html', 'utf8');
+const lines = text.split('\n');
+
 let depth = 0;
-let endIdx = -1;
-const tagRegex = /<\/?div[^>]*>/g;
-tagRegex.lastIndex = startIdx;
-let match;
-while((match = tagRegex.exec(html)) !== null) {
-    if(match[0].startsWith('</')) depth--;
-    else depth++;
-    if(depth === 0) {
-        endIdx = match.index + match[0].length;
-        break;
+let manualContentStart = -1;
+for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.includes('id="manualContent"')) {
+        manualContentStart = i;
+        depth = 1;
+    } else if (manualContentStart !== -1) {
+        const open = (line.match(/<div/g) || []).length;
+        const close = (line.match(/<\/div>/g) || []).length;
+        depth += (open - close);
+        if (depth === 0) {
+            console.log('manualContent closed at line', i);
+            break;
+        }
     }
 }
-console.log('Length:', endIdx - startIdx);
+
+// Find sec-branches-directory
+for(let i=0; i<lines.length; i++) {
+    if(lines[i].includes('id="sec-branches-directory"')) {
+        console.log('sec-branches-directory is at line', i);
+    }
+}
