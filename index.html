@@ -2163,6 +2163,7 @@
         <button class="vtab" id="tCross" onclick="setView('cross')">🔀 Cross-Sell</button>
         <button class="vtab" id="tUp" onclick="setView('up')">⬆️ Upsell</button>
         <button class="vtab" id="tManual" onclick="setView('manual')">📖 دليل المستشار</button>
+        <button class="vtab" id="tDiff" onclick="setView('diff')">⚖️ الفروقات</button>
 
       </div>
     </div>
@@ -2200,6 +2201,10 @@
       <div id="vUpInner"></div>
     </div>
 
+
+    <div id="vDiff" style="display:none">
+      <iframe src="دليلك للفروقات.html" style="width:100%; height:85vh; border:none; border-radius:12px; background:#fff;"></iframe>
+    </div>
 
     <div id="vManual" style="display:none">
       <div id="vManualInner" style="padding: 10px 0;">
@@ -11326,8 +11331,8 @@ const CS = [{ "main": "الثلاجات", "rec": "مبرد المياه", "reaso
       render();
     }
 
-    const VIEW_IDS = { fab: 'vFAB', products: 'vProducts', cross: 'vCross', up: 'vUp', manual: 'vManual' };
-    const TAB_IDS = { fab: 'tFAB', products: 'tProducts', cross: 'tCross', up: 'tUp', manual: 'tManual' };
+    const VIEW_IDS = { fab: 'vFAB', products: 'vProducts', cross: 'vCross', up: 'vUp', manual: 'vManual', diff: 'vDiff' };
+    const TAB_IDS = { fab: 'tFAB', products: 'tProducts', cross: 'tCross', up: 'tUp', manual: 'tManual', diff: 'tDiff' };
 
     function setView(v) {
       VIEW = v; PAGE = 0;

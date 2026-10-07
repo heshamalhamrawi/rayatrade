@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>دليل الفروقات – Raya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f9;--sf:#fff;--sf2:#f7f9fc;--ink:#0f172a;--mut:#5b6880;--line:#e2e7f0;--brand:#2456e6;--brand-s:#e8eefe;--side:#0e1730;--side-ink:#c9d3ea;--win:#e3f7ec;--win-ink:#08733f;--win-b:#9bdcb8;--say:#fff6e0;--say-ink:#7a4d00;--say-b:#f3d48a;--obj:#fdecec;--obj-ink:#8f1d1d;--sh:0 1px 2px rgba(15,23,42,.05),0 6px 20px rgba(15,23,42,.06);--r:16px}
+html[data-theme=dark]{--bg:#0a1020;--sf:#131c33;--sf2:#18223d;--ink:#eef2fb;--mut:#9aa8c4;--line:#26324f;--brand:#7da2ff;--brand-s:#1b2a52;--side:#070c1a;--side-ink:#b7c3de;--win:#0f3324;--win-ink:#6fe3a6;--win-b:#1f6b48;--say:#33280c;--say-ink:#ffd67a;--say-b:#6b5416;--obj:#3a1717;--obj-ink:#ffb0b0;--sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,"Segoe UI",Tahoma,Arial,sans-serif;font-size:15.5px;line-height:1.65;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+.rl{background:#fff;border-radius:14px;padding:12px 16px;margin:0 4px 14px;display:grid;place-items:center;cursor:pointer}.rl img{height:52px;display:block}
+.cr{margin:22px 6px 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#8fa0c4;line-height:1.6;direction:ltr;text-align:center}.cr b{color:#fff;display:block;font-size:13px}
+.hero{position:relative}.hl{background:#fff;border-radius:12px;padding:8px 12px;display:inline-block;margin-bottom:12px}.hl img{height:34px;display:block}
+.by{direction:ltr;text-align:center;color:var(--mut);font-size:12.5px;margin:4px 0 10px}.by b{color:var(--ink)}
+@media(min-width:901px){.hl{display:none}}
+/* layout */
+.app{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+aside{background:var(--side);color:var(--side-ink);position:sticky;top:0;height:100vh;overflow-y:auto;padding:18px 12px 30px;scrollbar-width:thin}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 16px;color:#fff;font-weight:800;font-size:18px;cursor:pointer}
+.logo i{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#22c55e);display:grid;place-items:center;font-style:normal;font-size:20px}
+.logo small{display:block;font-weight:400;font-size:11.5px;color:#8fa0c4;margin-top:-4px}
+.gt{font-size:11.5px;font-weight:700;color:#7386ad;padding:14px 10px 4px;letter-spacing:.3px}
+.si{display:flex;align-items:center;gap:9px;width:100%;text-align:right;padding:7px 10px;border-radius:10px;color:var(--side-ink);font-size:14.5px}
+.si:hover{background:rgba(255,255,255,.07);color:#fff}
+.si.on{background:#2456e6;color:#fff;font-weight:700}
+.si span{font-size:17px;width:22px;text-align:center}
+main{min-width:0}
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 22px;display:flex;gap:10px;align-items:center}
+.burger{display:none;font-size:22px;width:42px;height:42px;border-radius:12px;background:var(--sf);border:1px solid var(--line)}
+.srch{position:relative;flex:1;max-width:620px}
+.srch input{width:100%;height:44px;border-radius:13px;border:1.5px solid var(--line);background:var(--sf);color:var(--ink);font:inherit;padding:0 44px 0 14px;outline:0}
+.srch input:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-s)}
+.srch:before{content:"🔎";position:absolute;right:14px;top:9px;font-size:16px;opacity:.7}
+.res{position:absolute;top:50px;right:0;left:0;background:var(--sf);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh);max-height:62vh;overflow:auto;display:none;padding:6px}
+.res.open{display:block}
+.res button{display:flex;gap:10px;align-items:center;width:100%;text-align:right;padding:9px 10px;border-radius:10px}
+.res button:hover,.res button.k{background:var(--brand-s)}
+.res b{font-weight:700}.res small{color:var(--mut);display:block;font-size:12.5px;line-height:1.3}
+.res .none{padding:14px;color:var(--mut);text-align:center}
+.tb{margin-inline-start:auto;display:flex;gap:8px}
+.ib{height:44px;padding:0 13px;border-radius:13px;background:var(--sf);border:1px solid var(--line);font-size:14px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.ib:hover{border-color:var(--brand)}
+.ib.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.wrap{padding:22px;max-width:1180px;margin:0 auto}
+/* home */
+.hero{background:linear-gradient(135deg,#1c3fb8,#2456e6 45%,#16a394);color:#fff;border-radius:22px;padding:28px 26px;box-shadow:var(--sh)}
+.hero h1{margin:0 0 6px;font-size:clamp(22px,3.4vw,32px);font-weight:800;line-height:1.3}
+.hero p{margin:0;opacity:.92;max-width:640px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stats div{background:rgba(255,255,255,.16);border-radius:12px;padding:6px 14px;font-size:13.5px}
+.stats b{font-size:18px;margin-inline-end:5px}
+h2.g{font-size:17px;margin:26px 2px 10px;display:flex;align-items:center;gap:8px}
+h2.g:after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.cc{background:var(--sf);border:1px solid var(--line);border-radius:var(--r);padding:14px;text-align:right;display:flex;gap:12px;align-items:flex-start;transition:.15s;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.cc:hover{transform:translateY(-2px);border-color:var(--brand);box-shadow:var(--sh)}
+.cc i{font-style:normal;font-size:26px;width:48px;height:48px;border-radius:14px;background:var(--brand-s);display:grid;place-items:center;flex:none}
+.cc b{display:block;font-size:15.5px;line-height:1.4}
+.cc small{color:var(--mut);font-size:12.5px;line-height:1.45;display:block;margin-top:2px}
+/* category */
+.bc{color:var(--mut);font-size:13.5px;margin-bottom:6px}
+.bc a{color:var(--brand);font-weight:600}
+.ch{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ch i{font-style:normal;font-size:30px;width:58px;height:58px;border-radius:17px;background:var(--sf);border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.ch h1{margin:0;font-size:clamp(20px,3vw,27px);font-weight:800;line-height:1.3}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 16px;border-radius:999px;background:var(--sf);border:1.5px solid var(--line);font-weight:700;font-size:14.5px}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sec{background:var(--sf);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-top:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.sec>h3{margin:0 0 12px;font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sec>h3 small{font-weight:400;color:var(--mut);font-size:13px}
+.tys{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+.ty{border:1.5px solid var(--line);border-radius:14px;padding:13px;background:var(--sf2);display:flex;flex-direction:column;gap:7px}
+.ty .hd{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;line-height:1.35}
+.ty .hd i{font-style:normal;font-size:22px}
+.ty .for{font-size:14px}.ty .for b{color:var(--brand);font-size:12.5px;display:block}
+.say{background:var(--say);color:var(--say-ink);border:1px dashed var(--say-b);border-radius:11px;padding:8px 10px;font-size:13.8px;margin-top:auto}
+.say b{font-size:12px;display:block;opacity:.85}
+/* advisor */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--sf2);font-size:14px;font-weight:600}
+.chip:hover{border-color:var(--brand)}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip.off{opacity:.45;text-decoration:line-through}
+.rk{margin-top:14px;display:grid;gap:8px}
+.rk .hint{color:var(--mut);font-size:14px}
+.bar{display:grid;grid-template-columns:minmax(120px,210px) 1fr 46px;gap:10px;align-items:center;font-size:14.5px}
+.bar .nm{font-weight:700;line-height:1.3}
+.bar .tr{height:14px;background:var(--sf2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--mut);border-radius:99px;transition:width .35s}
+.bar.best .tr i{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.bar.best .nm{color:var(--win-ink)}
+.bar .pc{font-weight:800;text-align:left;font-variant-numeric:tabular-nums}
+.verdict{background:var(--win);border:1.5px solid var(--win-b);color:var(--win-ink);border-radius:13px;padding:11px 13px;margin-top:6px}
+.verdict b{font-size:16.5px}.verdict p{margin:4px 0 0;font-size:14px}
+/* table */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:13px}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);border-inline-start:1px solid var(--line);vertical-align:middle;text-align:center;min-width:140px}
+tr>*:first-child{border-inline-start:0;text-align:right;position:sticky;right:0;background:var(--sf2);font-weight:700;min-width:118px;max-width:170px;z-index:2}
+thead th{background:var(--ink);color:var(--bg);font-weight:800;font-size:15px;line-height:1.35}
+thead th:first-child{background:var(--ink);color:var(--bg)}
+thead th i{font-style:normal;display:block;font-size:20px}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td:not(:first-child):not(.w){background:var(--sf2)}
+td.w{background:var(--win);color:var(--win-ink);font-weight:700}
+td.w:before{content:"✓ ";font-weight:800}
+tfoot td{background:var(--sf2);font-weight:800;border-bottom:0;border-top:2px solid var(--line)}
+tfoot .n{display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:99px;background:var(--line);padding:0 8px}
+tfoot .top1 .n{background:#16a34a;color:#fff}
+.lg{color:var(--mut);font-size:12.5px;margin-top:8px;display:flex;gap:14px;flex-wrap:wrap}
+.lg span:before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;background:var(--win);border:1px solid var(--win-b);margin-inline-end:5px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.two .sec{margin-top:14px}
+ul.tp{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.tp li{background:var(--sf2);border-radius:11px;padding:9px 12px;border-inline-start:4px solid var(--brand);font-size:14.3px}
+.ob{border-radius:12px;overflow:hidden;border:1px solid var(--line);margin-bottom:8px}
+.ob .q{background:var(--obj);color:var(--obj-ink);padding:8px 12px;font-weight:700;font-size:14.3px}
+.ob .a{background:var(--win);color:var(--win-ink);padding:8px 12px;font-size:14.3px}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.note{color:var(--mut);font-size:12.5px;text-align:center;margin:22px 0 8px}
+.cust .sales{display:none!important}
+.cbanner{display:none;background:#16a34a;color:#fff;text-align:center;font-weight:700;font-size:13.5px;padding:5px}
+.cust .cbanner{display:block}
+.ov{display:none}
+@media(max-width:900px){
+.app{display:block}
+aside{position:fixed;inset:0 0 0 auto;width:min(290px,84vw);z-index:60;transform:translateX(105%);transition:transform .25s}
+.nav-open aside{transform:none}
+.nav-open .ov{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50}
+.burger{display:block;flex:none}
+.top{padding:8px 12px;gap:7px}
+.ib{padding:0 11px}.ib em{display:none}
+.wrap{padding:14px 12px 30px}
+.two{grid-template-columns:1fr}
+.hero{padding:20px 18px;border-radius:18px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.cc{flex-direction:column;gap:8px;padding:12px}
+.sec{padding:13px}
+th,td{min-width:128px;padding:9px 9px;font-size:13.8px}
+tr>*:first-child{min-width:96px;max-width:112px;font-size:13px}
+.bar{grid-template-columns:1fr 44px}.bar .nm{grid-column:1/-1}
+}
+@media print{
+aside,.top,.nav2,.chips,.ov,.cbanner{display:none!important}
+.app{display:block}body{background:#fff;font-size:12px}
+.sec{box-shadow:none;break-inside:avoid}.tw{overflow:visible}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="cbanner">👁 وضع العميل – ملاحظات البيع مخفية. تقدر تلف الشاشة للعميل.</div>
+<div class="app">
+<aside id="side"></aside>
+<div class="ov" onclick="nav(0)"></div>
+<main>
+<div class="top">
+<button class="burger" onclick="nav(1)" aria-label="القائمة">☰</button>
+<div class="srch"><input id="q" type="search" placeholder="ابحث: غسالة، انفرتر، نوفروست، OLED ..." autocomplete="off"><div class="res" id="res"></div></div>
+<div class="tb">
+<button class="ib" id="bc" onclick="cust()" title="إخفاء ملاحظات البيع لعرض الشاشة على العميل">👁 <em>وضع العميل</em></button>
+<button class="ib" onclick="window.print()" title="طباعة">🖨</button>
+<button class="ib" onclick="theme()" title="فاتح / داكن">🌓</button>
+</div>
+</div>
+<div class="wrap" id="v"></div>
+</main>
+</div>
+<script>
+const LOGO="data:image/png;base64,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";
+const D=[];
+D.push(
+{id:"washers",n:"الغسالات",e:"🧺",g:"غسيل وتجفيف",c:[
+{t:"نوع الغسالة",ty:[
+["فول أوتوماتيك","🌀","اللي عاوز أنضف غسيل وعناية بالهدوم وتوفير ميه","دي بتغسل بالتقليب مش بالفرك، فالهدوم بتعيش أكتر وبتطلع أنضف بميه أقل."],
+["فوق أوتوماتيك","⬆️","اللي عاوز أوتوماتيك بسعر أقل وسهولة استخدام","تحط الهدوم من فوق من غير ما توطي، وتقدر تزود أي قطعة في نص الدورة."],
+["هاف أوتوماتيك","🪣","الميزانية المحدودة أو الأماكن اللي ضغط الميه فيها ضعيف","أوفر حاجة في السعر والكهربا، وبتشتغل حتى لو الميه ضعيفة أو مقطوعة."]],
+r:[
+["طريقة التحميل","من الأمام","من فوق","من فوق (حوض غسيل + حوض عصر)",""],
+["التشغيل","أوتوماتيك بالكامل","أوتوماتيك بالكامل","يدوي: تنقل الغسيل للعصر بنفسك","01"],
+["نضافة الغسيل","الأعلى","جيدة جدًا","جيدة","0"],
+["العناية بالأقمشة","الألطف على الهدوم","متوسطة","أخشن شوية","0"],
+["استهلاك المياه","الأقل","أعلى","إنت اللي بتتحكم","0"],
+["تسخين المياه","سخان داخلي حتى 90°","غالبًا بدون (بعض الموديلات بسخان)","بدون","0"],
+["قوة العصر","الأعلى (حتى 1400 لفة)","جيدة","قوية في حوض العصر","0"],
+["إضافة هدوم بعد التشغيل","صعب (إلا موديلات بباب إضافي)","سهل","سهل","12"],
+["مدة الدورة","الأطول","أقصر","الأقصر","2"],
+["ضغط المياه","محتاجة ضغط مناسب","محتاجة ضغط (بعضها يتحمل الضعيف)","مش شرط – ممكن تتملي يدوي","2"],
+["المكان","تتركب تحت الرخامة – محتاجة مساحة قدامها","محتاجة مساحة فوقها للغطا","خفيفة وسهل تتنقل",""],
+["السعر","الأعلى","متوسط","الأقل","2"]],
+nd:[["أنضف غسيل وعناية بالهدوم",3,2,1],["ميزانية محدودة",0,2,3],["ضغط الميه ضعيف / بتقطع",0,1,3],["مش عاوز مجهود",3,3,0],["توفير ميه",3,1,2],["أزود هدوم في النص",1,3,3],["مش بحب أوطي (كبار السن)",1,3,2],["تتركب تحت الرخامة",3,0,0]],
+tp:["السعة: 7 كجم لـ 3–4 أفراد • 8–9 كجم لـ 5–6 أفراد • 10 كجم فأكتر للبطاطين والأسر الكبيرة.","الفول والفوق محتاجين مسحوق أوتوماتيك (رغوة قليلة) – نبّه العميل."],
+ob:[["الفول غالية عليّا","فرق السعر بيرجعلك في توفير الميه والمسحوق وعمر الهدوم نفسها."],["بخاف الفول تاخد وقت طويل","فيها برامج سريعة 15–30 دقيقة للغسيل اليومي الخفيف."]]},
+{t:"الموتور: عادي ولا انفرتر",ty:[
+["موتور عادي","⚙️","استخدام خفيف وميزانية أقل","عملي واقتصادي في سعر الشراء."],
+["موتور انفرتر","🔋","استخدام يومي كتير واللي عاوز هدوء وعمر أطول","أهدى، أوفر في الكهربا، وضمان الموتور عليه أطول."]],
+r:[
+["استهلاك الكهرباء","أعلى","أوفر بشكل واضح","1"],
+["الصوت والاهتزاز","أعلى","أهدى بكتير","1"],
+["العمر الافتراضي","جيد","أطول (أجزاء احتكاك أقل)","1"],
+["ضمان الموتور","أقصر غالبًا","أطول غالبًا (يوصل 10 سنين في ماركات كتير)","1"],
+["تكلفة الإصلاح","أرخص","أغلى (بوردة إلكترونية)","0"],
+["السعر","أقل","أعلى","0"]],
+nd:[["ميزانية محدودة",3,0],["غسيل يومي كتير",0,3],["هدوء (شقة / غسيل بالليل)",0,3],["توفير في الفاتورة",0,3]],
+tp:["اقرأ للعميل مدة ضمان الموتور من كارت المنتج – دي أقوى نقطة بيع للانفرتر."]},
+{t:"غسالة بمجفف ولا جهازين؟",ty:[
+["غسالة بمجفف (2×1)","♻️","الشقق الصغيرة واللي معندوش بلكونة نشر","جهاز واحد يغسل وينشف من غير ما تاخد مكان زيادة."],
+["غسالة + مجفف منفصل","👯","الأسر الكبيرة والغسيل الكتير","تغسل وتنشف في نفس الوقت وتنشف الحمولة كاملة."]],
+r:[
+["المساحة","جهاز واحد","جهازين (ممكن فوق بعض)","0"],
+["كمية التجفيف","حوالي نص إلى ثلثين حمولة الغسيل","الحمولة كاملة","1"],
+["الوقت","دورة واحدة طويلة","تغسل وتنشف مع بعض","1"],
+["استهلاك التجفيف","أعلى غالبًا","أوفر لو المجفف هيت بامب","1"],
+["لو حصل عطل","الاتنين يقفوا","واحد بس اللي يقف","1"],
+["السعر","أقل من شراء جهازين","أعلى","0"]],
+nd:[["مساحة ضيقة",3,0],["أسرة كبيرة / غسيل كتير",0,3],["ميزانية أقل",3,1],["عاوز أخلص بسرعة",1,3]],
+tp:["وضّح للعميل إن سعة التجفيف في الـ 2×1 أقل من سعة الغسيل (مكتوبة على الجهاز زي 9/6 كجم)."]}
+]},
+{id:"dryers",n:"المجففات",e:"🌬️",g:"غسيل وتجفيف",c:[
+{t:"نوع المجفف",ty:[
+["تهوية (Vented)","💨","اللي عنده شباك أو بلكونة جنب المجفف وعاوز أقل سعر","أسرع وأرخص مجفف، بس محتاج مخرج هوا لبره."],
+["تكثيف (Condenser)","💧","أي مكان من غير فتحة خارجية","بيتركب في أي مكان، البخار بيتحول لميه في خزان."],
+["هيت بامب","🌿","اللي بيستخدمه كتير وعاوز أقل فاتورة وعناية بالهدوم","بيستهلك حوالي نص كهربا المجفف العادي وألطف على الهدوم."]],
+r:[
+["طريقة العمل","يطرد الهوا الرطب بخرطوم لبره","يكثف البخار لميه في خزان أو صرف","مضخة حرارية تعيد استخدام الهوا السخن",""],
+["التركيب","محتاج فتحة خارجية","أي مكان","أي مكان","12"],
+["استهلاك الكهرباء","الأعلى","عالي","الأقل (حوالي النص)","2"],
+["حرارة التجفيف","عالية","عالية","أقل وألطف على الأقمشة","2"],
+["مدة الدورة","الأسرع","متوسطة","الأطول","0"],
+["الصيانة","فلتر وبر","فلتر + تفريغ الخزان + تنضيف المكثف","فلتر + تفريغ الخزان","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,2,0],["مفيش فتحة خارجية",0,3,3],["استخدام يومي",1,1,3],["هدوم غالية / حساسة",1,1,3],["عاوز أسرع تنشيف",3,2,1]]}
+]},
+{id:"dish",n:"غسالات الأطباق",e:"🍽️",g:"غسيل وتجفيف",c:[
+{t:"المقاس والسعة",ty:[
+["60 سم","🍽️","الأسر من 4 أفراد فأكتر والعزومات","بتشيل حلل وصواني كبيرة وغسيل يوم كامل في مرة واحدة."],
+["45 سم (سليم)","📏","المطبخ الضيق وأسرة 2–4 أفراد","نفس الأداء في عرض أقل 15 سم."],
+["مكتبي (تيبل توب)","📦","فردين أو مطبخ من غير مكان تركيب","بتتحط على الرخامة ومش محتاجة تجهيز مطبخ."]],
+r:[
+["السعة","12–15 فرد","9–11 فرد","6–8 أفراد","0"],
+["مناسب لأسرة","4 أفراد فأكتر","2–4 أفراد","1–2 فرد",""],
+["الحلل والصواني الكبيرة","تدخل بسهولة","محدود","صعب","0"],
+["المساحة المطلوبة","عرض 60 سم","عرض 45 سم","فوق الرخامة","2"],
+["البرامج والمميزات","الأكثر","متوسطة","أساسية","0"],
+["السعر","الأعلى","متوسط","الأقل","2"]],
+nd:[["أسرة كبيرة / عزومات",3,1,0],["مطبخ ضيق",0,3,3],["ميزانية محدودة",0,2,3],["إيجار / مش عاوز تركيب",0,1,3]],
+tp:["غسالة الأطباق بتستهلك ميه أقل من الغسيل اليدوي بالحنفية المفتوحة.","محتاجة ملح ومادة تلميع مع المنظف – اعرضهم مع البيع."],
+ob:[["بتاخد كهربا وميه كتير","الدورة كلها بتستهلك ميه أقل من غسيل نفس الكمية بإيدك، وفيها برنامج اقتصادي."]]}
+]},
+{id:"fridge",n:"الثلاجات",e:"🧊",g:"تبريد وتجميد",c:[
+{t:"ديفروست ولا نوفروست",ty:[
+["ديفروست","❄️","الميزانية المحدودة والأماكن اللي الكهربا فيها بتقطع","أوفر في السعر والكهربا وبتحافظ على طراوة الخضار."],
+["نوفروست","🌬️","اللي عاوز راحة: مفيش تلج ولا إذابة","مفيش تلج بيتكون خالص، والبرودة موزعة على كل الرفوف."]],
+r:[
+["طريقة التبريد","تبريد مباشر من الألواح","مروحة بتوزع هوا بارد",""],
+["تكوّن الثلج","بيتكون ومحتاج إذابة يدوي","لا يتكون","1"],
+["توزيع البرودة","غير متساوي","متساوي في كل الرفوف","1"],
+["رطوبة الأكل","رطوبة أعلى – الخضار تفضل طرية","هوا أنشف – لازم تغطي الأكل","0"],
+["استهلاك الكهرباء","أقل","أعلى شوية (الانفرتر بيعوّض)","0"],
+["عند انقطاع الكهرباء","تحفظ البرودة مدة أطول","مدة أقل","0"],
+["الصوت","أهدى","صوت مروحة خفيف","0"],
+["السعات المتاحة","صغيرة ومتوسطة","كل السعات","1"],
+["السعر","أقل","أعلى","0"]],
+nd:[["ميزانية محدودة",3,1],["مش عاوز أذوّب تلج",0,3],["الكهربا بتقطع كتير",3,1],["أسرة كبيرة وتخزين كتير",1,3],["توفير في الفاتورة",3,2]],
+ob:[["النوفروست بتنشف الأكل","صح لو الأكل مكشوف – مع التغطية أو العلب مفيش مشكلة، وفي المقابل مفيش تلج خالص."]]},
+{t:"شكل الثلاجة",ty:[
+["فريزر علوي","⬆️","الاختيار الاقتصادي والمطابخ العادية","الشكل المعروف، أوفر سعر لنفس السعة."],
+["فريزر سفلي (كومبي)","⬇️","اللي بيستخدم الثلاجة أكتر من الفريزر","الثلاجة على مستوى عينك من غير ما توطي، والفريزر أدراج منظمة."],
+["سايد باي سايد","🚪","الأسر الكبيرة والتخزين الكتير","سعة كبيرة وفريزر رأسي كامل وشكل فخم."],
+["فرنش دور (4 أبواب)","✨","اللي عاوز أعلى تجهيز وأعرض رفوف","رفوف عريضة تشيل أي صينية، وأدراج فريزر منظمة."]],
+r:[
+["السعة","صغيرة إلى متوسطة","متوسطة","كبيرة","كبيرة جدًا","23"],
+["الوصول للثلاجة","الخضار تحت – محتاج توطي","على مستوى العين","على مستوى العين","على مستوى العين","123"],
+["الفريزر","رف أو رفين فوق","أدراج منظمة","رأسي كبير برفوف","أدراج سفلية متعددة",""],
+["الصواني العريضة","تدخل","تدخل","صعب (الرفوف ضيقة)","تدخل بسهولة","3"],
+["العرض المطلوب","60–70 سم","60–70 سم","حوالي 90 سم","80–90 سم","01"],
+["المميزات","أساسية","متوسطة","ديسبنسر ميه/تلج غالبًا","الأعلى","3"],
+["السعر","الأقل","متوسط","عالي","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,2,0,0],["مطبخ ضيق",3,3,0,0],["أسرة كبيرة",1,1,3,3],["شكل فخم",0,1,3,3],["صواني وعزومات",2,2,0,3],["مش بحب أوطي",0,3,3,3]],
+tp:["قبل بيع السايد أو الفرنش دور: اسأل عن مقاس باب الشقة والأسانسير والمكان في المطبخ.","السعة: حوالي 100–120 لتر للفردين + 50 لتر لكل فرد زيادة."]},
+{t:"الكمبروسر: عادي ولا انفرتر",ty:[
+["كمبروسر عادي","⚙️","ميزانية أقل","سعر شراء أقل وصيانته أرخص."],
+["كمبروسر انفرتر","🔋","جهاز شغال 24 ساعة – التوفير بيبان","الثلاجة شغالة طول اليوم، فالانفرتر بيفرق في الفاتورة كل شهر."]],
+r:[
+["طريقة العمل","يشتغل بكامل قوته ويفصل","سرعات متغيرة من غير فصل",""],
+["استهلاك الكهرباء","أعلى","أوفر","1"],
+["ثبات درجة الحرارة","متذبذب شوية","ثابت – الأكل يعيش أكتر","1"],
+["الصوت","أعلى عند التشغيل","أهدى","1"],
+["ضمان الكمبروسر","أقصر غالبًا","أطول غالبًا","1"],
+["السعر","أقل","أعلى","0"]],
+nd:[["ميزانية محدودة",3,0],["توفير في الفاتورة",0,3],["هدوء (مطبخ مفتوح)",0,3]]}
+]},
+{id:"freezer",n:"الفريزرات",e:"🥶",g:"تبريد وتجميد",c:[
+{t:"رأسي ولا أفقي (ديب فريزر)",ty:[
+["فريزر رأسي","🗄️","البيوت – تنظيم سهل ومساحة أرضية أقل","أدراج زي الثلاجة، كل حاجة قدامك ومنظمة."],
+["ديب فريزر أفقي","📦","الكميات الكبيرة والمحلات","بيشيل كميات أكبر وبيحافظ على البرودة أطول لو الكهربا قطعت."]],
+r:[
+["الشكل","أدراج بباب أمامي","صندوق بغطا من فوق",""],
+["المساحة الأرضية","أقل","أكبر","0"],
+["تنظيم الأكل","سهل (كل درج لنوع)","أصعب (الحاجات فوق بعض)","0"],
+["السعة الفعلية","أقل","أكبر وتشيل قطع كبيرة","1"],
+["عند انقطاع الكهرباء","يحفظ مدة أقل","يحفظ البرودة أطول","1"],
+["استهلاك الكهرباء","أعلى شوية","أوفر","1"],
+["نظام التبريد","ديفروست أو نوفروست","ديفروست غالبًا",""],
+["السعر لكل لتر","أعلى","أقل","1"]],
+nd:[["تنظيم وسهولة وصول",3,0],["مساحة ضيقة",3,0],["تخزين كميات كبيرة",1,3],["الكهربا بتقطع",1,3],["استخدام تجاري",0,3]],
+tp:["عدد الأدراج في الرأسي = نقطة بيع: 5 أدراج لأسرة صغيرة، 6–8 لأسرة كبيرة."]}
+]},
+{id:"ac",n:"التكييفات",e:"❄️",g:"تكييف وتهوية وتدفئة",c:[
+{t:"عادي ولا انفرتر",ty:[
+["تكييف عادي","⚙️","تشغيل ساعات قليلة أو أوضة مش بتتستخدم كتير","سعر شراء أقل وصيانة أرخص، مناسب للتشغيل الخفيف."],
+["تكييف انفرتر","🔋","تشغيل ساعات طويلة يوميًا","بيهدّي سرعته بدل ما يفصل ويشتغل، فبيوفر كهربا وبيثبت الحرارة."]],
+r:[
+["طريقة العمل","يشتغل بكامل قوته ويفصل","يغيّر سرعته ومايفصلش",""],
+["استهلاك الكهرباء","أعلى","أوفر بوضوح مع التشغيل الطويل","1"],
+["ثبات درجة الحرارة","بتطلع وتنزل","ثابتة","1"],
+["الصوت","أعلى","أهدى","1"],
+["الوصول للدرجة","عادي","أسرع","1"],
+["تكلفة الصيانة","أرخص","أغلى (بوردة إلكترونية)","0"],
+["السعر","أقل","أعلى","0"]],
+nd:[["ميزانية محدودة",3,0],["تشغيل ساعات طويلة",0,3],["أوضة ضيوف / تشغيل قليل",3,1],["هدوء للنوم",1,3],["توفير في الفاتورة",0,3]],
+ob:[["الانفرتر غالي","لو بتشغله أكتر من 5–6 ساعات يوميًا، فرق السعر بيرجع من الفاتورة في مواسم قليلة."]]},
+{t:"بارد فقط ولا بارد ساخن",ty:[
+["بارد فقط","🧊","الأماكن اللي شتاها دافي","لو مش محتاج تدفئة، وفّر فرق السعر."],
+["بارد ساخن","🔥","اللي عاوز جهاز واحد للصيف والشتا","جهاز واحد بدل تكييف ودفاية، وتدفئته أوفر من الدفاية الكهربا."]],
+r:[
+["التبريد","نعم","نعم",""],
+["التدفئة","لا","نعم","1"],
+["تكلفة التدفئة","محتاج دفاية منفصلة","أوفر من الدفاية الكهربا لنفس الدفا","1"],
+["أمان التدفئة","—","من غير سطح سخن ولا لهب","1"],
+["السعر","أقل","أعلى شوية","0"]],
+nd:[["ميزانية محدودة",3,1],["شتا برد / أطفال وكبار سن",0,3],["جهاز واحد للسنة كلها",0,3]]},
+{t:"شكل التكييف",ty:[
+["سبليت","🏠","البيوت – الاختيار الأساسي","أهدى وأكفأ نوع للبيت."],
+["شباك","🪟","اللي عنده فتحة جاهزة أو مش عاوز تركيب وحدة خارجية","قطعة واحدة وتركيبه بسيط."],
+["متنقل","🛞","الإيجار أو اللي مينفعش يركّب","مفيش تركيب ولا تكسير، وتنقله بين الأوض."],
+["فري ستاند (دولابي)","🏢","الريسبشن الكبير والمحلات","قدرات عالية ودفع هوا قوي للمساحات الواسعة."]],
+r:[
+["التركيب","فني + وحدة خارجية","فتحة في الحائط","بدون (خرطوم للشباك)","فني + وحدة خارجية","2"],
+["كفاءة التبريد","عالية","متوسطة","الأقل","عالية للمساحات الكبيرة","03"],
+["الصوت","الأهدى","عالي","عالي (الكمبروسر جوه الأوضة)","متوسط","0"],
+["استهلاك الكهرباء","الأوفر","أعلى","الأعلى لنفس التبريد","عالي (قدرة كبيرة)","0"],
+["القدرات المتاحة","1.5 – 3 حصان غالبًا","1.5 – 2.25 حصان","حوالي 1.5 حصان","3 – 5 حصان فأكتر",""],
+["السعر","متوسط","أقل","متوسط","الأعلى","1"]],
+nd:[["بيت عادي",3,1,0,0],["إيجار / ممنوع تكسير",0,1,3,0],["مساحة كبيرة جدًا",1,0,0,3],["هدوء",3,0,0,2],["أقل استهلاك",3,1,0,1]]},
+{t:"القدرة المناسبة (حصان)",ty:[
+["1.5 حصان","1️⃣","أوضة نوم أو مكتب","مناسب لأغلب أوض النوم."],
+["2.25 حصان","2️⃣","أوضة كبيرة أو ريسبشن صغير","الاختيار الآمن للأوض الواسعة."],
+["3 حصان","3️⃣","ريسبشن","مناسب للريسبشن المتوسط."],
+["5 حصان","5️⃣","ريسبشن كبير أو محل","للمساحات المفتوحة والتجارية."]],
+r:[
+["مساحة الغرفة (تقريبًا)","حتى 16 م²","17 – 24 م²","25 – 35 م²","36 – 50 م²",""],
+["أمثلة","أوضة 4×4","أوضة 4×6","ريسبشن 5×7","ريسبشن 6×8 أو محل",""]],
+nd:[],
+tp:["زوّد درجة في القدرة لو: الدور الأخير • شمس مباشرة أو زجاج كتير • مطبخ مفتوح • عدد أفراد كبير • سقف عالي.","قدرة أقل من المطلوب = التكييف مش بيفصل وفاتورة أعلى وعمر أقصر. دي أهم معلومة للعميل.","الأرقام تقريبية لارتفاع سقف عادي (حوالي 3 متر)."]}
+]},
+{id:"cooling",n:"مروحة ولا مبرد ولا تكييف؟",e:"🌡️",g:"تكييف وتهوية وتدفئة",c:[
+{t:"حلول التبريد",ty:[
+["مروحة","🌀","أقل سعر وأقل كهربا","بتحرّك الهوا وتحسسك بالراحة بأقل تكلفة."],
+["مبرد هواء (صحراوي)","💦","الجو الحر الجاف واللي مش عاوز تركيب","بيبرّد الهوا بالميه والتلج بكهربا قريبة من المروحة."],
+["تكييف","❄️","تبريد حقيقي في أي جو","الوحيد اللي بينزّل درجة حرارة الأوضة للرقم اللي تختاره."]],
+r:[
+["طريقة التبريد","تحريك الهوا بس","تبخير ميه (هوا بارد رطب)","تبريد حقيقي بالفريون",""],
+["خفض درجة الحرارة","لا","كام درجة في الجو الجاف","للدرجة اللي تختارها","2"],
+["في الجو الرطب (السواحل)","تشتغل عادي","ضعيف ويزود الرطوبة","ممتاز ويشيل الرطوبة","2"],
+["استهلاك الكهرباء","الأقل","قليل","الأعلى","0"],
+["التركيب","بدون","بدون (ميه وتلج)","فني تركيب","01"],
+["التهوية","أي مكان","محتاج شباك مفتوح","أوضة مقفولة",""],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,2,0],["تبريد قوي فعلاً",0,1,3],["منطقة ساحلية رطبة",2,0,3],["إيجار / من غير تركيب",3,3,0],["أقل فاتورة",3,2,0]],
+ob:[["المبرد زي التكييف؟","لا – المبرد بيلطّف الهوا في الجو الجاف، لكن مش بيوصل الأوضة لدرجة حرارة محددة زي التكييف."]]}
+]},
+{id:"fans",n:"المراوح",e:"🌀",g:"تكييف وتهوية وتدفئة",c:[
+{t:"نوع المروحة",ty:[
+["استاند","🧍","الاستخدام المتنقل بين الأوض","تتنقل وتتوجّه وتتعلّى وتتوطّى زي ما تحب."],
+["حائط","🧱","الأماكن الضيقة والبيوت اللي فيها أطفال","مش بتاخد مكان على الأرض وبعيدة عن إيد الأطفال."],
+["سقف","🏠","تهوية الأوضة كلها بهدوء","بتوزّع الهوا على الأوضة كلها وأهدى نوع."],
+["برجية (تاور)","🗼","الشكل المودرن والمساحة الصغيرة","شكل شيك ومن غير ريش مكشوفة."]],
+r:[
+["قوة الهوا","قوية ومركّزة","قوية ومركّزة","توزيع على الأوضة كلها","ألطف",""],
+["المساحة الأرضية","تاخد مكان","لا","لا","صغيرة جدًا","12"],
+["التنقل","سهل","ثابتة","ثابتة","سهل","03"],
+["التركيب","بدون","تثبيت في الحائط","فني وسقف مناسب","بدون","03"],
+["الأمان مع الأطفال","متوسط","عالي","عالي","عالي","123"],
+["الصوت","متوسط","متوسط","الأهدى","هادية","2"],
+["السعر","متوسط","متوسط","متوسط","أعلى",""]],
+nd:[["أطفال في البيت",0,3,3,3],["مساحة ضيقة",0,3,3,2],["أنقلها بين الأوض",3,0,0,3],["هدوء للنوم",1,1,3,2],["شكل مودرن",1,0,1,3]]}
+]},
+{id:"heaters",n:"الدفايات",e:"🔥",g:"تكييف وتهوية وتدفئة",c:[
+{t:"نوع الدفاية",ty:[
+["زيت","🛢️","أوض النوم والأطفال والتشغيل الطويل","أأمن دفاية: مفيش لهب ولا بتنشّف الهوا، وبتفضل دافية بعد ما تفصل."],
+["هالوجين / كوارتز","💡","تدفئة سريعة لشخص قاعد قدامها","بتدفّي في ثانية وبأقل سعر."],
+["مروحة / سيراميك","🌬️","تدفئة أوضة صغيرة بسرعة","بتنشر هوا سخن في الأوضة كلها في دقايق."],
+["غاز","🔥","المساحات الكبيرة ومن غير كهربا","أقوى تدفئة ومش بتأثر على فاتورة الكهربا."]],
+r:[
+["سرعة التدفئة","بطيئة","فورية (للي قدامها)","سريعة","سريعة وقوية","13"],
+["توزيع الدفا","الأوضة كلها","اتجاه واحد","الأوضة كلها","الأوضة كلها","023"],
+["الدفا بعد الفصل","يفضل فترة","يروح فورًا","يروح فورًا","يروح فورًا","0"],
+["تأثيرها على الهوا","لا تنشّف الهوا","بسيط","بتنشّف الهوا","بتستهلك أكسجين – لازم تهوية","0"],
+["الأمان مع الأطفال","الأعلى","سطح سخن مكشوف","جيد","محتاجة حذر","0"],
+["الصوت","صامتة","صامتة","صوت مروحة","صامتة",""],
+["تكلفة التشغيل","عالية (الترموستات بيقلل)","متوسطة","عالية","أسطوانة غاز – بدون كهربا","3"],
+["السعر","أعلى","الأقل","متوسط","أعلى","1"]],
+nd:[["أطفال / أوضة نوم",3,0,2,0],["ميزانية محدودة",1,3,2,0],["تدفئة فورية",0,3,2,3],["مساحة كبيرة",2,0,1,3],["تشغيل طول الليل",3,0,1,0]],
+tp:["عدد الريش في دفاية الزيت = مساحة الأوضة: 9 ريش لأوضة صغيرة، 11–13 للأوضة المتوسطة والكبيرة.","دفاية الغاز: لازم شباك موارب دايمًا – قولها للعميل بوضوح."]}
+]},
+{id:"air",n:"معالجة الهواء",e:"🍃",g:"تكييف وتهوية وتدفئة",c:[
+{t:"منقي ولا مرطب ولا مزيل رطوبة",ty:[
+["منقي هواء","🍃","الحساسية والتراب والتدخين","بيشيل التراب والدخان ومسببات الحساسية من الهوا."],
+["مرطب هواء","💧","جفاف الهوا من التكييف أو الدفاية","بيزود رطوبة الهوا فيريّح الجلد والتنفس."],
+["مزيل رطوبة","🌫️","الرطوبة والعفن وريحة الكمكمة","بيسحب الميه من الهوا ويمنع العفن على الحيطان."]],
+r:[
+["بيعمل إيه","يفلتر الهوا","يزود الرطوبة","يقلل الرطوبة",""],
+["المشكلة اللي بيحلها","حساسية، تراب، دخان، روايح","جفاف جلد وأنف وكحة ناشفة","عفن، رطوبة حيطان، ريحة كمكمة",""],
+["المستهلكات","تغيير فلتر دوري","ميه (ويفضل مفلترة)","تفريغ خزان الميه",""],
+["أنسب مكان","أوض النوم والمدن الزحمة","أوض مكيفة أو فيها دفاية","بدروم، سواحل، أوض مقفولة",""]],
+nd:[["حساسية صدر / تراب",3,1,1],["مدخن في البيت",3,0,0],["جفاف من التكييف",0,3,0],["عفن ورطوبة",0,0,3],["مولود جديد",2,3,0]],
+tp:["دول 3 أجهزة مختلفة مش بدايل لبعض – اسأل العميل عن المشكلة الأول."]}
+]}
+);
+D.push(
+{id:"cookers",n:"البوتاجازات",e:"🍳",g:"طبخ وأفران",c:[
+{t:"نوع الفرن في البوتاجاز",ty:[
+["غاز كامل","🔥","الطبخ اليومي وأقل تكلفة تشغيل","كله غاز: أرخص تشغيل وبيشتغل حتى لو الكهربا قطعت."],
+["مشترك (شعلات غاز + فرن كهربا)","⚡","اللي بيحب الحلويات والمخبوزات","الفرن الكهربا بيسوّي من فوق وتحت بالتساوي – الكيك والبيتزا بيطلعوا مظبوطين."]],
+r:[
+["الشعلات","غاز","غاز",""],
+["الفرن","غاز","كهرباء",""],
+["توزيع حرارة الفرن","من تحت – محتاج تقليب","متساوي (سخانات + مروحة)","1"],
+["التحكم في الحرارة","تقريبي","دقيق بالدرجة","1"],
+["الحلويات والمخبوزات","جيد","ممتاز","1"],
+["تكلفة التشغيل","الأقل","أعلى (كهربا الفرن)","0"],
+["عند انقطاع الكهرباء","الفرن يشتغل","الفرن يقف","0"],
+["السعر","أقل","أعلى","0"]],
+nd:[["ميزانية محدودة",3,1],["حلويات ومخبوزات",1,3],["أقل تكلفة تشغيل",3,1],["الكهربا بتقطع",3,0]]},
+{t:"مستوى الأمان",ty:[
+["بدون أمان","⚠️","أقل سعر","الاختيار الاقتصادي."],
+["أمان فرن","🛡️","حماية أساسية","الفرن بيقفل الغاز لو الشعلة طفت."],
+["أمان كامل","✅","البيوت اللي فيها أطفال وكبار سن","لو أي شعلة طفت من هوا أو فوران، الغاز بيتقفل لوحده."]],
+r:[
+["أمان الشعلات","لا","لا","نعم","2"],
+["أمان الفرن والشواية","لا","نعم","نعم","12"],
+["لو الشعلة طفت","الغاز يفضل طالع","الفرن بس اللي يقفل","الغاز يتقفل في كل الشعلات","2"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["أطفال / كبار سن",0,1,3],["ميزانية محدودة",3,2,0],["راحة بال",0,1,3]],
+ob:[["فرق السعر كبير عشان الأمان","ده تأمين على البيت كله – تسريب غاز واحد أغلى بكتير من فرق السعر."]]},
+{t:"بوتاجاز حر ولا بلت إن؟",ty:[
+["بوتاجاز حر","🍳","المطبخ الجاهز والإيجار","قطعة واحدة تتنقل معاك ومش محتاجة تجهيز مطبخ."],
+["بلت إن (مسطح + فرن)","🧩","المطبخ الجديد بتصميم مودرن","شكل متكامل مع المطبخ، والفرن على ارتفاع مريح."]],
+r:[
+["الشكل","قطعة منفصلة","مدمج في المطبخ","1"],
+["التركيب","توصيل غاز بس","تفصيل مطبخ + فني","0"],
+["ارتفاع الفرن","تحت – محتاج توطي","ممكن على مستوى الإيد","1"],
+["التنضيف حواليه","فراغات على الجناب","سطح واحد من غير فراغات","1"],
+["النقل عند تغيير السكن","سهل","صعب","0"],
+["التكلفة الإجمالية","أقل","أعلى (جهازين + تركيب)","0"]],
+nd:[["إيجار / هتنقل",3,0],["مطبخ جديد بيتفصّل",1,3],["ميزانية محدودة",3,0],["شكل مودرن",0,3]],
+tp:["المقاس: 60 سم (4 شعلات) للمطبخ الصغير • 90 سم (5 شعلات) للأسر والعزومات."]}
+]},
+{id:"hobs",n:"المسطحات",e:"♨️",g:"طبخ وأفران",c:[
+{t:"غاز ولا كهربا ولا إنداكشن",ty:[
+["مسطح غاز","🔥","الطبخ المصري وأقل تكلفة تشغيل","بيشتغل بأي حلة، أرخص تشغيل، وشغال لو الكهربا قطعت."],
+["سيراميك كهربائي","⚡","اللي معندوش غاز وعاوز شكل نضيف","سطح زجاج واحد سهل التنضيف وبيشتغل بأي حلة مسطحة."],
+["إنداكشن","🧲","الأمان والسرعة والشكل المودرن","أسرع تسخين، والسطح نفسه مش بيسخن، وبيفصل لو شلت الحلة."]],
+r:[
+["مصدر الحرارة","لهب مباشر","سخان تحت الزجاج","مجال مغناطيسي بيسخّن الحلة نفسها",""],
+["سرعة التسخين","سريع","الأبطأ","الأسرع","2"],
+["التحكم في الحرارة","فوري ومرئي","استجابة بطيئة","فوري ودقيق","02"],
+["الأواني المناسبة","أي نوع","أي نوع بقاعدة مسطحة","أواني مغناطيسية بس (ستانلس/زهر)","0"],
+["الأمان","لهب مكشوف","السطح بيفضل سخن","السطح بارد نسبيًا ويفصل لوحده","2"],
+["التنضيف","الأصعب (حوامل وشعلات)","سهل","الأسهل","2"],
+["كفاءة الطاقة","الأقل","متوسطة","الأعلى","2"],
+["عند انقطاع الكهرباء","يشتغل","يقف","يقف","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,1,0],["أطفال / أمان",1,0,3],["مفيش غاز",0,3,3],["تنضيف سهل",0,2,3],["طبخ تقيل بحلل كبيرة",3,1,2],["الكهربا بتقطع",3,0,0]],
+tp:["اختبار الإنداكشن: لو المغناطيس بيلزق في قاع الحلة تبقى شغالة عليه.","الإنداكشن والسيراميك محتاجين خط كهربا وقاطع مناسب – نبّه العميل."]}
+]},
+{id:"ovens",n:"الأفران البلت إن",e:"🥧",g:"طبخ وأفران",c:[
+{t:"فرن غاز ولا كهربا",ty:[
+["فرن غاز","🔥","الطبخ اليومي (صواني ولحوم) بأقل تكلفة","أرخص تشغيل ومناسب للأكل المصري."],
+["فرن كهربا","⚡","الحلويات والمخبوزات والتسوية المتساوية","حرارة من فوق وتحت ومروحة – تقدر تسوّي صنيتين مع بعض."]],
+r:[
+["توزيع الحرارة","من تحت أساسًا","من كل الاتجاهات","1"],
+["دقة درجة الحرارة","تقريبية","دقيقة","1"],
+["برامج الطهي","محدودة","متعددة (مروحة، جريل، إذابة...)","1"],
+["التسوية على أكتر من رف","صعب","ممكن","1"],
+["تكلفة التشغيل","الأقل","أعلى","0"],
+["التركيب","خط غاز + تهوية","خط كهربا مناسب",""],
+["السعر","قريب","قريب",""]],
+nd:[["حلويات ومخبوزات",1,3],["أقل تكلفة تشغيل",3,1],["مفيش غاز",0,3],["طبخ يومي تقيل",3,2]],
+tp:["فيه أفران غاز بمروحة بتحسّن توزيع الحرارة – حل وسط كويس."]}
+]},
+{id:"hoods",n:"الشفاطات",e:"🌫️",g:"طبخ وأفران",c:[
+{t:"شكل الشفاط",ty:[
+["مسطح","▭","المطبخ الصغير والطبخ الخفيف","أوفر سعر وبيتركب تحت الدولاب."],
+["هرمي","🔺","الطبخ المصري التقيل والقلي","قوة شفط أعلى وبيلم الأبخرة كويس."],
+["ديكور (مدخنة / زجاج مائل)","💎","المطبخ المودرن والمفتوح","قوة عالية وشكل هو قطعة ديكور في المطبخ."],
+["مدمج مخفي","🫥","المطبخ البلت إن اللي عاوز شكل نضيف","بيختفي جوه الدولاب ومبيبانش."]],
+r:[
+["قوة الشفط","ضعيفة إلى متوسطة","متوسطة إلى قوية","قوية","متوسطة","2"],
+["مناسب لطبخ","خفيف","تقيل وقلي","تقيل ومطبخ مفتوح","خفيف إلى متوسط",""],
+["المساحة","الأصغر","متوسطة","الأكبر","مخفي","03"],
+["الصوت","متوسط","متوسط","أهدى غالبًا","متوسط","2"],
+["الشكل","عملي","كلاسيك","الأشيك","مخفي تمامًا","23"],
+["السعر","الأقل","متوسط","الأعلى","متوسط","0"]],
+nd:[["ميزانية محدودة",3,2,0,1],["قلي وطبخ تقيل",0,3,3,1],["مطبخ مفتوح على الريسبشن",0,2,3,1],["شكل مودرن",0,1,3,3],["مطبخ صغير",3,2,0,3]],
+tp:["عرض الشفاط لازم يساوي عرض البوتاجاز أو المسطح أو أكبر (60 أو 90 سم)."]},
+{t:"طرد خارجي ولا فلتر كربون",ty:[
+["طرد خارجي","🏭","أي مطبخ فيه مخرج للهوا","بيطلّع الدخان والريحة بره البيت خالص – أقوى نتيجة."],
+["تدوير بفلتر كربون","♻️","المطبخ اللي مفيهوش مخرج","بينقّي الهوا ويرجعه، ومش محتاج تكسير ولا مدخنة."]],
+r:[
+["طريقة العمل","يسحب الهوا ويطرده بره","يفلتر الهوا ويرجعه للمطبخ",""],
+["التخلص من الروايح","كامل","جزئي","0"],
+["الحرارة والرطوبة","بتخرج بره","بتفضل في المطبخ","0"],
+["التركيب","محتاج مدخنة وفتحة","بدون فتحة","1"],
+["المستهلكات","تنضيف فلتر الدهون","تغيير فلتر الكربون كل 3–6 شهور","0"]],
+nd:[["فيه مخرج هوا",3,1],["مفيش مخرج / ممنوع تكسير",0,3],["قلي كتير",3,0]],
+tp:["أغلب الشفاطات بتشتغل بالطريقتين – اعرض فلتر الكربون كإكسسوار."]}
+]},
+{id:"micro",n:"الميكروويف",e:"📡",g:"طبخ وأفران",c:[
+{t:"سولو ولا جريل ولا كونفكشن",ty:[
+["سولو","🔆","التسخين والإذابة بس","لو كل استخدامك تسخين وإذابة، ده كفاية وأوفر."],
+["بجريل","🥪","التسخين + تحمير خفيف","بيسخّن وكمان بيحمّر وش الأكل والسندوتشات."],
+["كونفكشن (بفرن)","🍗","اللي عاوز ميكروويف وفرن في جهاز واحد","بيسخّن وبيشوي وبيخبز زي الفرن – 3 أجهزة في واحد."]],
+r:[
+["تسخين وإذابة","نعم","نعم","نعم",""],
+["تحمير وشوي","لا","نعم","نعم","12"],
+["خبز (كيك / بيتزا)","لا","لا","نعم","2"],
+["يغني عن الفرن الكهربا","لا","لا","للكميات الصغيرة","2"],
+["سهولة الاستخدام","الأسهل","سهل","محتاج تعوّد","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["تسخين بس",3,2,1],["ميزانية محدودة",3,2,0],["معنديش فرن",0,1,3],["تحمير سندوتشات وبيتزا",0,3,3]],
+tp:["السعة: 20–25 لتر لفردين أو تلاتة • 28–34 لتر للأسرة • 40 لتر فأكتر للأطباق الكبيرة.","ممنوع المعدن في وضع الميكروويف – ذكّر العميل."]},
+{t:"ميكروويف ولا فرن كهربا ولا قلاية هوائية؟",ty:[
+["ميكروويف","📡","التسخين السريع","أسرع جهاز لتسخين الأكل وإذابة المجمدات."],
+["فرن كهربائي","🥧","الخبز والصواني","للكيك والبيتزا والصواني الكبيرة."],
+["قلاية هوائية","🍟","المقرمشات بزيت أقل","بطاطس وفراخ مقرمشة بمعلقة زيت واحدة."]],
+r:[
+["تسخين الأكل","الأسرع","بطيء","متوسط","0"],
+["إذابة المجمدات","نعم","لا","لا","0"],
+["القرمشة والتحمير","لا (في السولو)","جيد","الأفضل","2"],
+["الخبز والحلويات","لا (في السولو)","الأفضل","كميات صغيرة","1"],
+["الكمية","طبق","الأكبر (صواني)","محدودة","1"],
+["سرعة الطهي","الأسرع للتسخين","الأبطأ","سريعة","0"],
+["استهلاك الكهرباء","قليل (وقت قصير)","الأعلى","متوسط","0"]],
+nd:[["تسخين سريع",3,0,1],["كيك وبيتزا",0,3,1],["أكل مقرمش صحي",0,1,3],["كميات كبيرة",1,3,0]],
+tp:["الأجهزة دي بتكمّل بعض – فرصة ممتازة للبيع الإضافي."]}
+]},
+{id:"fryers",n:"القلايات",e:"🍟",g:"أجهزة مطبخ صغيرة",c:[
+{t:"زيت ولا هوائية",ty:[
+["قلاية زيت","🛢️","اللي عاوز طعم القلي التقليدي","نفس طعم المطاعم بحرارة ثابتة وأمان أكتر من الطاسة."],
+["قلاية هوائية","💨","الأكل الصحي والاستخدام اليومي","قرمشة قريبة من القلي بزيت أقل بكتير ومن غير ريحة."],
+["فرن هوائي (أوفن)","🗄️","الأسرة الكبيرة واللي عاوز أكتر من وظيفة","سعة أكبر ورفوف وسيخ شواية – قلاية وفرن في جهاز."]],
+r:[
+["كمية الزيت","لترات","معلقة أو بدون","معلقة أو بدون","12"],
+["الطعم والقرمشة","قلي تقليدي كامل","قريب جدًا من القلي","قريب من القلي","0"],
+["صحة الأكل","دهون أعلى","دهون أقل","دهون أقل","12"],
+["الريحة والدخان","موجودة","قليلة جدًا","قليلة جدًا","12"],
+["الوظائف","قلي بس","قلي، شوي، تسخين","قلي، شوي، خبز، تجفيف","2"],
+["السعة","متوسطة","صغيرة إلى متوسطة","الأكبر","2"],
+["التنضيف","الأصعب (زيت)","سهل (سلة)","متوسط (رفوف)","1"],
+["المساحة","متوسطة","صغيرة","كبيرة","1"]],
+nd:[["أكل صحي",0,3,3],["طعم القلي الأصلي",3,1,1],["أسرة كبيرة",1,1,3],["تنضيف سهل",0,3,2],["مطبخ صغير",1,3,0]],
+tp:["سعة القلاية الهوائية: 3–4 لتر لفردين • 5–6 لتر للأسرة • 7 لتر فأكتر للأسرة الكبيرة."]}
+]},
+{id:"blend",n:"الخلاطات ومحضرات الطعام",e:"🥤",g:"أجهزة مطبخ صغيرة",c:[
+{t:"خلاط ولا هاند بلندر ولا كبة ولا محضر طعام",ty:[
+["خلاط","🥤","العصاير والسموذي","الأساسي لأي عصير أو ميلك شيك أو تلج مجروش."],
+["هاند بلندر","🥄","الشوربة وأكل الأطفال","بتضرب في الحلة مباشرة وبيتغسل في ثانية."],
+["كبة","🧅","فرم البصل والتوم واللحمة","بيفرم في ثواني من غير دموع ولا مجهود."],
+["محضر طعام","🔪","اللي بيطبخ كتير وعاوز جهاز شامل","بيفرم ويقطّع شرايح ويبشر ويعجن – بيوفر نص وقت التحضير."]],
+r:[
+["الاستخدام الأساسي","عصاير وسموذي","هرس وضرب في الحلة","فرم","فرم + تقطيع + بشر + عجن",""],
+["السوائل","ممتاز","جيد","ضعيف","متوسط","0"],
+["الفرم الناشف","ضعيف","بملحق","ممتاز","ممتاز","23"],
+["تقطيع شرايح وبشر","لا","لا","لا","نعم","3"],
+["العجن","لا","لا","بسيط","نعم (كميات صغيرة)","3"],
+["المساحة والغسيل","متوسط","الأصغر والأسهل","صغير","الأكبر وملحقات كتير","1"],
+["السعر","متوسط","أقل","أقل","الأعلى","12"]],
+nd:[["عصاير يوميًا",3,1,0,1],["أكل أطفال وشوربة",1,3,0,1],["فرم بصل ولحمة",0,1,3,3],["سلطات وتقطيع",0,0,0,3],["مطبخ صغير",1,3,3,0]],
+tp:["قوة الموتور بالوات نقطة بيع: للتلج والمكسرات اختار 600 وات فأكتر."]},
+{t:"مضرب ولا عجان",ty:[
+["مضرب يدوي","🥚","الكيك والكريمة من وقت للتاني","خفيف ورخيص وكفاية لضرب البيض والكريمة."],
+["مضرب بوعاء","🥣","اللي بيعمل حلويات بانتظام","بيشتغل لوحده وإيدك فاضية."],
+["عجان (ستاند ميكسر)","🍞","العجين التقيل والكميات الكبيرة","بيعجن عيش وبيتزا وفطير من غير مجهود وموتوره بيستحمل."]],
+r:[
+["ضرب بيض وكريمة","ممتاز","ممتاز","ممتاز",""],
+["خليط الكيك","جيد","ممتاز","ممتاز","12"],
+["العجين التقيل (عيش/بيتزا)","لا يُنصح","محدود","ممتاز","2"],
+["الكمية","صغيرة","متوسطة","كبيرة","2"],
+["إيدك فاضية","لا","نعم","نعم","12"],
+["المساحة","الأصغر","متوسطة","الأكبر","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["استخدام قليل",3,1,0],["عجين عيش وفطير",0,1,3],["حلويات كتير / مشروع بيتي",0,2,3],["ميزانية محدودة",3,2,0]]}
+]},
+{id:"juicers",n:"العصارات",e:"🍊",g:"أجهزة مطبخ صغيرة",c:[
+{t:"نوع العصارة",ty:[
+["عصارة موالح","🍊","البرتقال والليمون بس","بسيطة ورخيصة لعصير البرتقال اليومي."],
+["عصارة طرد مركزي","🥕","عصير سريع من فواكه وخضار صلبة","بتعصر تفاح وجزر في ثواني وبتفصل التفل."],
+["عصارة بطيئة (كولد برس)","🌿","المهتمين بالصحة وأعلى جودة","بتطلع عصير أكتر وأغنى وبيعيش أطول من غير رغوة."]],
+r:[
+["أنواع الفاكهة","موالح بس","صلبة (تفاح، جزر...)","صلبة + ورقيات + طرية","2"],
+["سرعة العصر","سريعة","الأسرع","بطيئة","1"],
+["كمية العصير المستخرجة","—","جيدة","الأعلى","2"],
+["جودة العصير","طازة","رغوة أكتر ويتأكسد أسرع","أغنى ويعيش أطول","2"],
+["الصوت","هادية","عالي","هادية","02"],
+["التنضيف","الأسهل","متوسط","أكتر أجزاء","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["برتقال وليمون بس",3,1,1],["عصير سريع الصبح",2,3,0],["صحة وديتوكس",0,1,3],["ميزانية محدودة",3,2,0]],
+ob:[["العصارة ولا الخلاط؟","الخلاط بيضرب الفاكهة كلها بتفلها، العصارة بتطلع عصير صافي من غير ألياف."]]}
+]},
+{id:"coffee",n:"ماكينات القهوة",e:"☕",g:"أجهزة مطبخ صغيرة",c:[
+{t:"نوع الماكينة",ty:[
+["قهوة تركي","🫖","محبين القهوة التركي بوش","قهوة تركي بوش مظبوط كل مرة من غير ما تفور."],
+["اسبريسو","☕","محبين اللاتيه والكابتشينو","قهوة الكافيهات في البيت مع رغوة لبن."],
+["كبسولات","💊","السرعة والنضافة","كبسولة وزرار – قهوة في 30 ثانية من غير أي بهدلة."],
+["فلتر (أمريكان)","🫗","المكاتب والكميات","بتعمل دورق كامل يكفي المكتب وبأقل تكلفة للكوباية."]],
+r:[
+["نوع القهوة","تركي","اسبريسو ومشتقاته","اسبريسو (حسب الكبسولة)","أمريكان / فلتر",""],
+["مشروبات اللبن","لا","نعم (بخار)","حسب الموديل","لا","1"],
+["سهولة الاستخدام","سهلة","محتاجة تعلّم","الأسهل","سهلة","2"],
+["وقت التحضير","دقيقتين","متوسط","الأسرع","5–10 دقايق لدورق","2"],
+["تكلفة الكوباية","قليلة","قليلة (بن مطحون)","الأعلى (كبسولات)","الأقل","3"],
+["الكمية في المرة","1–4 فناجين","1–2","1","دورق كامل","3"],
+["التنضيف","بسيط","الأكتر","الأقل","بسيط","2"],
+["سعر الماكينة","أقل","الأعلى","متوسط","أقل","03"]],
+nd:[["بحب التركي",3,0,0,0],["لاتيه وكابتشينو",0,3,2,0],["مستعجل دايمًا",1,0,3,1],["مكتب / ناس كتير",1,0,1,3],["أقل تكلفة للكوباية",2,2,0,3]],
+tp:["مع الاسبريسو اعرض مطحنة بن – البن الطازة بيفرق في الطعم."]}
+]},
+{id:"cooksmall",n:"حلل الطهي الكهربائية",e:"🍲",g:"أجهزة مطبخ صغيرة",c:[
+{t:"ضغط ولا أرز ولا بخار",ty:[
+["حلة ضغط كهربائية","⏱️","اللحوم والبقوليات بسرعة","بتسوّي اللحمة في تلت الوقت وبتفصل لوحدها بأمان."],
+["حلة أرز","🍚","أرز مظبوط كل مرة","أرز مفلفل من غير متابعة وبتحفظه سخن."],
+["طهي بالبخار","🥦","الأكل الصحي والدايت","خضار وسمك وفراخ من غير زيت وبكل فيتاميناتهم."]],
+r:[
+["الاستخدام الأساسي","لحوم، بقوليات، شوربة، أرز","أرز وحبوب","خضار، سمك، فراخ",""],
+["سرعة الطهي","الأسرع","عادية","متوسطة","0"],
+["تعدد الوظائف","الأكثر (برامج متعددة)","محدود","محدود","0"],
+["الطهي بدون زيت","ممكن","ممكن","دايمًا","2"],
+["الأمان","صمامات وقفل تلقائي","بسيطة وآمنة","بسيطة وآمنة",""],
+["السعر","الأعلى","الأقل","متوسط","1"]],
+nd:[["وقتي ضيق",3,1,1],["دايت وأكل صحي",1,1,3],["أرز يوميًا",2,3,0],["جهاز واحد لكل حاجة",3,0,0]],
+ob:[["بخاف من حلة الضغط","الكهربائية مختلفة: فيها أكتر من صمام أمان ومش بتتفتح طول ما فيها ضغط."]]}
+]},
+{id:"grills",n:"الشوايات",e:"🥩",g:"أجهزة مطبخ صغيرة",c:[
+{t:"نوع الشواية",ty:[
+["شواية كهربا مفتوحة","♨️","الشوي جوه البيت","شوي في المطبخ أو البلكونة من غير فحم ولا دخان كتير."],
+["جريل ضغط (كونتاكت)","🥪","السندوتشات والشوي السريع","بيشوي من الوشين مع بعض في دقايق وبيصفّي الدهون."],
+["شواية فحم","🔥","الرحلات والطعم الأصلي","طعم الفحم اللي مفيش زيه."]],
+r:[
+["الطعم","قريب من الشوي","شوي خفيف","طعم الفحم الأصلي","2"],
+["الاستخدام داخل البيت","نعم","نعم","لا – أماكن مفتوحة","01"],
+["سرعة التجهيز","سريعة","الأسرع","الأبطأ (إشعال الفحم)","1"],
+["الدخان","قليل","قليل جدًا","كتير","1"],
+["التنضيف","متوسط","سهل (ألواح)","الأصعب","1"],
+["الكمية","متوسطة","صغيرة","الأكبر","2"]],
+nd:[["شقة من غير بلكونة",3,3,0],["رحلات وجنينة",0,0,3],["سندوتشات وبرجر",1,3,1],["عزومات",2,0,3]]}
+]}
+);
+D.push(
+{id:"vac",n:"المكانس",e:"🧹",g:"نظافة وعناية بالملابس",c:[
+{t:"نوع المكنسة",ty:[
+["بكيس","🛍️","التنضيف العميق ومرضى الحساسية","التراب بيتقفل عليه في الكيس وترميه من غير ما تلمسه."],
+["بدون كيس (سيكلون)","🌪️","الاستخدام اليومي من غير مصاريف","مفيش أكياس تشتريها، وقوة الشفط ثابتة."],
+["برميل (رطب وجاف)","🛢️","الجراجات والميه والتنضيف التقيل","بتشفط تراب وميه وردم – للشغل التقيل."],
+["عمودية لاسلكية","🔋","التنضيف السريع اليومي","خفيفة ومن غير سلك – تنضّف في دقيقة وترجعها مكانها."],
+["روبوت","🤖","اللي معندوش وقت","بتنضّف لوحدها وإنت بره البيت."]],
+r:[
+["قوة الشفط","قوية","قوية","الأقوى","متوسطة","الأضعف","2"],
+["التخلص من التراب","تغيير كيس (نضيف)","تفريغ حاوية","تفريغ البرميل","تفريغ حاوية صغيرة","تفريغ حاوية صغيرة","0"],
+["المصاريف الدورية","أكياس","لا يوجد","لا يوجد","بطارية بعد سنين","فرش وفلاتر","12"],
+["شفط السوائل","لا","لا","نعم","لا (غالبًا)","بعضها بيمسح","2"],
+["سهولة الحركة","متوسطة (سلك)","متوسطة (سلك)","تقيلة","الأسهل","لوحدها","34"],
+["مدة التشغيل","مفتوحة","مفتوحة","مفتوحة","20–60 دقيقة","حسب البطارية","012"],
+["المجهود","متوسط","متوسط","عالي","قليل","صفر","4"],
+["السعر","متوسط","متوسط","متوسط","أعلى","الأعلى",""]],
+nd:[["حساسية صدر",3,1,1,1,1],["سجاد كتير",3,3,2,1,0],["ميه وتنضيف تقيل",0,0,3,0,0],["تنضيف سريع يومي",0,1,0,3,2],["معنديش وقت",0,0,0,2,3],["حيوانات أليفة",2,3,1,2,2]],
+tp:["فلتر HEPA نقطة بيع قوية للأسر اللي فيها حساسية أو أطفال.","الروبوت واللاسلكية مكمّلين مش بدايل للمكنسة الأساسية في البيوت الكبيرة."]}
+]},
+{id:"irons",n:"المكاوي",e:"👔",g:"نظافة وعناية بالملابس",c:[
+{t:"نوع المكواة",ty:[
+["مكواة جافة","🔲","الاستخدام البسيط وأقل سعر","بسيطة ومتينة ومش بتبوظ بسهولة."],
+["مكواة بخار","💨","الاستخدام المنزلي اليومي","البخار بيفرد الكسرات أسرع بنص المجهود."],
+["محطة بخار (مولد)","🚂","الكوي الكتير والأقمشة التقيلة","بخار قوي ومستمر بيخلّص كوم الغسيل في نص الوقت."],
+["ستيمر رأسي","🧥","البدل والفساتين والستاير","بتفرد الهدوم وهي متعلقة من غير ترابيزة كوي."]],
+r:[
+["قوة البخار","بدون","متوسطة","الأعلى","متوسطة إلى قوية","2"],
+["سرعة الكوي","الأبطأ","جيدة","الأسرع","سريع للقطعة الواحدة","2"],
+["الكسرات الصعبة (قطن/كتان)","محتاجة رش ميه","جيد","ممتاز","ضعيف","2"],
+["الأقمشة الحساسة","حذر","جيد","جيد","الأأمن (مفيش تلامس)","3"],
+["كسرة البنطلون والياقة","نعم","نعم","نعم","لا","012"],
+["خزان الميه","—","صغير","كبير (1–2 لتر)","متوسط إلى كبير","2"],
+["وزن المكواة في الإيد","متوسط","متوسط","الأخف (الخزان منفصل)","خفيف","23"],
+["السعر","الأقل","متوسط","الأعلى","متوسط","0"]],
+nd:[["ميزانية محدودة",3,2,0,1],["كوي كتير لأسرة",0,2,3,0],["بدل وفساتين وعبايات",0,1,2,3],["مستعجل الصبح",0,2,1,3],["قمصان بكسرة مظبوطة",1,3,3,0]],
+tp:["الستيمر مش بديل للمكواة في القمصان القطن – بيكمّلها.","انصح بميه مفلترة لتقليل الجير، واسأل عن خاصية منع التكلس."]}
+]},
+{id:"wheater",n:"سخانات المياه",e:"🚿",g:"مياه",c:[
+{t:"كهربا ولا غاز ولا فوري",ty:[
+["كهربا (بخزان)","⚡","أي حمام – الأأمن والأسهل تركيبًا","بيتركب في أي مكان حتى جوه الحمام، وبيشتغل مع ضغط الميه الضعيف."],
+["غاز","🔥","الأسر الكبيرة وأقل تكلفة تشغيل","ميه سخنة مش بتخلص وبأقل تكلفة شهرية."],
+["فوري كهربا","⚡","الحوض والاستخدام الخفيف والمساحة الضيقة","صغير جدًا وبيسخّن في لحظتها من غير انتظار."]],
+r:[
+["كمية الميه السخنة","محدودة بحجم الخزان","مستمرة","مستمرة","12"],
+["وقت الانتظار","محتاج يسخّن الأول","فوري","فوري","12"],
+["تكلفة التشغيل","أعلى","الأقل","عالي وقت التشغيل بس","1"],
+["مكان التركيب","أي مكان","مكان جيد التهوية + مدخنة","قرب نقطة الاستخدام","0"],
+["متطلبات التركيب","فيشة عادية","خط غاز","كابل وقاطع قويين","0"],
+["مع ضغط الميه الضعيف","يشتغل","محتاج ضغط مناسب","محتاج ضغط مناسب","0"],
+["المساحة","الأكبر","متوسطة","الأصغر","2"],
+["السعر","متوسط","أعلى","أقل","2"]],
+nd:[["أسرة كبيرة / استحمام ورا بعض",1,3,1],["مفيش غاز",3,0,3],["ضغط الميه ضعيف",3,0,0],["أقل فاتورة",1,3,1],["مساحة ضيقة",0,1,3],["تركيب جوه الحمام",3,0,2]],
+tp:["سعة الكهربا: 30–40 لتر لحوض أو فرد • 50 لتر لـ 2–3 أفراد • 80–100 لتر للأسرة.","سعة الغاز: 6 لتر لنقطة واحدة • 10 لتر لحمام ومطبخ • أكبر لأكتر من حمام.","سخان الغاز ممنوع يتركب في حمام مقفول من غير تهوية – معلومة أمان لازم تتقال."]}
+]},
+{id:"filters",n:"فلاتر المياه",e:"💧",g:"مياه",c:[
+{t:"عدد المراحل",ty:[
+["3 مراحل","3️⃣","ميه كويسة ومحتاجة تنقية من الشوائب والكلور","بيشيل الرواسب والكلور والريحة وبيسيب الأملاح الطبيعية."],
+["5 مراحل (RO)","5️⃣","الميه العالية الأملاح","تناضح عكسي بيشيل الأملاح والشوائب الدقيقة – ميه قريبة من المعدنية."],
+["7 مراحل (RO + معادن)","7️⃣","أعلى نقاء مع طعم أحسن","نفس نقاء الـ RO وبيرجّع المعادن المفيدة ويظبط الطعم."]],
+r:[
+["الرواسب والشوائب","نعم","نعم","نعم",""],
+["الكلور والريحة والطعم","نعم","نعم","نعم",""],
+["تقليل الأملاح الذائبة","لا","نعم","نعم","12"],
+["إعادة المعادن","الأملاح الطبيعية باقية","لا","نعم","2"],
+["خزان تخزين","لا (ميه مباشرة)","نعم","نعم",""],
+["يحتاج كهرباء (موتور)","لا","غالبًا نعم","غالبًا نعم","0"],
+["ميه مهدرة","لا","نعم (جزء بيتصرف)","نعم (جزء بيتصرف)","0"],
+["تكلفة تغيير الشمعات","الأقل","أعلى","الأعلى","0"],
+["السعر","الأقل","متوسط","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,1,0],["ميه مالحة / أملاح عالية",0,3,3],["ميه حكومية كويسة",3,1,1],["أحسن طعم",1,2,3],["أطفال رضّع",1,3,3]],
+tp:["اسأل العميل: الميه عندك طعمها مالح أو بتسيب جير في الغلاية؟ لو آه → RO.","مواعيد تغيير الشمعات بيعة متكررة – سجّلها للعميل."]}
+]},
+{id:"disp",n:"مبردات المياه",e:"🚰",g:"مياه",c:[
+{t:"نوع المبرد",ty:[
+["تحميل علوي","⬆️","أقل سعر","الشكل المعروف وأوفر اختيار."],
+["تحميل سفلي","⬇️","السيدات وكبار السن والمكاتب","القزازة بتتحط تحت من غير ما تشيل 19 لتر لفوق."],
+["مكتبي","📦","المساحات الصغيرة","بيتحط على أي ترابيزة أو رخامة."]],
+r:[
+["تغيير القزازة","رفع لفوق (تقيل)","تتزق تحت بسهولة","رفع لفوق","1"],
+["الشكل","القزازة ظاهرة","القزازة مخفية","صغير","1"],
+["المساحة","أرضي","أرضي","فوق ترابيزة","2"],
+["كابينة / ثلاجة سفلية","في موديلات كتير","لا (مكان القزازة)","لا","0"],
+["السعر","أقل","الأعلى","الأقل","2"]],
+nd:[["صعب أشيل القزازة",0,3,0],["ميزانية محدودة",3,0,3],["مكتب / شكل شيك",1,3,1],["مساحة ضيقة",1,1,3]],
+tp:["اسأل عن عدد الحنفيات: بارد وساخن بس، ولا بارد وساخن وعادي.","قفل أمان الأطفال على الحنفية السخنة نقطة بيع مهمة."]}
+]},
+{id:"tv",n:"التلفزيونات",e:"📺",g:"ترفيه",c:[
+{t:"تقنية الشاشة",ty:[
+["LED","📺","الاستخدام اليومي والميزانية المحدودة","صورة كويسة للقنوات واليوتيوب بأحسن سعر."],
+["QLED","🌈","الأوض المنورة ومحبي الألوان الزاهية","ألوان أغنى وسطوع أعلى – الصورة باينة حتى والشمس داخلة."],
+["Mini LED","🔆","أعلى سطوع مع أسود عميق","قريب من أسود الـ OLED وبسطوع أعلى ومن غير قلق من احتراق الصورة."],
+["OLED","🎬","محبي السينما وأعلى جودة صورة","كل بكسل بينوّر لوحده – أسود حقيقي وأدق ألوان."]],
+r:[
+["طريقة الإضاءة","إضاءة خلفية LED","LED + طبقة كوانتم دوت","آلاف لمبات صغيرة بمناطق تعتيم","كل بكسل بينوّر لوحده",""],
+["الأسود والتباين","جيد","جيد جدًا","ممتاز","مثالي (أسود حقيقي)","3"],
+["السطوع (غرف منورة)","جيد","عالي","الأعلى","جيد جدًا","2"],
+["الألوان","جيدة","أغنى وأزهى","غنية جدًا","الأدق","3"],
+["زاوية الرؤية","متوسطة","متوسطة إلى جيدة","جيدة","الأوسع","3"],
+["الألعاب والحركة السريعة","جيد","جيد جدًا","ممتاز","الأسرع استجابة","3"],
+["احتراق الصورة","لا","لا","لا","وارد مع صورة ثابتة لساعات طويلة","012"],
+["سُمك الشاشة","عادي","عادي","رفيع","الأرفع","3"],
+["السعر","الأقل","متوسط","عالي","الأعلى","0"]],
+nd:[["ميزانية محدودة",3,2,1,0],["أوضة منورة / شمس",1,2,3,1],["أفلام بالليل",0,1,2,3],["ألعاب (بلايستيشن)",1,2,3,3],["قناة ثابتة شغالة طول اليوم",3,3,3,0],["ناس كتير بتتفرج من الجناب",1,1,2,3]],
+ob:[["OLED بتتحرق","الموديلات الحديثة فيها حماية، والمشكلة بتظهر بس مع صورة ثابتة ساعات طويلة يوميًا. لو ده استخدامك خد Mini LED."]]},
+{t:"دقة الشاشة",ty:[
+["HD","🔹","الشاشات 32 بوصة","كفاية جدًا لمقاس 32 بوصة."],
+["Full HD","🔷","من 40 إلى 43 بوصة","صورة واضحة للمقاسات المتوسطة."],
+["4K (UHD)","💠","من 50 بوصة فأكتر – الاختيار الأساسي النهارده","4 أضعاف تفاصيل الفول HD، وكل منصات المشاهدة بتدعمها."],
+["8K","💎","المقاسات العملاقة 75 بوصة فأكتر","أعلى دقة موجودة للشاشات الكبيرة جدًا."]],
+r:[
+["عدد البكسلات","1366×768","1920×1080","3840×2160","7680×4320","3"],
+["المقاس المناسب","حتى 32 بوصة","32 – 43 بوصة","43 بوصة فأكتر","75 بوصة فأكتر",""],
+["المحتوى المتاح","كل القنوات","كل القنوات والمنصات","المنصات والألعاب","قليل جدًا","12"],
+["السعر","الأقل","قليل","متوسط","الأعلى","0"]],
+nd:[["شاشة صغيرة (مطبخ / أوضة أطفال)",3,2,0,0],["شاشة ريسبشن",0,1,3,1],["منصات وألعاب",0,1,3,2],["ميزانية محدودة",3,3,1,0]],
+tp:["الدقة العالية على شاشة صغيرة مش بتبان – اربط الدقة بالمقاس ومسافة القعدة."]},
+{t:"المقاس ومسافة المشاهدة",ty:[
+["32 بوصة","▫️","مطبخ أو أوضة أطفال","للأماكن الصغيرة."],
+["43 بوصة","◽","أوضة نوم","مقاس أوضة النوم المثالي."],
+["50–55 بوصة","◻️","ريسبشن متوسط","أكتر مقاس مطلوب للريسبشن."],
+["65 بوصة","⬜","ريسبشن كبير","تجربة سينما في البيت."],
+["75 بوصة فأكتر","🟦","ريسبشن واسع أو هوم سينما","لأكبر تجربة مشاهدة."]],
+r:[
+["مسافة القعدة (تقريبًا)","1 – 1.5 متر","1.5 – 2 متر","2 – 2.5 متر","2.5 – 3 متر","3 متر فأكتر",""],
+["عرض الشاشة (تقريبًا)","70 سم","95 سم","110–122 سم","145 سم","165 سم فأكتر",""],
+["الدقة المقترحة","HD","Full HD أو 4K","4K","4K","4K أو 8K",""]],
+nd:[],
+tp:["اسأل العميل: الكنبة بعيدة قد إيه عن الحيطة؟ ده اللي بيحدد المقاس.","قيس عرض الحيطة أو مكتبة التلفزيون قبل ما تأكد المقاس.","الأرقام تقريبية لدقة 4K – العميل غالبًا بيندم إنه مخدش الأكبر."]},
+{t:"سمارت ولا عادي",ty:[
+["شاشة عادية","📺","القنوات والريسيفر بس","للي بيتفرج على القنوات بس."],
+["شاشة سمارت","🌐","يوتيوب ومنصات المشاهدة","يوتيوب ونتفليكس وشاهد على الشاشة مباشرة من غير أي جهاز زيادة."]],
+r:[
+["الإنترنت والتطبيقات","لا","نعم (واي فاي + متجر تطبيقات)","1"],
+["عرض شاشة الموبايل","لا (غالبًا)","نعم","1"],
+["التحكم الصوتي","لا","في موديلات كتير","1"],
+["ريسيفر داخلي","حسب الموديل","حسب الموديل",""],
+["السعر","أقل","أعلى شوية","0"]],
+nd:[["قنوات بس",3,1],["يوتيوب ومنصات",0,3],["أطفال (كرتون ويوتيوب)",0,3],["ميزانية محدودة",3,1]],
+tp:["لو العميل أخد عادية: اعرض عليه قطعة تحويل لسمارت (TV Stick / Box) كبيعة إضافية."]}
+]}
+);
+
+const AL={washers:"غسالة غساله",dryers:"مجفف نشافة نشافه",dish:"غسالة اطباق صحون مواعين",fridge:"تلاجة تلاجه تلاجات ثلاجة",freezer:"فريزر",ac:"تكييف تكيف مكيف حصان",cooling:"مروحة مبرد تكييف صحراوي",fans:"مروحة مراوح",heaters:"دفاية دفايه مدفأة",air:"معالج هواء رطوبة",cookers:"بوتاجاز بوتجاز",hobs:"مسطح",ovens:"فرن بلت ان",hoods:"شفاط هود",micro:"ميكروويف مايكرويف ميكرويف",fryers:"قلاية airfryer",blend:"ميكسر مفرمة",juicers:"عصارة عصاره",coffee:"قهوة نسبريسو",cooksmall:"حلة برستو",grills:"شواية جريل",vac:"مكنسة مكنسه",irons:"مكواة مكوة مكواه",wheater:"سخان سخانات",filters:"فلتر فلاتر شمع مياه",disp:"مبرد مياه كولدير",tv:"شاشة شاشات تلفزيون تليفزيون"};
+const $=s=>document.querySelector(s),V=$("#v");
+let st={cat:null,cmp:0,hide:new Set(),need:new Set()};
+const groups=[...new Set(D.map(c=>c.g))];
+const nCmp=D.reduce((a,c)=>a+c.c.length,0);
+const norm=s=>(s||"").toLowerCase().replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/ث/g,"ت");
+function nav(o){document.body.classList.toggle("nav-open",!!o)}
+function theme(){const h=document.documentElement,t=h.dataset.theme==="dark"?"light":"dark";h.dataset.theme=t;try{localStorage.setItem("th",t)}catch(e){}}
+function cust(){const on=document.body.classList.toggle("cust");$("#bc").classList.toggle("on",on)}
+(function(){let t;try{t=localStorage.getItem("th")}catch(e){}if(!t&&window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches)t="dark";if(t)document.documentElement.dataset.theme=t})();
+function go(id,i){location.hash=id?"#"+id+"/"+(i||0):"#"}
+function side(){
+ let h=`<div class="rl" onclick="go()"><img src="${LOGO}" alt="Raya"></div><div class="logo" onclick="go()"><i>⚖️</i><div>دليل الفروقات<small>مستشار المبيعات</small></div></div>`;
+ groups.forEach(g=>{h+=`<div class="gt">${g}</div>`;D.filter(c=>c.g===g).forEach(c=>{h+=`<button class="si ${st.cat===c.id?"on":""}" onclick="go('${c.id}')"><span>${c.e}</span>${c.n}</button>`})});
+ h+=`<div class="cr">Created By<b>Hesham Alghamrawi</b>Senior Training Manager</div>`;
+ $("#side").innerHTML=h;
+}
+function home(){
+ let h=`<div class="hero"><div class="hl"><img src="${LOGO}" alt="Raya"></div><h1>العميل قال «عاوز…»؟ اعرف الفرق في ثواني.</h1><p>اختار المنتج، شوف الخلاصة والجدول، وعلّم على اللي يهم العميل والدليل يرشّح لك النوع الأنسب.</p><div class="stats"><div><b>${D.length}</b>منتج</div><div><b>${nCmp}</b>مقارنة</div><div><b>${D.reduce((a,c)=>a+c.c.reduce((x,m)=>x+m.r.length,0),0)}</b>معيار</div></div></div>`;
+ groups.forEach(g=>{h+=`<h2 class="g">${g}</h2><div class="grid">`;D.filter(c=>c.g===g).forEach(c=>{h+=`<button class="cc" onclick="go('${c.id}')"><i>${c.e}</i><span><b>${c.n}</b><small>${c.c.map(m=>m.t).join(" • ")}</small></span></button>`});h+=`</div>`});
+ h+=`<p class="note">المعلومات إرشادية عامة وتختلف حسب الماركة والموديل – راجع كارت المنتج دايمًا قبل تأكيد أي مواصفة.</p><p class="by">Created By: <b>Hesham Alghamrawi</b> – Senior Training Manager</p>`;
+ V.innerHTML=h;
+}
+function wins(m){const w=m.ty.map(()=>0);m.r.forEach(r=>{[...r[r.length-1]].forEach(d=>w[+d]++)});return w}
+function cat(){
+ const c=D.find(x=>x.id===st.cat),m=c.c[st.cmp],n=m.ty.length,vis=m.ty.map((_,i)=>i).filter(i=>!st.hide.has(i));
+ let h=`<div class="bc"><a href="#">الرئيسية</a> ‹ ${c.g}</div><div class="ch"><i>${c.e}</i><h1>${c.n}</h1></div>`;
+ if(c.c.length>1)h+=`<div class="tabs">${c.c.map((x,i)=>`<button class="tab ${i===st.cmp?"on":""}" onclick="go('${c.id}',${i})">${x.t}</button>`).join("")}</div>`;
+ h+=`<div class="sec"><h3>⚡ الخلاصة في 10 ثواني <small>${m.t}</small></h3><div class="tys">${m.ty.map(t=>`<div class="ty"><div class="hd"><i>${t[1]}</i>${t[0]}</div><div class="for"><b>مناسب لـ</b>${t[2]}</div><div class="say sales"><b>💬 قول للعميل</b>${t[3]}</div></div>`).join("")}</div></div>`;
+ if(m.nd&&m.nd.length)h+=`<div class="sec"><h3>🎯 المرشّح السريع <small>اسأل العميل وعلّم على اللي يهمه</small></h3><div class="chips">${m.nd.map((x,i)=>`<button class="chip ${st.need.has(i)?"on":""}" onclick="tn(${i})">${x[0]}</button>`).join("")}</div><div class="rk" id="rk"></div></div>`;
+ const w=wins(m),mx=Math.max(...vis.map(i=>w[i]));
+ h+=`<div class="sec"><h3>📊 جدول المقارنة</h3>`;
+ if(n>2)h+=`<div class="chips" style="margin-bottom:10px">${m.ty.map((t,i)=>`<button class="chip ${st.hide.has(i)?"off":"on"}" onclick="tc(${i})">${t[0]}</button>`).join("")}</div>`;
+ h+=`<div class="tw"><table><thead><tr><th>المعيار</th>${vis.map(i=>`<th><i>${m.ty[i][1]}</i>${m.ty[i][0]}</th>`).join("")}</tr></thead><tbody>`;
+ m.r.forEach(r=>{const ws=r[r.length-1];h+=`<tr><td>${r[0]}</td>${vis.map(i=>`<td class="${ws.includes(i)?"w":""}">${r[i+1]}</td>`).join("")}</tr>`});
+ h+=`</tbody>`;
+ if(mx>0)h+=`<tfoot><tr><td>نقاط التفوق</td>${vis.map(i=>`<td class="${w[i]===mx?"top1":""}"><span class="n">${w[i]}</span></td>`).join("")}</tr></tfoot>`;
+ h+=`</table></div><div class="lg"><span>الأفضل في المعيار ده</span>${mx>0?"نقاط التفوق = عدد المعايير اللي النوع كسب فيها (مش كل المعايير بنفس الأهمية عند كل عميل).":""}</div></div>`;
+ const tp=m.tp&&m.tp.length,ob=m.ob&&m.ob.length;
+ if(tp||ob){h+=`<div class="${tp&&ob?"two":""} sales">`;
+  if(tp)h+=`<div class="sec"><h3>💡 نصايح للمستشار</h3><ul class="tp">${m.tp.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+  if(ob)h+=`<div class="sec"><h3>🛡️ الرد على الاعتراضات</h3>${m.ob.map(x=>`<div class="ob"><div class="q">العميل: «${x[0]}»</div><div class="a">الرد: ${x[1]}</div></div>`).join("")}</div>`;
+  h+=`</div>`}
+ const ix=D.indexOf(c),p=D[ix-1],nx=D[ix+1];
+ h+=`<div class="nav2">${p?`<button class="ib" onclick="go('${p.id}')">→ ${p.n}</button>`:"<span></span>"}${nx?`<button class="ib" onclick="go('${nx.id}')">${nx.n} ←</button>`:""}</div>`;
+ h+=`<p class="note">المعلومات إرشادية عامة وتختلف حسب الماركة والموديل – راجع كارت المنتج قبل تأكيد أي مواصفة.</p><p class="by">Created By: <b>Hesham Alghamrawi</b> – Senior Training Manager</p>`;
+ V.innerHTML=h;rank();
+}
+function rank(){
+ const el=$("#rk");if(!el)return;const m=D.find(x=>x.id===st.cat).c[st.cmp];
+ if(!st.need.size){el.innerHTML=`<div class="hint">👆 اختار أولوية أو أكتر، والترشيح هيظهر هنا فورًا.</div>`;return}
+ const sc=m.ty.map((t,i)=>({i,s:[...st.need].reduce((a,k)=>a+m.nd[k][i+1],0)})).sort((a,b)=>b.s-a.s),max=st.need.size*3,top=sc[0].s;
+ const best=sc.filter(x=>x.s===top);
+ let h=sc.map(x=>`<div class="bar ${x.s===top?"best":""}"><div class="nm">${m.ty[x.i][1]} ${m.ty[x.i][0]}</div><div class="tr"><i style="width:${Math.round(x.s/max*100)}%"></i></div><div class="pc">${Math.round(x.s/max*100)}%</div></div>`).join("");
+ h+=best.length===1?`<div class="verdict"><b>✅ الأنسب: ${m.ty[best[0].i][0]}</b><p class="sales">💬 ${m.ty[best[0].i][3]}</p></div>`:`<div class="verdict"><b>🤝 متقاربين: ${best.map(x=>m.ty[x.i][0]).join(" و ")}</b><p>اسأل العميل سؤال كمان عشان تحسم.</p></div>`;
+ el.innerHTML=h;
+}
+function tn(i){st.need.has(i)?st.need.delete(i):st.need.add(i);document.querySelectorAll(".sec .chips")[0].children[i].classList.toggle("on");rank()}
+function tc(i){const n=D.find(x=>x.id===st.cat).c[st.cmp].ty.length;if(st.hide.has(i))st.hide.delete(i);else if(n-st.hide.size>2)st.hide.add(i);const y=scrollY;cat();scrollTo(0,y)}
+function route(){
+ const [id,i]=decodeURIComponent(location.hash.slice(1)).split("/"),c=D.find(x=>x.id===id);
+ const same=c&&st.cat===c.id&&st.cmp===(+i||0);
+ if(c){st.cat=c.id;st.cmp=Math.min(+i||0,c.c.length-1);if(!same){st.hide=new Set();st.need=new Set()}cat()}else{st.cat=null;home()}
+ side();nav(0);if(!same)scrollTo(0,0);
+ const on=$(".si.on");if(on&&on.scrollIntoView)on.scrollIntoView({block:"nearest"});
+}
+/* search */
+const IDX=[];D.forEach(c=>{IDX.push({k:norm(c.n+" "+(AL[c.id]||"")),e:c.e,a:c.n,b:c.c.map(m=>m.t).join(" • "),id:c.id,i:0,p:3});c.c.forEach((m,i)=>{IDX.push({k:norm(m.t),e:c.e,a:m.t,b:c.n,id:c.id,i,p:2});m.ty.forEach(t=>IDX.push({k:norm(t[0]),e:t[1],a:t[0],b:c.n+" ‹ "+m.t,id:c.id,i,p:2}));m.r.forEach(r=>IDX.push({k:norm(r[0]),e:"📊",a:r[0],b:c.n+" ‹ "+m.t,id:c.id,i,p:1}))})});
+const Q=$("#q"),R=$("#res");let hits=[],kx=-1;
+function search(){
+ const ws=norm(Q.value).split(/\s+/).filter(Boolean);kx=-1;
+ if(!ws.length){R.classList.remove("open");return}
+ hits=IDX.filter(x=>ws.every(w=>x.k.includes(w))).sort((a,b)=>b.p-a.p).slice(0,14);
+ R.innerHTML=hits.length?hits.map((x,j)=>`<button data-j="${j}"><span>${x.e}</span><span><b>${x.a}</b><small>${x.b}</small></span></button>`).join(""):`<div class="none">مفيش نتايج – جرّب كلمة تانية</div>`;
+ R.classList.add("open");
+}
+function pick(j){const x=hits[j];if(!x)return;Q.value="";R.classList.remove("open");Q.blur();go(x.id,x.i)}
+Q.addEventListener("input",search);Q.addEventListener("focus",search);
+Q.addEventListener("keydown",e=>{const b=R.querySelectorAll("button");if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();kx=(kx+(e.key==="ArrowDown"?1:-1)+b.length)%b.length;b.forEach((x,j)=>x.classList.toggle("k",j===kx));b[kx]&&b[kx].scrollIntoView({block:"nearest"})}else if(e.key==="Enter"){pick(kx<0?0:kx)}else if(e.key==="Escape"){R.classList.remove("open");Q.blur()}});
+R.addEventListener("mousedown",e=>{const b=e.target.closest("button");if(b){e.preventDefault();pick(+b.dataset.j)}});
+document.addEventListener("click",e=>{if(!e.target.closest(".srch"))R.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();Q.focus()}});
+addEventListener("hashchange",route);route();
+</script>
+<style>
+.fab{position:fixed;left:18px;bottom:18px;z-index:70;width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,#2456e6,#12b5a0);box-shadow:0 8px 26px rgba(36,86,230,.45);display:grid;place-items:center;transition:transform .2s}
+.fab:hover{transform:scale(1.07)}
+.fab:before{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid #2dd4bf;opacity:.6;animation:pl 2.2s infinite}
+.fab svg{width:44px;height:44px}
+.fab b{position:absolute;top:-6px;right:-8px;background:#0e1730;color:#fff;font-size:11.5px;border-radius:99px;padding:1px 8px;direction:ltr;border:2px solid var(--bg)}
+@keyframes pl{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+@keyframes bk{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.eye{transform-origin:center;transform-box:fill-box;animation:bk 4s infinite}
+.bot{position:fixed;left:18px;bottom:18px;z-index:80;width:400px;max-width:calc(100vw - 24px);height:min(640px,calc(100vh - 36px));background:var(--sf);border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden}
+.bot-open .bot{display:flex}.bot-open .fab{display:none}
+.cust .fab,.cust .bot{display:none!important}
+.bh{background:linear-gradient(135deg,#0e1730,#1d3a9e 60%,#12a394);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.bh svg{width:46px;height:46px;flex:none;background:rgba(255,255,255,.12);border-radius:14px;padding:4px}
+.bh b{font-size:17px;direction:ltr;display:block;text-align:right;line-height:1.3}
+.bh small{font-size:12px;opacity:.85;display:flex;align-items:center;gap:5px}
+.bh small:before{content:"";width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80}
+.bh button{margin-inline-start:auto;color:#fff;font-size:15px;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.14)}
+.bh button+button{margin-inline-start:0}
+.bm{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.ms{max-width:90%;padding:9px 13px;border-radius:16px;font-size:14.3px;line-height:1.6;animation:in .18s}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ms.u{align-self:flex-start;background:var(--brand);color:#fff;border-end-start-radius:5px}
+html[data-theme=dark] .ms.u{color:#0a1020}
+.ms.b{align-self:flex-end;background:var(--sf);border:1px solid var(--line);border-end-end-radius:5px;max-width:96%}
+.ms p{margin:0 0 6px}.ms p:last-child{margin:0}
+.ms ul{margin:4px 0 6px;padding:0;list-style:none}.ms li{padding:3px 0;border-bottom:1px dashed var(--line)}.ms li:last-child{border:0}
+.ms .ok{color:var(--win-ink);font-weight:700}
+.ms .sy{background:var(--say);color:var(--say-ink);border-radius:10px;padding:6px 9px;margin:6px 0;font-size:13.6px}
+.ms .vd{background:var(--win);color:var(--win-ink);border-radius:10px;padding:7px 10px;margin:6px 0;font-weight:700}
+.ms .tx{overflow-x:auto;margin:6px 0;border:1px solid var(--line);border-radius:10px}
+.ms table{font-size:12.8px}.ms th,.ms td{min-width:92px;padding:6px 7px}.ms tr>*:first-child{min-width:78px;max-width:96px}
+.ms thead th{font-size:12.8px}
+.bq,.bl{display:inline-block;margin:5px 0 0 5px;padding:5px 11px;border-radius:99px;font-size:13px;font-weight:600;border:1.5px solid var(--brand);color:var(--brand);background:transparent}
+.bl{background:var(--brand);color:#fff}html[data-theme=dark] .bl{color:#0a1020}
+.bq:hover{background:var(--brand-s)}
+.dots{display:flex;gap:4px;padding:4px 2px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:dt 1s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dt{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-4px)}}
+.bf{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--sf)}
+.bf input{flex:1;height:44px;border-radius:13px;border:1.5px solid var(--line);background:var(--sf2);color:var(--ink);font:inherit;padding:0 13px;outline:0;min-width:0}
+.bf input:focus{border-color:var(--brand)}
+.bf button{width:46px;height:44px;border-radius:13px;background:var(--brand);color:#fff;font-size:18px;flex:none}
+@media(max-width:900px){.fab{left:12px;bottom:12px;width:58px;height:58px}.fab svg{width:38px;height:38px}.bot{left:0;bottom:0;width:100vw;max-width:100vw;height:88vh;border-radius:22px 22px 0 0}}
+@media print{.fab,.bot{display:none!important}}
+</style>
+<button class="fab" onclick="bot(1)" aria-label="Dr. H"><b>Dr. H</b><svg viewBox="0 0 64 64"><use href="#rb"/></svg></button>
+<div class="bot" id="bot">
+<div class="bh"><svg viewBox="0 0 64 64"><use href="#rb"/></svg><div><b>Dr. H</b><small>بيرد فورًا من محتوى الدليل</small></div><button onclick="botReset()" title="محادثة جديدة">↺</button><button onclick="bot(0)" title="إغلاق">✕</button></div>
+<div class="bm" id="bm"></div>
+<div class="bf"><input id="bi" type="text" enterkeyhint="send" placeholder="اسأل Dr. H: الفرق بين… / أنسب… / كام حصان…" autocomplete="off"><button type="button" id="bs" aria-label="إرسال">➤</button></div>
+</div>
+<svg width="0" height="0" style="position:absolute"><symbol id="rb" viewBox="0 0 64 64">
+<line x1="32" y1="5" x2="32" y2="14" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="5" r="4" fill="#fbbf24"/>
+<rect x="3" y="27" width="7" height="16" rx="3.5" fill="#c7d7ff"/><rect x="54" y="27" width="7" height="16" rx="3.5" fill="#c7d7ff"/>
+<rect x="9" y="13" width="46" height="42" rx="15" fill="#fff"/>
+<rect x="15" y="22" width="34" height="18" rx="9" fill="#0e1730"/>
+<circle class="eye" cx="24.5" cy="31" r="4.6" fill="#2dd4bf"/><circle class="eye" cx="39.5" cy="31" r="4.6" fill="#2dd4bf"/>
+<circle cx="26" cy="29.5" r="1.4" fill="#fff"/><circle cx="41" cy="29.5" r="1.4" fill="#fff"/>
+<path d="M25 46q7 5 14 0" fill="none" stroke="#2456e6" stroke-width="3" stroke-linecap="round"/>
+<circle cx="14" cy="44" r="2.2" fill="#fda4af" opacity=".8"/><circle cx="50" cy="44" r="2.2" fill="#fda4af" opacity=".8"/>
+</symbol></svg>
+<script>
+/* ===== Dr. H – محرك إجابات محلي من محتوى الدليل ===== */
+const BM=$("#bm"),bi=$("#bi");let ctx=null,started=0;
+const bn=s=>norm(s).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[ءئؤ]/g,"");
+const pre=w=>{if(/\d/.test(w))return w;const v=w.replace(/^(وال|بال|لل|ال)/,"");return v===w&&w.length>=5?w.replace(/^[لو]/,""):v};
+const stem=w=>{if(/\d/.test(w))return w;w=pre(w);w=pre(SYN[w]||w);if(w.length>4)w=w.replace(/(ات|ين|ون)$/,"");if(w.length>3)w=w.replace(/[هي]$/,"");return w};
+var SYN={مراوح:"مروحه",مكانس:"مكنسه",مكاوي:"مكواه",مكوه:"مكواه",افران:"فرن",فلاتر:"فلتر",حلل:"حله",تليفزيون:"تلفزيون",تلفزيونات:"تلفزيون",ميه:"مياه",مايه:"مياه",مويه:"مياه",كهربه:"كهربا",فاتوره:"كهربا",ارخص:"سعر",رخيص:"سعر",رخيصه:"سعر",اغلي:"سعر",غالي:"سعر",غاليه:"سعر",تمن:"سعر",بكام:"سعر",دوشه:"صوت",هادي:"صوت",هاديه:"صوت",اهدي:"صوت",ازعاج:"صوت",عيال:"اطفال",ولاد:"اطفال",طفل:"اطفال",بيبي:"اطفال",صغيره:"ضيق",صغير:"ضيق",توب:"فوق",فرونت:"فول",اوتوماتك:"اوتوماتيك",انفيرتر:"انفرتر",انڤرتر:"انفرتر",اندكشن:"انداكشن",اير:"قلايه",ايرفراير:"قلايه",فراير:"هوايه"};
+const SW=new Set("عاوز عايز عاوزه عايزه محتاج محتاجه ايه اي هو هي ما بين فرق فروق فروقات و ولا او في من علي عن الي ده دي دا مع لو انا هل ممكن يا دكتور بتاع بتاعه اللي كده يعني طيب بس مش لي ليه ازاي قولي قول عرفني وريني هات بقي ام نوع انواع عند عندي عنده عميل عميله واحد حاجه كام قد احسن افضل انسب انهي اكتر اقل جدا اوي خالص كويس كويسه اوفر طب وانهي dr h".split(" ").map(stem));
+const toks=s=>bn(s).replace(/[^ء-يa-z0-9.]+/g," ").split(" ").filter(Boolean).map(stem).filter(w=>!SW.has(w)&&(w.length>1||/\d/.test(w)));
+const mt=(a,b)=>a===b||(!/\d/.test(a+b)&&a.length>=3&&b.length>=3&&(a.startsWith(b)||b.startsWith(a)));
+const has=(q,t)=>q.some(x=>mt(x,t));
+const dist=L=>L.map((a,i)=>a.filter(t=>!L.some((b,j)=>j!==i&&b.includes(t))));
+D.forEach(c=>{c._k=toks(c.n+" "+(AL[c.id]||""));c._n=toks(c.n);c.c.forEach(m=>{m._ty=m.ty.map(t=>toks(t[0]));m._tyd=dist(m._ty).map(d=>d.filter(t=>!c._k.includes(t)));m._r=m.r.map(r=>toks(r[0]));m._rd=dist(m._r);m._n=(m.nd||[]).map(n=>toks(n[0]));m._t=toks(m.t).filter(t=>t!=="شكل"&&!c._k.includes(t))})});
+function rowPick(m,q){const h=m._r.map(a=>a.filter(t=>has(q,t)).length),mx=Math.max(0,...h);return mx?h.map((x,i)=>x===mx?i:-1).filter(i=>i>=0).slice(0,3):[]}
+function pick2(L,Ld,q,ck){let r=[];L.forEach((a,i)=>{const d=Ld[i];if(a.length&&(d.length?d.some(t=>has(q,t)):a.every(t=>has(q,t))))r.push(i)});
+ if(ck)L.forEach((a,i)=>{if(r.includes(i))return;a.forEach(t=>{if(ck.includes(t)||!has(q,t))return;const sh=L.map((b,j)=>b.includes(t)?j:-1).filter(j=>j>=0);if(sh.length>1&&!sh.some(j=>r.includes(j)))sh.forEach(j=>r.includes(j)||r.push(j))})});r.sort((a,b)=>a-b);return r.filter(i=>!r.some(j=>j!==i&&L[i].length<L[j].length&&L[i].every(t=>L[j].includes(t))))}
+const E=s=>s.replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const nm=(m,i)=>m.ty[i][1]+" "+m.ty[i][0];
+const openB=(c,m)=>`<div><button class="bl" data-go="${c.id}/${c.c.indexOf(m)}">📊 افتح المقارنة كاملة</button></div>`;
+function vRow(m,ri,ids){const r=m.r[ri],w=r[r.length-1];return `<p><b>${r[0]}</b></p><ul>${ids.map(i=>`<li class="${w.includes(i)?"ok":""}">${w.includes(i)?"✓ ":""}${m.ty[i][0]}: ${r[i+1]}</li>`).join("")}</ul>`}
+function vDiff(m,ids){return `<div class="tx"><table><thead><tr><th>المعيار</th>${ids.map(i=>`<th>${m.ty[i][0]}</th>`).join("")}</tr></thead><tbody>${m.r.map(r=>{const w=r[r.length-1];return `<tr><td>${r[0]}</td>${ids.map(i=>`<td class="${w.includes(i)?"w":""}">${r[i+1]}</td>`).join("")}</tr>`}).join("")}</tbody></table></div>`}
+function vProf(m,i){const t=m.ty[i],pos=[],neg=[];m.r.forEach(r=>{const w=r[r.length-1];if(!w)return;(w.includes(i)?pos:neg).push(`${r[0]}: ${r[i+1]}`)});
+ return `<p><b>${nm(m,i)}</b><br>مناسب لـ ${t[2]}.</p><div class="sy">💬 ${t[3]}</div>${pos.length?`<p><b>نقاط القوة</b></p><ul>${pos.slice(0,6).map(x=>`<li class="ok">✓ ${x}</li>`).join("")}</ul>`:""}${neg.length?`<p><b>خد بالك من</b></p><ul>${neg.slice(0,4).map(x=>`<li>• ${x}</li>`).join("")}</ul>`:""}`}
+function vRank(m,ns){const sc=m.ty.map((t,i)=>({i,s:ns.reduce((a,k)=>a+m.nd[k][i+1],0)})).sort((a,b)=>b.s-a.s),mx=ns.length*3,top=sc[0].s,best=sc.filter(x=>x.s===top);
+ return `<p>على أساس: <b>${ns.map(k=>m.nd[k][0]).join(" + ")}</b></p><ul>${sc.map(x=>`<li class="${x.s===top?"ok":""}">${nm(m,x.i)} — ${Math.round(x.s/mx*100)}%</li>`).join("")}</ul>`+(best.length===1?`<div class="vd">✅ الأنسب: ${m.ty[best[0].i][0]}</div><div class="sy">💬 ${m.ty[best[0].i][3]}</div>`:`<div class="vd">🤝 متقاربين: ${best.map(x=>m.ty[x.i][0]).join(" و ")} – اسأل العميل سؤال كمان.</div>`)}
+function vOver(c,m){const i=c.c.indexOf(m);return `<p><b>${c.e} ${c.n} – ${m.t}</b></p><ul>${m.ty.map(t=>`<li><b>${t[1]} ${t[0]}:</b> ${t[2]}</li>`).join("")}</ul>`+(m.nd&&m.nd.length?`<p>العميل مهتم بإيه؟</p>${m.nd.slice(0,5).map(n=>`<button class="bq" data-q="${n[0]}" data-pin="${c.id}/${i}">${n[0]}</button>`).join("")}`:"")}
+function others(c,m){const o=c.c.filter(x=>x!==m);return o.length?`<p style="margin-top:8px">مقارنات تانية في ${c.n}:</p>${o.map(x=>`<button class="bq" data-q="${x.t}" data-pin="${c.id}/${c.c.indexOf(x)}">${x.t}</button>`).join("")}`:""}
+function calc(raw,q){
+ const cur=ctx?ctx.id:st.cat,isAC=has(q,"تكييف")||has(q,"حصان")||has(q,"مكيف")||cur==="ac",isTV=has(q,"شاش")||has(q,"تلفزيون")||has(q,"بوص")||cur==="tv";
+ let a=null,x=raw.match(/(\d+(?:\.\d+)?)\s*(?:x|×|\*|في)\s*(\d+(?:\.\d+)?)/);
+ if(x)a=x[1]*x[2];
+ const mm=raw.match(/(\d+(?:\.\d+)?)\s*(?:متر|م2|م²|م\b)/);
+ if(isTV&&!x&&mm&&/مساف|بعد|بعيد|كنب|قعد|قاعد/.test(raw)){const d=+mm[1],s=d<=1.5?"32 بوصة":d<=2?"43 بوصة":d<=2.5?"50–55 بوصة":d<=3?"65 بوصة":"75 بوصة فأكتر",c=D.find(c=>c.id==="tv");ctx={id:"tv",i:2};
+  return `<p>مسافة القعدة حوالي <b>${d} متر</b></p><div class="vd">📺 المقاس المناسب: ${s}</div><p>رقم تقريبي لدقة 4K – وقيس عرض الحيطة قبل التأكيد.</p>${openB(c,c.c[2])}`}
+ if(!a&&mm&&isAC)a=+mm[1];
+ if(a&&isAC){const hp=a<=16?"1.5 حصان":a<=24?"2.25 حصان":a<=35?"3 حصان":a<=50?"5 حصان":null,c=D.find(c=>c.id==="ac");ctx={id:"ac",i:3};
+  return `<p>مساحة الأوضة حوالي <b>${Math.round(a*10)/10} م²</b></p><div class="vd">❄️ ${hp?"القدرة المناسبة: "+hp:"المساحة أكبر من 50 م² – محتاجة أكتر من جهاز أو معاينة"}</div><ul>${c.c[3].tp.map(t=>`<li>• ${t}</li>`).join("")}</ul>${openB(c,c.c[3])}`}
+ return null}
+function answer(text,pin){
+ const raw=bn(text),q=toks(text);
+ if(/^(اهلا|هاي|هلا|مرحبا|السلام|سلام|صباح|مساء|ازيك|hi|hello|hey)/.test(raw)&&q.length<3)return intro(1);
+ if(/شكرا|تسلم|متشكر|ميرسي|thanks/.test(raw))return `<p>العفو 🤖 أي سؤال تاني أنا موجود.</p>`;
+ if(/انت مين|اسمك|بتعمل ايه|مين انت/.test(raw))return intro(1);
+ const cl=calc(raw,q);if(cl)return cl;
+ if(!q.length&&!pin)return `<p>اكتب اسم المنتج أو النوعين اللي عاوز تعرف الفرق بينهم.</p>`+sugg();
+ /* اعتراضات */
+ let bo=null;D.forEach(c=>c.c.forEach(m=>(m.ob||[]).forEach(o=>{const t=toks(o[0]),h=t.filter(x=>has(q,x)).length;if(t.length&&h>=2&&h/t.length>=.6&&(!bo||h>bo.h))bo={h,o,c,m}})));
+ const tipW=/سع[هة]|حجم|مقاس|لتر|كيلو|كجم|افراد|اسره|عدد/.test(raw),tipQ0=tipW;
+ /* اختيار المقارنة */
+ let cand=[];
+ D.forEach(c=>{const ch=q.filter(x=>has(c._k,x)).length;c.c.forEach((m,i)=>{
+  if(pin&&!(pin[0]===c.id&&pin[1]===i))return;
+  const T=pick2(m._ty,m._tyd,q,c._k),q2=q.filter(x=>!T.some(i=>m._ty[i].some(t=>mt(x,t)))),R=rowPick(m,q2),N=m._n.map((n,k)=>n.length&&n.filter(t=>has(q,t)).length/n.length>=.6?k:-1).filter(k=>k>=0),th=m._t.filter(t=>has(q,t)).length;
+  let hits=ch+T.length+th+N.length,s=(ch?2+ch+(c._n.every(t=>has(q,t))?3:0):0)+2*T.length+1.5*th+(R.length?1:0)+N.length;
+  if(pin)hits++;
+  if(ctx&&ctx.id===c.id){s+=1;if(ctx.i===i)s+=1.5+(R.length?2:0);hits+=R.length}
+  else if(!ctx&&st.cat===c.id){s+=1;if(st.cmp===i)s+=1;hits+=R.length}
+  if(!pin&&!(ch+T.length+th+N.length)){const kn=q.filter(x=>R.some(r=>m._r[r].some(t=>mt(x,t)))).length;if(q.length-kn>=q.length/2)hits=0}
+  if(hits>0)cand.push({c,m,i,T,R,N,s,ch,th})})});
+ if(bo&&(!cand.length||!cand.some(x=>x.T.length>1))){ctx={id:bo.c.id,i:bo.c.c.indexOf(bo.m)};return `<p><b>العميل: «${bo.o[0]}»</b></p><div class="vd">${bo.o[1]}</div>${openB(bo.c,bo.m)}`}
+ if(!cand.length)return fallback(text);
+ cand.sort((a,b)=>b.s-a.s);const top=cand.filter(x=>x.s>=cand[0].s-.01);let k=top[0];
+ if(top.length>1){
+  if(top.every(x=>x.c===k.c)&&!k.T.length&&!k.N.length&&!k.R.length){ctx={id:k.c.id,i:0};const tm=tipW&&k.c.c.find(x=>x.tp);return (tm?`<p><b>${k.c.e} ${k.c.n}</b></p><ul>${tm.tp.map(t=>`<li>• ${t}</li>`).join("")}</ul>`:vOver(k.c,k.c.c[0]))+others(k.c,k.c.c[0])+openB(k.c,tm||k.c.c[0])}
+  return `<p>تقصد أنهي واحدة؟</p>${top.slice(0,6).map(x=>`<button class="bq" data-q="${E(text)}" data-pin="${x.c.id}/${x.i}">${x.c.e} ${x.c.n} – ${x.m.t}</button>`).join("")}`}
+ const {c,m,T,R,N}=k;ctx={id:c.id,i:k.i};let h="";
+ const all=m.ty.map((_,i)=>i),tipQ=tipW&&m.tp;
+ if(T.length&&R.length)h=`<p><b>${c.n} – ${m.t}</b></p>`+R.map(r=>vRow(m,r,T.length>1?T:all)).join("");
+ else if(T.length>1)h=`<p>الفرق بين <b>${T.map(i=>m.ty[i][0]).join(" و ")}</b>:</p><ul>${T.map(i=>`<li><b>${nm(m,i)}:</b> ${m.ty[i][2]}</li>`).join("")}</ul>${vDiff(m,T)}`;
+ else if(N.length)h=vRank(m,N);
+ else if(R.length)h=`<p><b>${c.n} – ${m.t}</b></p>`+R.map(r=>vRow(m,r,all)).join("");
+ else if(T.length)h=vProf(m,T[0]);
+ else if(tipQ)h=`<p><b>${c.e} ${c.n}</b></p>`;
+ else h=vOver(c,m)+(k.th||pin?"":others(c,m));
+ if(tipQ)h+=`<p><b>💡 معلومة مفيدة</b></p><ul>${m.tp.map(t=>`<li>• ${t}</li>`).join("")}</ul>`;
+ return h+openB(c,m)}
+function fallback(text){const ws=norm(text).split(/\s+/).filter(w=>w.length>3),hs=[];IDX.forEach(x=>{if(x.p>1&&ws.some(w=>x.k.includes(w))&&!hs.some(y=>y.id===x.id&&y.i===x.i))hs.push(x)});
+ return hs.length?`<p>مش متأكد من قصدك – يمكن تقصد:</p>${hs.slice(0,5).map(x=>`<button class="bl" data-go="${x.id}/${x.i}">${x.e} ${x.a}</button>`).join("")}`:`<p>السؤال ده مش موجود في محتوى الدليل. أنا بجاوب من المقارنات اللي هنا بس.</p>`+sugg()}
+function sugg(){let L=["الفرق بين الفول والفوق أوتوماتيك","تكييف لأوضة 4×5","OLED ولا QLED؟","ثلاجة نوفروست ولا ديفروست","أنسب دفاية لأوضة أطفال"];
+ if(st.cat){const c=D.find(x=>x.id===st.cat),m=c.c[st.cmp];L=[m.t,...(m.nd||[]).slice(0,3).map(n=>n[0])];return `<p>جرّب في ${c.n}:</p>`+L.map(x=>`<button class="bq" data-q="${x}" data-pin="${c.id}/${st.cmp}">${x}</button>`).join("")}
+ return `<p>جرّب تسأل:</p>`+L.map(x=>`<button class="bq" data-q="${x}">${x}</button>`).join("")}
+function intro(s){return `<p>أهلاً 👋 أنا <b>Dr. H</b> 🤖</p><p>اسألني عن الفرق بين أي نوعين، أو قولّي العميل مهتم بإيه وأرشّح لك الأنسب – الرد فوري من محتوى الدليل.</p>`+(s?sugg():"")}
+function say(h,u){const d=document.createElement("div");d.className="ms "+(u?"u":"b");d.innerHTML=h;BM.appendChild(d);BM.scrollTop=u?BM.scrollHeight:Math.max(0,d.offsetTop-60);return d}
+function ask(text,pin){text=(text||"").trim();if(!text)return;bi.value="";say(E(text),1);const t=say(`<div class="dots"><i></i><i></i><i></i></div>`);let h;try{h=answer(text,pin)}catch(e){h=`<p>حصلت مشكلة في السؤال ده – جرّب صيغة تانية.</p>`}setTimeout(()=>{t.innerHTML=h;BM.scrollTop=Math.max(0,t.offsetTop-60)},260)}
+function bot(o){document.body.classList.toggle("bot-open",!!o);if(o){if(!started){started=1;say(intro(1))}if(innerWidth>900)bi.focus()}}
+function botReset(){BM.innerHTML="";ctx=null;say(intro(1))}
+bi.addEventListener("keydown",e=>{if((e.key==="Enter"||e.keyCode===13)&&!e.isComposing){e.preventDefault();e.stopPropagation();ask(bi.value)}});
+$("#bs").addEventListener("click",()=>{ask(bi.value);bi.focus()});
+BM.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.go){const[id,i]=b.dataset.go.split("/");go(id,+i);if(innerWidth<=900)bot(0)}else if(b.dataset.q){const p=b.dataset.pin;ask(b.dataset.q,p?[p.split("/")[0],+p.split("/")[1]]:null)}});
+</script>
+</body>
+</html>
