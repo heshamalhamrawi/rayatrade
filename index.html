@@ -5543,6 +5543,8 @@
                           style="cursor:pointer; font-size:12px; padding:10px;">مقابل حد ائتماني</div>
                         <div class="guest-step" onclick="showSubProtocolTab('inst_4', this)"
                           style="cursor:pointer; font-size:12px; padding:10px;">راتب افتراضي</div>
+                        <div class="guest-step" onclick="showSubProtocolTab('inst_5', this)"
+                          style="cursor:pointer; font-size:12px; padding:10px;">تمويل غير المؤمن عليهم</div>
                       </div>
 
                       <!-- Content for inst_1 -->
@@ -5828,6 +5830,382 @@
                         </div>
                       </div>
 
+                      <!-- Content for inst_5 (تمويل غير المؤمن عليهم) -->
+<div id="sub-protocol-inst_5" class="sub-protocol-tab-content" style="display:none;">
+  <div style="padding: 10px 0;">
+    
+<style>
+#sub-protocol-inst_5 {
+  --navy:#001780; --blue:#225FAC; --deep:#001E5A;
+  --bg:#F3F6FB; --surface:#FFFFFF; --tint:#E8EEF8; --line:#D3DCEC;
+  --fg:#14203D; --muted:#56637E;
+  --drv:#225FAC; --drv-soft:#E6EEF9;
+  --med:#0E7C74; --med-soft:#E2F3F1;
+  --ok:#1C7C45; --ok-soft:#E4F4EA; --no:#B3261E; --no-soft:#FBE9E7;
+  --warn:#9A5B00; --warn-soft:#FFF3DC;
+  --c: var(--drv); --cs: var(--drv-soft);
+  direction: rtl;
+  text-align: right;
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+#sub-protocol-inst_5 * { box-sizing: border-box; }
+#sub-protocol-inst_5 .wrap { max-width: 860px; margin: 0 auto; padding: 4px 6px; display: grid; gap: 24px; }
+#sub-protocol-inst_5 section { display: grid; gap: 12px; }
+#sub-protocol-inst_5 section > h2 { font-size: 20px; font-weight: 800; color: var(--navy); margin: 0 0 4px 0; border-bottom: 2px solid var(--tint); padding-bottom: 6px; }
+#sub-protocol-inst_5 .sub { color: var(--muted); font-size: 14px; margin: 0; }
+#sub-protocol-inst_5 .num { font-weight: 800; font-variant-numeric: tabular-nums; }
+#sub-protocol-inst_5 p { margin: 0; }
+
+/* idea */
+#sub-protocol-inst_5 .idea { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+#sub-protocol-inst_5 .idea .big { font-size: 17px; font-weight: 700; line-height: 1.6; color: var(--deep); }
+#sub-protocol-inst_5 .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+#sub-protocol-inst_5 .why div { background: var(--tint); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+#sub-protocol-inst_5 .why b { display: block; font-weight: 800; margin-bottom: 4px; color: var(--blue); }
+
+/* program file */
+#sub-protocol-inst_5 .prog { border-radius: 16px; overflow: hidden; border: 1.5px solid var(--c); background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+#sub-protocol-inst_5 .prog.drv { --c: var(--drv); --cs: var(--drv-soft); }
+#sub-protocol-inst_5 .prog.med { --c: var(--med); --cs: var(--med-soft); }
+#sub-protocol-inst_5 .prog-head { background: var(--cs); padding: 16px 18px; display: grid; gap: 4px; border-bottom: 1.5px solid var(--c); }
+#sub-protocol-inst_5 .prog-head h3 { font-size: 20px; font-weight: 800; color: var(--c); margin: 0; }
+#sub-protocol-inst_5 .prog-body { display: grid; }
+#sub-protocol-inst_5 .row { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); align-items: start; }
+#sub-protocol-inst_5 .row:first-child { border-top: 0; }
+#sub-protocol-inst_5 .row > .k { font-weight: 700; color: var(--c); font-size: 14.5px; padding-top: 2px; }
+#sub-protocol-inst_5 .row > .v { min-width: 0; display: grid; gap: 8px; }
+@media (max-width: 600px) { #sub-protocol-inst_5 .row { grid-template-columns: 1fr; gap: 4px; } }
+#sub-protocol-inst_5 .range { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+#sub-protocol-inst_5 .range .num { font-size: 22px; color: var(--c); line-height: 1; }
+#sub-protocol-inst_5 .range .to { color: var(--muted); font-size: 14px; }
+#sub-protocol-inst_5 ul.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+#sub-protocol-inst_5 ul.check li { position: relative; padding-inline-start: 24px; font-size: 14.5px; }
+#sub-protocol-inst_5 ul.check li::before { content: "✓"; position: absolute; inset-inline-start: 0; top: 0; color: var(--c); font-weight: 800; font-size: 15px; }
+#sub-protocol-inst_5 .or-box { display: grid; gap: 8px; }
+#sub-protocol-inst_5 .opt { border: 1.5px dashed var(--c); border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; font-size: 14px; background: rgba(255,255,255,0.6); }
+#sub-protocol-inst_5 .opt .tag { font-weight: 800; color: var(--c); font-size: 13px; }
+#sub-protocol-inst_5 .or { font-weight: 800; text-align: center; color: var(--muted); font-size: 13px; }
+#sub-protocol-inst_5 .formula { background: var(--tint); border-radius: 10px; padding: 10px 14px; font-weight: 700; font-size: 15px; line-height: 1.6; }
+#sub-protocol-inst_5 .formula .op { color: var(--c); }
+#sub-protocol-inst_5 .mult { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#sub-protocol-inst_5 .mult div { border-radius: 10px; padding: 10px 12px; background: var(--cs); display: grid; gap: 2px; }
+#sub-protocol-inst_5 .mult .num { font-size: 24px; color: var(--c); line-height: 1.1; }
+#sub-protocol-inst_5 .mult small { font-size: 13px; color: var(--fg); }
+#sub-protocol-inst_5 .example { border-inline-start: 4px solid var(--c); background: var(--cs); border-radius: 0 10px 10px 0; padding: 8px 12px; font-size: 14px; display: grid; gap: 3px; }
+#sub-protocol-inst_5 .example .t { font-weight: 700; color: var(--c); font-size: 13px; }
+#sub-protocol-inst_5 .note { display: flex; gap: 10px; align-items: flex-start; background: var(--warn-soft); color: var(--fg); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+#sub-protocol-inst_5 .note::before { content: "!"; flex: 0 0 20px; height: 20px; border-radius: 50%; background: var(--warn); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 13px; margin-top: 2px; }
+
+/* companies finder */
+#sub-protocol-inst_5 .finder { display: grid; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--line); }
+#sub-protocol-inst_5 .finder label { font-weight: 700; font-size: 14px; }
+#sub-protocol-inst_5 .finder input { width: 100%; padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; font: inherit; font-size: 14px; }
+#sub-protocol-inst_5 .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { #sub-protocol-inst_5 .cats { grid-template-columns: 1fr; } }
+#sub-protocol-inst_5 .cat { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; background: #fff; }
+#sub-protocol-inst_5 .cat h4 { margin: 0; font-size: 15px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+#sub-protocol-inst_5 .cat.a h4 { background: var(--med); color: #fff; }
+#sub-protocol-inst_5 .cat.b h4 { background: var(--cs); color: var(--med); }
+#sub-protocol-inst_5 .cat ul { list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto; }
+#sub-protocol-inst_5 .cat li { padding: 7px 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 13.5px; }
+#sub-protocol-inst_5 .cat li.hit { background: var(--warn-soft); font-weight: bold; }
+#sub-protocol-inst_5 .empty { color: var(--muted); font-size: 14px; padding: 12px; text-align: center; }
+
+/* table */
+#sub-protocol-inst_5 .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: #fff; margin-top: 6px; }
+#sub-protocol-inst_5 table { border-collapse: collapse; width: 100%; font-size: 14px; }
+#sub-protocol-inst_5 th, #sub-protocol-inst_5 td { padding: 9px 12px; text-align: right; border-top: 1px solid var(--line); }
+#sub-protocol-inst_5 thead th { border-top: 0; font-weight: 800; font-size: 14.5px; background: var(--tint); }
+#sub-protocol-inst_5 thead th:nth-child(2) { color: var(--drv); }
+#sub-protocol-inst_5 thead th:nth-child(3) { color: var(--med); }
+#sub-protocol-inst_5 tbody th { font-weight: 700; color: var(--muted); white-space: nowrap; }
+#sub-protocol-inst_5 td.diff { background: var(--warn-soft); }
+
+/* dialogue */
+#sub-protocol-inst_5 .chat { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+#sub-protocol-inst_5 .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.5; }
+#sub-protocol-inst_5 .msg b { display: block; font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+#sub-protocol-inst_5 .msg.c { background: var(--tint); justify-self: start; }
+#sub-protocol-inst_5 .msg.s { background: var(--drv-soft); justify-self: end; }
+
+/* say / don't */
+#sub-protocol-inst_5 .say { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+@media (max-width: 600px) { #sub-protocol-inst_5 .say { grid-template-columns: 1fr; } }
+#sub-protocol-inst_5 .say > div { border-radius: 12px; padding: 14px; display: grid; gap: 6px; }
+#sub-protocol-inst_5 .say .yes { background: var(--ok-soft); border: 1px solid rgba(28,124,69,0.2); }
+#sub-protocol-inst_5 .say .nope { background: var(--no-soft); border: 1px solid rgba(179,38,30,0.2); }
+#sub-protocol-inst_5 .say h3 { font-size: 16px; margin: 0; }
+#sub-protocol-inst_5 .say .yes h3 { color: var(--ok); }
+#sub-protocol-inst_5 .say .nope h3 { color: var(--no); }
+#sub-protocol-inst_5 .say ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 5px; font-size: 14px; }
+
+/* red lines */
+#sub-protocol-inst_5 .red { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+#sub-protocol-inst_5 .red li { background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid var(--no); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+
+/* questions / test */
+#sub-protocol-inst_5 .qs { display: grid; gap: 8px; }
+#sub-protocol-inst_5 details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+#sub-protocol-inst_5 summary { cursor: pointer; list-style: none; padding: 12px 14px; font-weight: 700; display: flex; gap: 10px; align-items: center; font-size: 14px; user-select: none; }
+#sub-protocol-inst_5 summary::-webkit-details-marker { display: none; }
+#sub-protocol-inst_5 summary .qn { flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--tint); color: var(--blue); font-weight: 800; display: grid; place-items: center; font-size: 13px; }
+#sub-protocol-inst_5 summary .hint { margin-inline-start: auto; flex: 0 0 auto; font-size: 12px; color: var(--blue); background: var(--tint); padding: 3px 10px; border-radius: 999px; }
+#sub-protocol-inst_5 details[open] summary .hint { visibility: hidden; }
+#sub-protocol-inst_5 details .ans { padding: 0 14px 12px 48px; color: var(--ok); font-weight: 700; font-size: 14px; margin: 0; }
+
+/* takeaway */
+#sub-protocol-inst_5 .take { background: var(--head-bg); color: #fff; border-radius: 14px; padding: 18px 20px; display: grid; gap: 8px; }
+#sub-protocol-inst_5 .take h2 { color: #fff; font-size: 18px; margin: 0; border: 0; padding: 0; }
+#sub-protocol-inst_5 .take p { font-size: 15px; line-height: 1.6; margin: 0; }
+#sub-protocol-inst_5 .take .next { font-weight: 700; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; font-size: 14px; }
+</style>
+
+    
+  <div style="background: linear-gradient(135deg, #001780 0%, #225FAC 100%); color: #fff; padding: 22px 20px; border-radius: 14px; margin-bottom: 20px; text-align: center;">
+    <div style="display: inline-block; background: rgba(255,255,255,0.18); padding: 4px 14px; border-radius: 999px; font-size: 13px; font-weight: bold; margin-bottom: 8px;">أكاديمية راية للتجزئة · مهارة في كبسولة</div>
+    <h2 style="font-size: 24px; font-weight: 900; margin: 0 0 8px 0; color: #fff;">العميل اللي مش مؤمن عليه… ليه طريق للتقسيط</h2>
+    <p style="font-size: 15px; opacity: 0.92; max-width: 650px; margin: 0 auto; line-height: 1.6;">
+      برنامجين تمويل لازم تكون حافظهم: سواقين أوبر وديدي وإن درايفر، وأصحاب الكروت الطبية من شركات التأمين.
+    </p>
+  </div>
+
+    <main>
+<div class="wrap">
+
+<section id="idea">
+  <h2>المهارة في جملة</h2>
+  <div class="idea">
+    <p class="big">لما العميل يقولك «أنا مش متأمن عليا»، ما تقفلش الكلام. اسأله بيشتغل إيه، ولو سواق على تطبيق أو معاه كارت طبي، اطلب منه الورق الصح من أول مرة.</p>
+    <div class="why">
+      <div><b>ليه مهمة للعميل؟</b>بياخد الجهاز اللي محتاجه بالتقسيط، ومن غير ما يرجع البيت يجيب ورق ناقص.</div>
+      <div><b>ليه مهمة ليك؟</b>بيعة كانت هتضيع بتتقفل، والملف بيعدّي من أول مرة من غير رفض أو تأخير.</div>
+    </div>
+  </div>
+</section>
+
+<section id="drivers">
+  <h2>البرنامج الأول</h2>
+  <article class="prog drv">
+    <div class="prog-head">
+      <h3>سواقين أوبر وديدي وإن درايفر</h3>
+      <p class="sub">العميل بيشتغل على عربيته في تطبيق توصيل ركاب</p>
+    </div>
+    <div class="prog-body">
+      <div class="row"><div class="k">السن</div><div class="v">
+        <div class="range"><span class="num">30</span><span class="to">سنة لحد</span><span class="num">60</span><span class="to">سنة</span></div>
+      </div></div>
+      <div class="row"><div class="k">مدة التقسيط</div><div class="v">
+        <div class="range"><span class="num">10</span><span class="to">شهور لحد</span><span class="num">36</span><span class="to">شهر</span></div>
+      </div></div>
+      <div class="row"><div class="k">إثبات الدخل</div><div class="v">
+        <p>اختار <b>واحد بس</b> من الاتنين:</p>
+        <div class="or-box">
+          <div class="opt"><span class="tag">الطريقة الأولى</span>كشف صافي أرباح آخر 6 شهور من التطبيق + فيديو من التطبيق يظهر فيه بيانات العميل</div>
+          <div class="or">أو</div>
+          <div class="opt"><span class="tag">الطريقة التانية</span>كشف حساب بنكي آخر 6 شهور فيه تحويلات الدخل، ويعتمده قسم الـFRMU</div>
+        </div>
+      </div></div>
+      <div class="row"><div class="k">ورق لازم في كل الحالات</div><div class="v">
+        <ul class="check">
+          <li>بطاقة رقم قومي سارية</li>
+          <li>العميل هو <b>مالك العربية</b> وصاحب الرخصة</li>
+          <li>رخصة العربية سارية <b>6 شهور على الأقل</b> وتغطي مدة التقسيط كلها (يعتمدها الـFRMU)</li>
+          <li>موديل العربية <b>ما يزيدش عن 10 سنين</b></li>
+        </ul>
+      </div></div>
+      <div class="row"><div class="k">حساب الدخل</div><div class="v">
+        <p>متوسط صافي الإيرادات المحولة في آخر 6 شهور.</p>
+        <div class="example"><span class="t">لو العميل كمان بياخد مرتب</span>الدخل = متوسط المرتب + متوسط دخل التطبيقات</div>
+      </div></div>
+      <div class="row"><div class="k">الشغل والتحقق</div><div class="v">
+        <ul class="check">
+          <li>شغال على التطبيق من <b>6 شهور على الأقل</b>، وده بيبان من كشف التطبيق أو فيديو يوضح تاريخ إنشاء الحساب</li>
+          <li><b>زيارة منزلية إلزامية</b> لحد ما نظام الـDVS الجديد يتطبق</li>
+        </ul>
+      </div></div>
+      <div class="row"><div class="k">الآي سكور</div><div class="v">
+        <p>نفس معايير التاريخ الائتماني العادية، داخليًا وخارجيًا.</p>
+      </div></div>
+      <div class="row"><div class="k">مضاعف الائتمان</div><div class="v">
+        <div class="formula">(متوسط الدخل <span class="op">÷ 2</span>) <span class="op">−</span> التزامات الآي سكور <span class="op">× 8</span></div>
+        <div class="mult">
+          <div><span class="num">×8</span><small>عنده سجل آي سكور أكتر من 6 شهور</small></div>
+          <div><span class="num">×4</span><small>مالوش آي سكور، أو سجله أقل من 6 شهور</small></div>
+        </div>
+        <div class="example"><span class="t">مثال للتوضيح</span>متوسط دخله 14,000 ← النص 7,000 ← ناقص التزامات 2,000 = 5,000 ← × 8 = <b>40,000 جنيه</b></div>
+        <p class="note">الحد الأقصى لعبء الدين (DBR) هو 50% من الدخل في كل الحالات.</p>
+      </div></div>
+    </div>
+  </article>
+</section>
+
+<section id="medical">
+  <h2>البرنامج التاني</h2>
+  <article class="prog med">
+    <div class="prog-head">
+      <h3>عملاء الكارت الطبي (شركات التأمين)</h3>
+      <p class="sub">العميل مش مؤمن عليه اجتماعيًا، بس شغله عامله كارت طبي من شركة تأمين</p>
+    </div>
+    <div class="prog-body">
+      <div class="row"><div class="k">السن</div><div class="v">
+        <div class="range"><span class="num">25</span><span class="to">سنة لحد</span><span class="num">60</span><span class="to">سنة</span></div>
+      </div></div>
+      <div class="row"><div class="k">مدة التقسيط</div><div class="v">
+        <div class="range"><span class="num">10</span><span class="to">شهور لحد</span><span class="num">36</span><span class="to">شهر</span></div>
+      </div></div>
+      <div class="row"><div class="k">الورق المطلوب</div><div class="v">
+        <ul class="check">
+          <li>بطاقة هوية سارية</li>
+          <li>كارت طبي صادر من <b>6 شهور على الأقل</b></li>
+          <li>فيديو من تطبيق شركة التأمين على الموبايل يظهر فيه بيانات العميل</li>
+        </ul>
+      </div></div>
+      <div class="row"><div class="k">حساب الدخل</div><div class="v">
+        <p>على أساس <b>برنامج الدخل الافتراضي</b>.</p>
+      </div></div>
+      <div class="row"><div class="k">مدة الخدمة</div><div class="v">
+        <p>شغال من 6 شهور على الأقل.</p>
+        <p class="note">لو الكارت الطبي أحدث من 6 شهور، العميل لازم يجيب مستند زيادة يثبت مدة خدمته.</p>
+      </div></div>
+      <div class="row"><div class="k">الآي سكور</div><div class="v">
+        <p>سجل <b>نضيف</b> داخليًا وخارجيًا.</p>
+      </div></div>
+      <div class="row"><div class="k">مضاعف الائتمان</div><div class="v">
+        <div class="mult">
+          <div><span class="num">×8</span><small>شركات الفئة (أ)</small></div>
+          <div><span class="num">×4</span><small>شركات الفئة (ب)</small></div>
+        </div>
+        <p class="note">الحد الأقصى لعبء الدين (DBR) هو 50% في الفئتين.</p>
+      </div></div>
+    </div>
+
+    <div class="finder">
+      <label for="q">شركة التأمين في أنهي فئة؟ اكتب اسمها من على الكارت</label>
+      <input id="uninsured_company_q" type="search" placeholder="مثلًا: أكسا أو AXA" autocomplete="off">
+      <p class="note">خلي بالك من الأسماء اللي شبه بعض: «الدلتا للتأمين» فئة (أ) لكن «الدلتا لتأمينات الحياة» فئة (ب). ونفس الكلام في «قناة السويس». و«مصر للتأمين» و«مصر لتأمينات الحياة» (أ) لكن «مصر للتأمين التكافلي» (ب).</p>
+      <div class="cats">
+        <div class="cat a"><h4><span>الفئة (أ)</span><span>×8</span></h4><ul id="listA"><li><span>ميتلايف مصر</span><small>MetLife Egypt</small></li><li><span>أروب للتأمين</span><small>Arope Insurance</small></li><li><span>المهندس للتأمين</span><small>Mohandes Insurance</small></li><li><span>الدلتا للتأمين</span><small>Delta Insurance</small></li><li><span>قناة السويس للتأمين</span><small>Suez Canal Insurance</small></li><li><span>رويال للتأمين</span><small>Royal Insurance</small></li><li><span>أكسا مصر</span><small>AXA Egypt</small></li><li><span>المصرية للتأمين التكافلي</span><small>Egyptian Takaful Insurance</small></li><li><span>بوبا مصر</span><small>Bupa Egypt</small></li><li><span>مصر للتأمين</span><small>Misr Insurance</small></li><li><span>أليانز مصر</span><small>Allianz Egypt</small></li><li><span>جي آي جي مصر</span><small>GIG Egypt</small></li><li><span>أورينت للتأمين التكافلي (نكست كير)</span><small>Orient Takaful Insurance (Next Care)</small></li><li><span>مصر لتأمينات الحياة</span><small>Misr Life Insurance</small></li></ul></div>
+        <div class="cat b"><h4><span>الفئة (ب)</span><span>×4</span></h4><ul id="listB"><li><span>جلوب ميد مصر</span><small>Globe Med Egypt</small></li><li><span>إسكان للتأمين</span><small>Iskan Insurance</small></li><li><span>طوكيو مارين مصر</span><small>Tokio Marine Egypt</small></li><li><span>الدلتا لتأمينات الحياة</span><small>Delta Life Assurance</small></li><li><span>قناة السويس لتأمينات الحياة</span><small>Suez Canal Life Insurance</small></li><li><span>إيه آي جي مصر</span><small>AIG Egypt</small></li><li><span>ثروة للتأمين</span><small>Sarwa Insurance</small></li><li><span>تشب للتأمين</span><small>Chubb Insurance</small></li><li><span>المصرية السعودية للتأمين</span><small>Egyptian Saudi Insurance House</small></li><li><span>صندوق معاشات المقاولون العرب</span><small>Arab Contractors Pension Fund</small></li><li><span>مصر للتأمين التكافلي</span><small>Misr Takaful Insurance</small></li><li><span>إيجي كير</span><small>Egy Care</small></li></ul></div>
+      </div>
+      <p class="empty" id="uninsured_company_none" hidden>الشركة دي مش في القايمة. ارجع لمديرك أو لقسم الائتمان قبل ما توعد العميل بحاجة.</p>
+    </div>
+  </article>
+</section>
+
+<section id="compare">
+  <h2>مقارنة سريعة</h2>
+  <p class="sub">الخانات الملونة هي اللي بيحصل فيها لخبطة.</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>البند</th><th>السواقين</th><th>الكارت الطبي</th></tr></thead>
+      <tbody>
+        <tr><th>السن</th><td class="diff">30 – 60</td><td class="diff">25 – 60</td></tr>
+        <tr><th>مدة التقسيط</th><td>10 – 36 شهر</td><td>10 – 36 شهر</td></tr>
+        <tr><th>إثبات الدخل</th><td>كشف التطبيق + فيديو، أو كشف بنكي</td><td>كارت طبي + فيديو من تطبيق التأمين</td></tr>
+        <tr><th>حساب الدخل</th><td class="diff">متوسط صافي آخر 6 شهور</td><td class="diff">برنامج الدخل الافتراضي</td></tr>
+        <tr><th>مدة الشغل</th><td>6 شهور على التطبيق</td><td>6 شهور خدمة</td></tr>
+        <tr><th>زيارة منزلية</th><td class="diff">إلزامية</td><td class="diff">مش مذكورة</td></tr>
+        <tr><th>الآي سكور</th><td class="diff">المعايير العادية</td><td class="diff">سجل نضيف</td></tr>
+        <tr><th>المضاعف</th><td class="diff">×8 بآي سكور، ×4 من غيره</td><td class="diff">×8 فئة (أ)، ×4 فئة (ب)</td></tr>
+        <tr><th>عبء الدين</th><td>50% بحد أقصى</td><td>50% بحد أقصى</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="floor">
+  <h2>موقف من الفرع</h2>
+  <div class="chat">
+    <div class="msg c"><b>العميل</b>عاوز التلاجة دي قسط، بس أنا مش متأمن عليا.</div>
+    <div class="msg s"><b>أنت</b>ولا يهمك، عندنا برامج لده. حضرتك بتشتغل إيه؟</div>
+    <div class="msg c"><b>العميل</b>سواق على أوبر بعربيتي.</div>
+    <div class="msg s"><b>أنت</b>تمام. العربية والرخصة باسم حضرتك؟ وشغال على التطبيق بقالك قد إيه؟</div>
+    <div class="msg c"><b>العميل</b>باسمي، وبقالي سنة تقريبًا.</div>
+    <div class="msg s"><b>أنت</b>ممتاز. هنحتاج بطاقتك، ورخصة العربية، وكشف أرباح آخر 6 شهور من التطبيق مع فيديو يبين بياناتك. ولو تحب، كشف حساب البنك بتاع آخر 6 شهور ينفع بدل كشف التطبيق.</div>
+  </div>
+  <div class="say">
+    <div class="yes"><h3>قول</h3><ul>
+      <li>«حضرتك بتشتغل إيه؟»</li>
+      <li>«العربية والرخصة باسمك؟»</li>
+      <li>«الكارت الطبي ده طالع من إمتى؟»</li>
+      <li>«ده الورق اللي هنحتاجه، عشان الملف يعدي من أول مرة»</li>
+    </ul></div>
+    <div class="nope"><h3>ما تقولش</h3><ul>
+      <li>«مفيش تقسيط من غير تأمينات»</li>
+      <li>«هات أي ورق وإحنا نشوف»</li>
+      <li>«مضمونة، هتتقبل أكيد»</li>
+      <li>«اتعملك رفض عشان كذا» (سبب الرفض ما بيتقالش)</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="redlines">
+  <h2>نقاط لازم تاخد بالك منها</h2>
+  <ul class="red">
+    <li>السواق لازم يكون <b>هو</b> مالك العربية. لو العربية باسم حد تاني، ما ينفعش على البرنامج ده.</li>
+    <li>موديل العربية أقدم من 10 سنين؟ ما ينفعش.</li>
+    <li>الرخصة لازم تغطي <b>مدة التقسيط كلها</b>، مش بس 6 شهور.</li>
+    <li>الكارت الطبي أحدث من 6 شهور؟ اطلب مستند يثبت مدة الخدمة قبل ما تبدأ.</li>
+    <li>دايمًا اتأكد من فئة شركة التأمين من القايمة، لأنها بتفرق في المضاعف.</li>
+    <li>ما تديش العميل وعد بالقبول، وما تقولوش سبب الرفض لو حصل.</li>
+  </ul>
+</section>
+
+<section id="check">
+  <h2>اختبر نفسك قبل الامتحان</h2>
+  <p class="sub">فكر في الإجابة، وبعدين دوس على السؤال تشوفها.</p>
+  <div class="qs">
+    <details><summary><span class="qn">1</span><span>سواق على إن درايفر عنده 28 سنة. ينفع على برنامج السواقين؟</span><span class="hint">الإجابة</span></summary><p class="ans">لأ، السن في برنامج السواقين من 30 لـ 60 سنة.</p></details>
+    <details><summary><span class="qn">2</span><span>عميل معاه كارت طبي من «بوبا مصر». المضاعف كام؟</span><span class="hint">الإجابة</span></summary><p class="ans">×8، لأن بوبا مصر فئة (أ).</p></details>
+    <details><summary><span class="qn">3</span><span>سواق أوبر ما عندوش كشف أرباح من التطبيق. فيه بديل؟</span><span class="hint">الإجابة</span></summary><p class="ans">أيوه، كشف حساب بنكي آخر 6 شهور فيه تحويلات الدخل، ويعتمده الـFRMU.</p></details>
+    <details><summary><span class="qn">4</span><span>الكارت الطبي طالع من 4 شهور بس. نعمل إيه؟</span><span class="hint">الإجابة</span></summary><p class="ans">نطلب من العميل مستند إضافي يثبت إن مدة خدمته 6 شهور على الأقل.</p></details>
+    <details><summary><span class="qn">5</span><span>سواق ديدي ما عندوش أي سجل آي سكور. المضاعف كام؟</span><span class="hint">الإجابة</span></summary><p class="ans">×4، وعبء الدين ما يزيدش عن 50%.</p></details>
+    <details><summary><span class="qn">6</span><span>عربية السواق موديل 2014. ينفع؟</span><span class="hint">الإجابة</span></summary><p class="ans">لأ، موديل العربية لازم ما يزيدش عن 10 سنين.</p></details>
+  </div>
+</section>
+
+<section class="take">
+  <h2>الخلاصة</h2>
+  <p>اسأل العميل بيشتغل إيه قبل ما تقوله لأ. السواق ليه برنامج، وصاحب الكارت الطبي ليه برنامج، والورق الصح من أول مرة بيقفل البيعة.</p>
+  <p class="next">ذاكر الكبسولة كويس، وبعدها امتحان الكبسولة.</p>
+</section>
+
+</div>
+</main>
+    
+<script>
+(function(){
+  function initUninsuredSearch() {
+    var q = document.getElementById("uninsured_company_q");
+    var none = document.getElementById("uninsured_company_none");
+    if (!q) return;
+    function norm(s){return (s||"").toLowerCase().replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ").trim();}
+    var items = document.querySelectorAll("#sub-protocol-inst_5 .cat li");
+    items.forEach(function(li){ li.dataset.k = norm(li.textContent); });
+    q.addEventListener("input", function(){
+      var v = norm(q.value), hits = 0;
+      items.forEach(function(li){
+        var m = !v || li.dataset.k.indexOf(v) > -1;
+        li.style.display = m ? "" : "none";
+        li.classList.toggle("hit", !!v && m);
+        if (m) hits++;
+      });
+      if (none) none.style.display = (v && hits === 0) ? "block" : "none";
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initUninsuredSearch);
+  } else {
+    initUninsuredSearch();
+  }
+})();
+</script>
+
+  </div>
+</div>
 
                     </div>
                   </div>
@@ -8552,6 +8930,13 @@
                 content: `المحظورات (خطوط حمراء): مناطق لا نقسط لها (Blacklisted Areas): شمال سيناء، حاليب وشلاتين، الواحات، مرسى مطروح، قنطرة شرق. مهن لا نقسط لها (Blacklisted Professions): ضباط الشرطة (إلا لو مدنيين)، الصحفيون، موظفو هيئة الإسعاف، المحامي الحر/المستقل (بنقبل المحامي بس لو بطاقته مكتوب فيها إنه موظف جوه شركة). ورق مرفوض تماماً: شهادة الدخل من أي محاسب قانوني، أو الوظائف الحكومية بنظام "اليومية".`
               },
               {
+                id: "installment_uninsured",
+                section: "بروتوكول تمويل غير المؤمن عليهم",
+                category: "protocols",
+                keywords: ["سواقين", "أوبر", "ديدي", "ان درايفر", "كارت طبي", "تأمين", "غير المؤمن عليهم", "تمويل", "تقسيط"],
+                content: "بروتوكول تمويل غير المؤمن عليهم: يشمل برنامجين رئيسيين: 1) سواقين النقل الذكي (أوبر، ديدي، إن درايفر): السن من 30 إلى 60 سنة، يمتلك رخصة وعربية باسمه، كشف أرباح آخر 6 شهور. 2) أصحاب الكروت الطبية من شركات التأمين المعتمدة: كارت طبي طالع من 6 شهور على الأقل مع إثبات الخدمة."
+              },
+              {
                 id: "installment_programs",
                 section: "برامج التقسيط الإضافية",
                 category: "installment",
@@ -8841,7 +9226,8 @@
                 'return_policy': 'sec-policies',
                 'installment_basic': 'sec-installment',
                 'installment_blacklist': 'sec-installment',
-                'installment_programs': 'sec-installment',
+                'installment_programs': 'sec-protocols',
+                'installment_uninsured': 'sec-protocols',
                 'omni_channel': 'sec-policies',
                 'csat_nps': 'sec-policies',
                 'teamwork': 'sec-culture',
